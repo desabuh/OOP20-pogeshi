@@ -9,4 +9,9 @@ public interface Battle {
     
     boolean checkBattleEnd();
     
+    public enum Turn{
+        PLAYER,
+        ENEMY
+    }
+    
 }
