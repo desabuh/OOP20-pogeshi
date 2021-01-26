@@ -1,66 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
 
 
-<Pane id="MainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="962.0" prefWidth="1395.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.BattleControllerImpl">
+<Pane id="MainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.BattleControllerImpl">
    <children>
-      <StackPane id="SPHand" layoutX="32.0" layoutY="692.0" prefHeight="237.0" prefWidth="1344.0" />
-      <Label id="LBLPlayerHealth" alignment="CENTER" contentDisplay="CENTER" layoutX="122.0" layoutY="291.0" prefHeight="50.0" prefWidth="69.0" text="30" textAlignment="CENTER" textFill="#00ff33">
+      <StackPane id="SPPlayerHand" layoutX="41.0" layoutY="769.0" prefHeight="274.0" prefWidth="1839.0" />
+      <Label id="LBLPlayerHealth" alignment="CENTER" layoutX="201.0" layoutY="389.0" prefHeight="45.0" prefWidth="39.0" text="30" textFill="LIME">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
-      <Label id="LBLPlayerShield" layoutX="286.0" layoutY="293.0" prefHeight="45.0" prefWidth="0.0" text="0" textFill="#0095ff">
+      <Label id="LBLPlayerShield" alignment="CENTER" layoutX="371.0" layoutY="389.0" prefHeight="45.0" prefWidth="39.0" text="0" textFill="#00fcff">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
-      <Label id="LBLEnemyHealth" alignment="CENTER" contentDisplay="CENTER" layoutX="1053.0" layoutY="129.0" prefHeight="50.0" prefWidth="69.0" text="10" textAlignment="CENTER" textFill="#00ff33">
+      <Label id="LBLPlayerDamage" alignment="CENTER" layoutX="296.0" layoutY="317.0" prefHeight="45.0" prefWidth="39.0" text="-2" textFill="RED" visible="false">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
-      <Label id="LBLEnemyShield" layoutX="1227.0" layoutY="131.0" text="0" textFill="#0095ff">
+      <Label id="LBLEnemyDamage" alignment="CENTER" layoutX="1532.0" layoutY="117.0" prefHeight="45.0" prefWidth="39.0" text="-2" textFill="RED" visible="false">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
-      <Label id="LBLPlayerDamage" alignment="CENTER" contentDisplay="CENTER" layoutX="180.0" layoutY="194.0" prefHeight="50.0" prefWidth="69.0" text="-2" textAlignment="CENTER" textFill="RED" visible="false">
+      <Label id="LBLEnemyShield" alignment="CENTER" layoutX="1615.0" layoutY="183.0" prefHeight="45.0" prefWidth="39.0" text="0" textFill="#00fcff">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
-      <Label id="LBLEnemyDamage" alignment="CENTER" contentDisplay="CENTER" layoutX="1111.0" layoutY="46.0" prefHeight="50.0" prefWidth="69.0" text="-2" textAlignment="CENTER" textFill="RED" visible="false">
+      <Label id="LBLEnemyHealth" alignment="CENTER" layoutX="1451.0" layoutY="183.0" prefHeight="45.0" prefWidth="39.0" text="10" textFill="LIME">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
-      <Label id="LBLPlayerMana" layoutX="77.0" layoutY="647.0" prefHeight="45.0" prefWidth="40.0" text="3" textFill="#0095ff">
-         <font>
-            <Font size="30.0" />
-         </font>
-      </Label>
-      <Label id="LBLManaSeparator" layoutX="111.0" layoutY="647.0" prefHeight="45.0" prefWidth="0.0" text="/" textFill="#0095ff">
-         <font>
-            <Font size="30.0" />
-         </font>
-      </Label>
-      <Label id="LBLPlayerMaxMana" layoutX="136.0" layoutY="647.0" prefHeight="45.0" prefWidth="40.0" text="3" textFill="#0095ff">
-         <font>
-            <Font size="30.0" />
-         </font>
-      </Label>
-      <Label layoutX="75.0" layoutY="610.0" text="Your mana">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <ImageView id="IMGPlayer" fitHeight="237.0" fitWidth="279.0" layoutX="91.0" layoutY="338.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView id="IMGEnemy" fitHeight="237.0" fitWidth="279.0" layoutX="1025.0" layoutY="177.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView id="IMGPlayer" fitHeight="293.0" fitWidth="313.0" layoutX="159.0" layoutY="463.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView id="IMGEnemy" fitHeight="293.0" fitWidth="313.0" layoutX="1395.0" layoutY="243.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </Pane>
