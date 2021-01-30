@@ -8,7 +8,6 @@
 
 <Pane fx:id="MainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.BattleControllerImpl">
    <children>
-      <StackPane fx:id="SPPlayerHand" layoutX="41.0" layoutY="769.0" prefHeight="274.0" prefWidth="1839.0" />
       <Label fx:id="LBLPlayerHealth" alignment="CENTER" layoutX="201.0" layoutY="389.0" prefHeight="45.0" prefWidth="39.0" text="30" textFill="LIME">
          <font>
             <Font size="30.0" />
@@ -42,5 +41,6 @@
       <ImageView fx:id="IMGPlayer" fitHeight="293.0" fitWidth="313.0" layoutX="159.0" layoutY="463.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="IMGEnemy" fitHeight="293.0" fitWidth="313.0" layoutX="1395.0" layoutY="243.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="BTNEndTurn" layoutX="1680.0" layoutY="700.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="107.0" text="Passa turno" />
+      <HBox fx:id="HBPlayerHand" layoutX="21.0" layoutY="767.0" prefHeight="284.0" prefWidth="1870.0" />
    </children>
 </Pane>
