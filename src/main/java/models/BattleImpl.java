@@ -1,5 +1,7 @@
 package models;
 
+import controllers.Card;
+
 public class BattleImpl implements Battle {
     
     private Turn turn = Turn.PLAYER;
@@ -18,6 +20,10 @@ public class BattleImpl implements Battle {
     public boolean checkBattleEnd() {
         // TODO Auto-generated method stub
         return false;
+    }
+    
+    public void playCard(Card c) {
+        
     }
 
 }
