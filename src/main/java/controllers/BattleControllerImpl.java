@@ -19,6 +19,7 @@ public class BattleControllerImpl implements BattleController {
 
     @FXML
     public void initialize() {
+        System.out.println("ciao");
         p.addCard(new CardImpl("Carta prova", 2, 3, 0));
         p.addCard(new CardImpl("Carta prova 2", 1, 1, 0));
         LBLPlayerHealth.setText(String.valueOf(p.getHealth()));
@@ -31,12 +32,13 @@ public class BattleControllerImpl implements BattleController {
                 }
                 
             });
-            HBPlayerHand.getChildren().add(new Button(c.getName()));
+            HBPlayerHand.getChildren().add(b);
         }
     }
     
-    public void selectedCard(Card c) {
-        
+    private void selectedCard(Card c) {
+        b.playCard(c);
+        p.removeCard(c);
     }
     
 }
