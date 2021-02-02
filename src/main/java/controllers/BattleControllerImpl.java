@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.*;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,19 +18,23 @@ public class BattleControllerImpl implements BattleController {
     private Label LBLPlayerHealth;
     @FXML
     private HBox HBPlayerHand;
+    @FXML
+    private Label LBLEnemyDamage;
 
     @FXML
     public void initialize() {
-        System.out.println("ciao");
         p.addCard(new CardImpl("Carta prova", 2, 3, 0));
         p.addCard(new CardImpl("Carta prova 2", 1, 1, 0));
         LBLPlayerHealth.setText(String.valueOf(p.getHealth()));
-        for(Card c : p.getHand()) {
-            Button b = new Button(c.getName());
+        List<Card> hand = new ArrayList<>(p.getHand());
+        for(int i = 0; i < hand.size(); i++) {
+            final int inHand = i;
+            Button b = new Button(hand.get(i).getName());
             b.setOnAction(new EventHandler<ActionEvent>() {
+                final int indexInHand = inHand;
                 @Override
                 public void handle(ActionEvent event) {
-                    selectedCard(c);
+                    selectedCard(indexInHand);
                 }
                 
             });
@@ -36,9 +42,32 @@ public class BattleControllerImpl implements BattleController {
         }
     }
     
-    private void selectedCard(Card c) {
-        b.playCard(c);
-        p.removeCard(c);
+    private void selectedCard(int index) {
+        if(b.playCard(p.getHand().get(index), p)) {
+            p.removeCard(index);
+            HBPlayerHand.getChildren().remove(index);
+            updateHand(index);
+        }
+        else {
+            System.out.println("Not enough mana!");
+        }
+    }
+    
+    private void updateHand(int startingIndex) {
+        List<Card> hand = new ArrayList<>(p.getHand());
+        for(int i = startingIndex; i < hand.size(); i++) {
+            final int inHand = i;
+            
+            Button b = (Button) HBPlayerHand.getChildren().get(i);
+            b.setOnAction(new EventHandler<ActionEvent>() {
+                final int indexInHand = inHand;
+                @Override
+                public void handle(ActionEvent event) {
+                    selectedCard(indexInHand);
+                }
+                
+            });
+        }
     }
     
 }
