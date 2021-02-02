@@ -4,6 +4,7 @@
 package models;
 
 import controllers.Card;
+import controllers.Player;
 
 public interface Battle {
 
@@ -11,7 +12,7 @@ public interface Battle {
     
     boolean checkBattleEnd();
     
-    void playCard(Card c);
+    boolean playCard(Card c, Player p);
     
     public enum Turn{
         PLAYER,

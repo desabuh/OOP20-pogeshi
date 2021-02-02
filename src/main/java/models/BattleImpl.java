@@ -1,10 +1,17 @@
 package models;
 
 import controllers.Card;
+import controllers.Player;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 
 public class BattleImpl implements Battle {
     
     private Turn turn = Turn.PLAYER;
+    
+    @FXML
+    private Label LBLEnemyDamage;
+
 
     @Override
     public void endTurn() {
@@ -22,8 +29,12 @@ public class BattleImpl implements Battle {
         return false;
     }
     
-    public void playCard(Card c) {
-        
+    public boolean playCard(Card c, Player p) {
+        if(p.getUnusedCombatMana() >= c.getCost()) {
+            p.setUnusedCombatMana(p.getUnusedCombatMana() - c.getCost());
+            return true;
+        }
+        return false;
     }
 
 }
