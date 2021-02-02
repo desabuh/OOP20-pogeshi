@@ -6,6 +6,7 @@ import com.google.inject.Injector;
 import guicemodule.ControllerModule;
 import guicemodules.FXMLLoaderModule;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import views.scene.SceneManager;
@@ -21,8 +22,6 @@ public final class Main extends Application {
 
     @Override
     public void start(final Stage stage) throws Exception {
-        // final Parent root = FXMLLoader.load(ClassLoader.getSystemResource("layouts/main.fxml"));
-        // final Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
 
         Injector injector = Guice.createInjector(new ControllerModule());
 
