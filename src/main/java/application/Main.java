@@ -1,10 +1,15 @@
 package application;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
+import guicemodule.ControllerModule;
+import guicemodules.FXMLLoaderModule;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import views.scene.SceneManager;
+import views.scene.layout.LAYOUT;
 
 /**
  * This class represent the Main class of the JavaFX-based application.
@@ -16,11 +21,18 @@ public final class Main extends Application {
 
     @Override
     public void start(final Stage stage) throws Exception {
-        final Parent root = FXMLLoader.load(ClassLoader.getSystemResource("layouts/main.fxml"));
-        final Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
+        // final Parent root = FXMLLoader.load(ClassLoader.getSystemResource("layouts/main.fxml"));
+        // final Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
+
+        Injector injector = Guice.createInjector(new ControllerModule());
+
+        SceneManager.provideControllerFactory(Injector::getInstance);
+
+        Scene mainScene = SceneManager.of(LAYOUT.ACCOUNT).getScene();
+
         // Stage configuration
-        stage.setTitle("JavaFX - Complete Example");
-        stage.setScene(scene);
+        stage.setTitle("Pogeshi");
+        stage.setScene(mainScene);
         stage.show();
     }
 

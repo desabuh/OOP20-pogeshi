@@ -1,4 +1,4 @@
-package view.scene;
+package views.scene;
 
 
 
@@ -81,7 +81,7 @@ public final class SceneManager {
      * static method used to provide an alternative factory to the standard one for providing controllers.
      * @param controllerFactory alternative controller factory to provide controllers
      */
-    public static void setControllerFactoryProvide(final Callback<Class<? extends Controller>, Controller> controllerFactory) {
+    public static void provideControllerFactory(final Callback<Class<? extends Controller>, Controller> controllerFactory) {
         FACTORY = controllerFactory;
     }
 
