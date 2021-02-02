@@ -47,17 +47,17 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <Label id="LBLAvailableMana" fx:id="LBLPlayerShield11" alignment="CENTER" layoutX="813.0" layoutY="700.0" prefHeight="45.0" prefWidth="57.0" text="3" textFill="#00fcff">
+      <Label fx:id="LBLAvailableMana" alignment="CENTER" layoutX="813.0" layoutY="700.0" prefHeight="45.0" prefWidth="57.0" text="3" textFill="#00fcff">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Label id="LBLSeparator" fx:id="LBLPlayerShield12" alignment="CENTER" layoutX="851.0" layoutY="700.0" prefHeight="45.0" prefWidth="39.0" text="/" textFill="#00fcff">
+      <Label fx:id="LBLSeparator" alignment="CENTER" layoutX="851.0" layoutY="700.0" prefHeight="45.0" prefWidth="39.0" text="/" textFill="#00fcff">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Label id="LBLMaxMana" fx:id="LBLPlayerShield121" alignment="CENTER" layoutX="870.0" layoutY="700.0" prefHeight="45.0" prefWidth="70.0" text="3" textFill="#00fcff">
+      <Label fx:id="LBLMaxMana" alignment="CENTER" layoutX="870.0" layoutY="700.0" prefHeight="45.0" prefWidth="70.0" text="3" textFill="#00fcff">
          <font>
             <Font size="25.0" />
          </font>
