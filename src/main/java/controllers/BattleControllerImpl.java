@@ -44,9 +44,11 @@ public class BattleControllerImpl implements BattleController {
     
     private void selectedCard(int index) {
         if(b.playCard(p.getHand().get(index), p)) {
+            LBLEnemyDamage.setText("-" + String.valueOf(p.getHand().get(index).getDamage()));
             p.removeCard(index);
             HBPlayerHand.getChildren().remove(index);
             updateHand(index);
+            LBLEnemyDamage.setVisible(true);
         }
         else {
             System.out.println("Not enough mana!");
