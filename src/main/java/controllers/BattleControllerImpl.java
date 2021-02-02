@@ -20,6 +20,8 @@ public class BattleControllerImpl implements BattleController {
     private HBox HBPlayerHand;
     @FXML
     private Label LBLEnemyDamage;
+    @FXML
+    private Label LBLAvailableMana;
 
     @FXML
     public void initialize() {
@@ -49,6 +51,7 @@ public class BattleControllerImpl implements BattleController {
             HBPlayerHand.getChildren().remove(index);
             updateHand(index);
             LBLEnemyDamage.setVisible(true);
+            LBLAvailableMana.setText(String.valueOf(p.getUnusedCombatMana()));
         }
         else {
             System.out.println("Not enough mana!");
