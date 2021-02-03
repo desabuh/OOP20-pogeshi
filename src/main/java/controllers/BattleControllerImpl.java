@@ -1,17 +1,21 @@
 package controllers;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import models.*;
+import models.Battle;
+import models.BattleImpl;
 
 public class BattleControllerImpl implements BattleController {
-    
-    private Player p = new PlayerImpl(30);
+    public static final int MAX_PLAYER_HEALTH = 30;
+
+    private Player p = new PlayerImpl(MAX_PLAYER_HEALTH);
     private Battle b = new BattleImpl();
 
     @FXML
@@ -29,50 +33,49 @@ public class BattleControllerImpl implements BattleController {
         p.addCard(new CardImpl("Carta prova 2", 1, 1, 0));
         LBLPlayerHealth.setText(String.valueOf(p.getHealth()));
         List<Card> hand = new ArrayList<>(p.getHand());
-        for(int i = 0; i < hand.size(); i++) {
+        for (int i = 0; i < hand.size(); i++) {
             final int inHand = i;
             Button b = new Button(hand.get(i).getName());
             b.setOnAction(new EventHandler<ActionEvent>() {
-                final int indexInHand = inHand;
+                private final int indexInHand = inHand;
                 @Override
-                public void handle(ActionEvent event) {
+                public void handle(final ActionEvent event) {
                     selectedCard(indexInHand);
                 }
-                
+
             });
             HBPlayerHand.getChildren().add(b);
         }
     }
-    
-    private void selectedCard(int index) {
-        if(b.playCard(p.getHand().get(index), p)) {
+
+    private void selectedCard(final int index) {
+        if (b.playCard(p.getHand().get(index), p)) {
             LBLEnemyDamage.setText("-" + String.valueOf(p.getHand().get(index).getDamage()));
             p.removeCard(index);
             HBPlayerHand.getChildren().remove(index);
             updateHand(index);
             LBLEnemyDamage.setVisible(true);
             LBLAvailableMana.setText(String.valueOf(p.getUnusedCombatMana()));
-        }
-        else {
+        } else {
             System.out.println("Not enough mana!");
         }
     }
-    
-    private void updateHand(int startingIndex) {
+
+    private void updateHand(final int startingIndex) {
         List<Card> hand = new ArrayList<>(p.getHand());
-        for(int i = startingIndex; i < hand.size(); i++) {
+        for (int i = startingIndex; i < hand.size(); i++) {
             final int inHand = i;
-            
+
             Button b = (Button) HBPlayerHand.getChildren().get(i);
             b.setOnAction(new EventHandler<ActionEvent>() {
-                final int indexInHand = inHand;
+                private final int indexInHand = inHand;
                 @Override
-                public void handle(ActionEvent event) {
+                public void handle(final ActionEvent event) {
                     selectedCard(indexInHand);
                 }
-                
+
             });
         }
     }
-    
+
 }
