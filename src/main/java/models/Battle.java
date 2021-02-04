@@ -3,8 +3,11 @@
  */
 package models;
 
+import java.util.Optional;
+
 import controllers.Card;
 import controllers.Player;
+import controllers.Character;
 
 public interface Battle {
 
@@ -12,7 +15,7 @@ public interface Battle {
     
     boolean checkBattleEnd();
     
-    boolean playCard(Card c, Player p);
+    Optional<? extends Character> playCard(Card c, int mana);
     
     public enum Turn{
         PLAYER,
