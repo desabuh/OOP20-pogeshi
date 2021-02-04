@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -63,17 +64,24 @@ public class BattleControllerImpl implements BattleController {
     }
 
     private void selectedCard(final int index) {
-        /*if (b.playCard(p.getHand().get(index), p)) {
-            LBLEnemyDamage.setText("-" + String.valueOf(p.getHand().get(index).getDamage()));
-            p.removeCard(index);
-            HBPlayerHand.getChildren().remove(index);
-            updateHand(index);
-            LBLEnemyDamage.setVisible(true);
-            LBLAvailableMana.setText(String.valueOf(p.getUnusedCombatMana()));
-            b.checkBattleEnd();
+        Optional<? extends Character> turn = b.playCard(p.getHand().get(index), p.getMana());
+        if (turn.isPresent()) {
+            if (turn.get() instanceof Player) {
+                System.out.println("Player!");
+                p.setUnusedCombatMana(p.getUnusedCombatMana() - p.getHand().get(index).getCost());
+                LBLEnemyDamage.setText("-" + String.valueOf(p.getHand().get(index).getDamage()));
+                p.removeCard(index);
+                HBPlayerHand.getChildren().remove(index);
+                updateHand(index);
+                LBLEnemyDamage.setVisible(true);
+                LBLAvailableMana.setText(String.valueOf(p.getUnusedCombatMana()));
+                b.checkBattleEnd();
+            } else {
+                System.out.println("Enemy!");
+            }
         } else {
             System.out.println("Not enough mana!");
-        }*/
+        }
     }
 
     private void updateHand(final int startingIndex) {
