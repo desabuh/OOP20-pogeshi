@@ -2,7 +2,7 @@ package controllers;
 
 import java.util.List;
 
-public interface Player implements Character {
+public interface Player extends Character {
 
     public int getMana();
 
