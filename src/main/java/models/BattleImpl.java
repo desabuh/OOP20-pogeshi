@@ -1,7 +1,11 @@
 package models;
 
+import java.util.Optional;
+
 import controllers.Card;
+import controllers.EnemyImpl;
 import controllers.Player;
+import controllers.PlayerImpl;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -12,15 +16,9 @@ public class BattleImpl implements Battle {
     @FXML
     private Label LBLEnemyDamage;
 
-
     @Override
     public void endTurn() {
-        if(turn == Turn.PLAYER) {
-            turn = Turn.ENEMY;
-        }
-        else {
-            turn = Turn.PLAYER;
-        }
+        turn = (turn == Turn.PLAYER) ? Turn.ENEMY : Turn.PLAYER;
     }
 
     @Override
@@ -29,12 +27,17 @@ public class BattleImpl implements Battle {
         return false;
     }
 
-    public boolean playCard(final Card c, final Player p) {
-        if (p.getUnusedCombatMana() >= c.getCost()) {
+    public Optional<Player> playCard(final Card c, int mana) {
+        if(mana >= c.getCost()) {
+            Character g = new PlayerImpl(0);
+            return turn == Turn.PLAYER ? Optional.of(g) : Optional.of(new EnemyImpl(0));
+        }
+        return Optional.empty();
+       /* if (p.getUnusedCombatMana() >= c.getCost()) {
             p.setUnusedCombatMana(p.getUnusedCombatMana() - c.getCost());
             return true;
         }
-        return false;
+        return false;*/
     }
 
 }
