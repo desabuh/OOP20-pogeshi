@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import controllers.Card;
 import controllers.EnemyImpl;
-import controllers.Player;
 import controllers.PlayerImpl;
+import controllers.Character;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -27,10 +27,9 @@ public class BattleImpl implements Battle {
         return false;
     }
 
-    public Optional<Player> playCard(final Card c, int mana) {
+    public Optional<? extends Character> playCard(final Card c, int mana) {
         if(mana >= c.getCost()) {
-            Character g = new PlayerImpl(0);
-            return turn == Turn.PLAYER ? Optional.of(g) : Optional.of(new EnemyImpl(0));
+            return turn == Turn.PLAYER ? Optional.of(new PlayerImpl(0)) : Optional.of(new EnemyImpl(0));
         }
         return Optional.empty();
        /* if (p.getUnusedCombatMana() >= c.getCost()) {
