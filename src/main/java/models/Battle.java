@@ -12,14 +12,16 @@ import controllers.Character;
 public interface Battle {
 
     void endTurn();
-    
+
     boolean checkBattleEnd();
-    
+
     Optional<? extends Character> playCard(Card c, int mana);
-    
+
+    Optional<? extends Character> currentTurn();
+
     public enum Turn{
         PLAYER,
         ENEMY
     }
-    
+
 }

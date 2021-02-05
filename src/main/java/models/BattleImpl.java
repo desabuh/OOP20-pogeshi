@@ -29,14 +29,14 @@ public class BattleImpl implements Battle {
 
     public Optional<? extends Character> playCard(final Card c, int mana) {
         if(mana >= c.getCost()) {
-            return turn == Turn.PLAYER ? Optional.of(new PlayerImpl(0)) : Optional.of(new EnemyImpl(0));
+            return currentTurn();
         }
         return Optional.empty();
-       /* if (p.getUnusedCombatMana() >= c.getCost()) {
-            p.setUnusedCombatMana(p.getUnusedCombatMana() - c.getCost());
-            return true;
-        }
-        return false;*/
+    }
+
+    @Override
+    public Optional<? extends Character> currentTurn() {
+        return turn == Turn.PLAYER ? Optional.of(new PlayerImpl(0)) : Optional.of(new EnemyImpl(0));
     }
 
 }
