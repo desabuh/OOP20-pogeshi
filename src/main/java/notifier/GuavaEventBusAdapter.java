@@ -6,10 +6,15 @@ import listener.Command;
 import listener.Listener;
 
 /**
- * implementation of {@link Notifier} that internally use {@link com.google.common.eventbus.EventBus}
- * not notify his {@link Listener}s.
+ * implementation of {@link Notifier}
+ * to notify his {@link Listener}s, adapter for Guava EventBus API.
+ * 
+ * @param <T> event type lo notify its listeners
+ * 
+ * @see com.google.common.eventbus.EventBus
+ * 
  */
-public final class CommandBusNotifier implements Notifier<Command> {
+public final class GuavaEventBusAdapter<T> implements Notifier<T> {
 
     /**
      * {@link com.google.common.eventbus.EventBus} object.
@@ -20,7 +25,7 @@ public final class CommandBusNotifier implements Notifier<Command> {
      * CommandBusNotifier constructor.
      * @param eventBus {@link com.google.common.eventbus.EventBus} injected instance
      */
-    public CommandBusNotifier(final EventBus eventBus) {
+    public GuavaEventBusAdapter(final EventBus eventBus) {
         this.eventBus = eventBus;
     }
 
@@ -29,16 +34,16 @@ public final class CommandBusNotifier implements Notifier<Command> {
      * @param listener a {@link Listener} for {@link Command} object
      */
     @Override
-    public void register(final Listener<Command> listener) {
+    public void register(final Listener<T> listener) {
         this.eventBus.register(listener);
     }
 
     /**
      * global notification to all registered listeners.
-     * @param command {@link Command} to send to its listeners
+     * @param event to send to its listeners
      */
     @Override
-    public void notifyListener(final Command command) {
+    public void notifyListener(final T event) {
         this.eventBus.post(eventBus);
     }
 
