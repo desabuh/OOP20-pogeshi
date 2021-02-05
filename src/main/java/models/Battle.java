@@ -15,11 +15,13 @@ public interface Battle {
 
     boolean checkBattleEnd();
 
-    Optional<? extends Character> playCard(Card c, int mana);
+    //Optional<? extends Character> playCard(Card c, int mana);
 
-    Optional<? extends Character> currentTurn();
+    Character currentTurn();
 
-    public enum Turn{
+    boolean isPlayable(Card c, int mana);
+
+    enum Turn {
         PLAYER,
         ENEMY
     }
