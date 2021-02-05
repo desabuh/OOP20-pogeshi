@@ -44,7 +44,7 @@ public class BattleControllerImpl implements BattleController {
 
     @FXML
     public void initialize() {
-        p.addCard(new CardImpl("Carta prova", 2, 3, 0));
+        p.addCard(new CardImpl("Carta prova", 7, 3, 0));
         p.addCard(new CardImpl("Carta prova 2", 1, 1, 0));
         e.addCard(new CardImpl("Carta nemico", 0, 1, 0));
         e.addCard(new CardImpl("Carta nemico 2", 0, 0, 2));
@@ -68,7 +68,7 @@ public class BattleControllerImpl implements BattleController {
             @Override
             public void handle(final ActionEvent event) {
                 b.endTurn();
-                if (b.currentTurn().get() instanceof Enemy) {
+                if (b.currentTurn() instanceof Enemy) {
                     selectedCard(0);
                     BTNEndTurn.fire();
                 } else {
@@ -82,9 +82,8 @@ public class BattleControllerImpl implements BattleController {
     }
 
     private void selectedCard(final int index) {
-        Optional<? extends Character> turn = b.currentTurn();
-        if (turn.isPresent()) {
-            if (turn.get() instanceof Player) {
+        if (b.currentTurn() instanceof Player) {
+            if (b.isPlayable(p.getHand().get(index), p.getUnusedCombatMana())) {
                 System.out.println("Player!");
                 p.setUnusedCombatMana(p.getUnusedCombatMana() - p.getHand().get(index).getCost());
                 LBLEnemyDamage.setText("-" + String.valueOf(p.getHand().get(index).getDamage()));
@@ -97,23 +96,22 @@ public class BattleControllerImpl implements BattleController {
                 LBLEnemyDamage.setVisible(true);
                 LBLPlayerDamage.setVisible(false);
                 LBLAvailableMana.setText(String.valueOf(p.getUnusedCombatMana()));
-
             } else {
-                System.out.println("Enemy!");
-                LBLPlayerDamage.setText("-" + String.valueOf(e.getHand().get(index).getDamage()));
-                p.damagePlayer(e.getHand().get(index).getDamage());
-                e.addShield(e.getHand().get(index).getShield());
-                e.removeCard(index);
-                LBLPlayerHealth.setText(String.valueOf(p.getHealth()));
-                LBLPlayerShield.setText(String.valueOf(p.getShield()));
-                LBLEnemyShield.setText(String.valueOf(e.getShield()));
-                LBLEnemyDamage.setVisible(false);
-                LBLPlayerDamage.setVisible(true);
+                System.out.println("Not enough mana!");
             }
-            b.checkBattleEnd();
         } else {
-            System.out.println("Not enough mana!");
+            System.out.println("Enemy!");
+            LBLPlayerDamage.setText("-" + String.valueOf(e.getHand().get(index).getDamage()));
+            p.damagePlayer(e.getHand().get(index).getDamage());
+            e.addShield(e.getHand().get(index).getShield());
+            e.removeCard(index);
+            LBLPlayerHealth.setText(String.valueOf(p.getHealth()));
+            LBLPlayerShield.setText(String.valueOf(p.getShield()));
+            LBLEnemyShield.setText(String.valueOf(e.getShield()));
+            LBLEnemyDamage.setVisible(false);
+            LBLPlayerDamage.setVisible(true);
         }
+        b.checkBattleEnd();
     }
 
     private void updateHand(final int startingIndex) {
