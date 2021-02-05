@@ -24,11 +24,21 @@ public class BattleControllerImpl implements BattleController {
     @FXML
     private Label LBLPlayerHealth;
     @FXML
+    private Label LBLPlayerShield;
+    @FXML
+    private Label LBLPlayerDamage;
+    @FXML
+    private Label LBLEnemyHealth;
+    @FXML
+    private Label LBLEnemyShield;
+    @FXML
     private HBox HBPlayerHand;
     @FXML
     private Label LBLEnemyDamage;
     @FXML
     private Label LBLAvailableMana;
+    @FXML
+    private Label LBLMaxMana;
     @FXML
     private Button BTNEndTurn;
 
@@ -36,8 +46,8 @@ public class BattleControllerImpl implements BattleController {
     public void initialize() {
         p.addCard(new CardImpl("Carta prova", 2, 3, 0));
         p.addCard(new CardImpl("Carta prova 2", 1, 1, 0));
-        e.addCard(new CardImpl("Carta nemico", 1, 1, 0));
-        e.addCard(new CardImpl("Carta nemico 2", 2, 0, 2));
+        e.addCard(new CardImpl("Carta nemico", 0, 1, 0));
+        e.addCard(new CardImpl("Carta nemico 2", 0, 0, 2));
         LBLPlayerHealth.setText(String.valueOf(p.getHealth()));
         List<Card> hand = new ArrayList<>(p.getHand());
         for (int i = 0; i < hand.size(); i++) {
@@ -58,27 +68,49 @@ public class BattleControllerImpl implements BattleController {
             @Override
             public void handle(final ActionEvent event) {
                 b.endTurn();
-                /*Reset mana giocatore?*/
+                if (b.currentTurn().get() instanceof Enemy) {
+                    selectedCard(0);
+                    BTNEndTurn.fire();
+                } else {
+                    p.setMana(p.getMana() + 1);
+                    p.setUnusedCombatMana(p.getMana());
+                    LBLAvailableMana.setText(String.valueOf(p.getUnusedCombatMana()));
+                    LBLMaxMana.setText(String.valueOf(p.getMana()));
+                }
             }
         });
     }
 
     private void selectedCard(final int index) {
-        Optional<? extends Character> turn = b.playCard(p.getHand().get(index), p.getMana());
+        Optional<? extends Character> turn = b.currentTurn();
         if (turn.isPresent()) {
             if (turn.get() instanceof Player) {
                 System.out.println("Player!");
                 p.setUnusedCombatMana(p.getUnusedCombatMana() - p.getHand().get(index).getCost());
                 LBLEnemyDamage.setText("-" + String.valueOf(p.getHand().get(index).getDamage()));
+                e.damageEnemy(p.getHand().get(index).getDamage());
+                p.addShield(p.getHand().get(index).getShield());
+                LBLEnemyHealth.setText(String.valueOf(e.getHealth()));
                 p.removeCard(index);
                 HBPlayerHand.getChildren().remove(index);
                 updateHand(index);
                 LBLEnemyDamage.setVisible(true);
+                LBLPlayerDamage.setVisible(false);
                 LBLAvailableMana.setText(String.valueOf(p.getUnusedCombatMana()));
-                b.checkBattleEnd();
+
             } else {
                 System.out.println("Enemy!");
+                LBLPlayerDamage.setText("-" + String.valueOf(e.getHand().get(index).getDamage()));
+                p.damagePlayer(e.getHand().get(index).getDamage());
+                e.addShield(e.getHand().get(index).getShield());
+                e.removeCard(index);
+                LBLPlayerHealth.setText(String.valueOf(p.getHealth()));
+                LBLPlayerShield.setText(String.valueOf(p.getShield()));
+                LBLEnemyShield.setText(String.valueOf(e.getShield()));
+                LBLEnemyDamage.setVisible(false);
+                LBLPlayerDamage.setVisible(true);
             }
+            b.checkBattleEnd();
         } else {
             System.out.println("Not enough mana!");
         }
