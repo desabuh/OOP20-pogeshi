@@ -10,5 +10,5 @@ public interface Notifier<T> {
 
     void register(Listener<T> listener);
 
-    void notifyListener();
+    void notifyListener(T data);
 }
