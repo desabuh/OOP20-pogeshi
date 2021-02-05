@@ -6,7 +6,7 @@ import listener.Command;
 import listener.Listener;
 
 /**
- * implementation of {@link Notifier}
+ * implementation of {@link EventBus}
  * to notify his {@link Listener}s, adapter for Guava EventBus API.
  * 
  * @param <T> event type lo notify its listeners
@@ -14,7 +14,7 @@ import listener.Listener;
  * @see com.google.common.eventbus.EventBus
  * 
  */
-public final class GuavaEventBusAdapter<T> implements Notifier<T> {
+public final class GuavaEventBusAdapter<T> implements notifier.EventBus<T> {
 
     /**
      * {@link com.google.common.eventbus.EventBus} object.
