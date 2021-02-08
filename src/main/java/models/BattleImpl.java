@@ -1,7 +1,5 @@
 package models;
 
-import java.util.Optional;
-
 import controllers.Card;
 import controllers.EnemyImpl;
 import controllers.PlayerImpl;
@@ -9,7 +7,7 @@ import controllers.Character;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class BattleImpl implements Battle {
+public final class BattleImpl implements Battle {
 
     private Turn turn = Turn.PLAYER;
 
@@ -38,9 +36,9 @@ public class BattleImpl implements Battle {
     public Character currentTurn() {
         return turn == Turn.PLAYER ? new PlayerImpl(0) : new EnemyImpl(0);
     }
-    
+
     @Override
-    public boolean isPlayable(Card c, int mana) {
+    public boolean isPlayable(final Card c, final int mana) {
         return turn == Turn.ENEMY ? true : mana >= c.getCost();
     }
 
