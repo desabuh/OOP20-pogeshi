@@ -18,7 +18,7 @@ public interface Deck {
 
     void addCard(Card card);
 
-    boolean checkDeckFull();
+    boolean isDeckFull();
 
-    boolean checkCardInDeck(Card card);
+    boolean isCardInDeck(Card card);
 }

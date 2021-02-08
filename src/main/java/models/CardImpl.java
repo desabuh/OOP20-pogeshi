@@ -1,6 +1,6 @@
 package models;
 
-public final class CardImpl implements Card{
+public final class CardImpl implements Card, Comparable<Card> {
     private int cost;
     private int attack;
     private int defense;
@@ -77,5 +77,10 @@ public final class CardImpl implements Card{
             return false;
         }
         return true;
+    }
+
+    @Override
+    public int compareTo(final Card card) {
+        return this.name.compareTo(card.getName());
     }
 }

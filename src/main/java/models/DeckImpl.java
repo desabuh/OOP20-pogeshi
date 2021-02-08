@@ -37,7 +37,7 @@ public final class DeckImpl implements Deck {
 
     @Override
     public void removeCard(final Card card) {
-        if (!this.cards.isEmpty() && checkCardInDeck(card)) {
+        if (!this.cards.isEmpty() && isCardInDeck(card)) {
             this.cards.remove(card);
         }
     }
@@ -50,12 +50,12 @@ public final class DeckImpl implements Deck {
     }
 
     @Override
-    public boolean checkDeckFull() {
+    public boolean isDeckFull() {
         return this.cards.size() == 10;
     }
 
     @Override
-    public boolean checkCardInDeck(final Card card) {
+    public boolean isCardInDeck(final Card card) {
         return this.cards.contains(card);
     }
 }
