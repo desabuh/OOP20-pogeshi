@@ -5,9 +5,9 @@ import java.util.List;
 import controllers.Card;
 
 public interface Hand {
-    public List<Card> getCards();
-    
-    public void addCard(Card c);
-    
-    public void removeCard(int index);
+    List<Card> getCards();
+
+    void addCard(Card c);
+
+    void removeCard(int index);
 }
