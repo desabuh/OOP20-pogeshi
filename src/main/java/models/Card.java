@@ -15,4 +15,6 @@ public interface Card {
     String getName();
 
     String getResourcePath();
+
+    String getDescription();
 }

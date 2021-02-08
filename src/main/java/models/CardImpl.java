@@ -6,13 +6,15 @@ public final class CardImpl implements Card, Comparable<Card> {
     private int defense;
     private String name;
     private String resourcePath;
+    private String description;
 
-    public CardImpl(final int attack, final int defense, final int cost, final String name, final String resourcePath) {
+    public CardImpl(final int attack, final int defense, final int cost, final String name, final String resourcePath, final String description) {
         this.cost = cost;
         this.attack = attack;
         this.defense = defense;
         this.name = name;
         this.resourcePath = resourcePath;
+        this.description = description;
     }
 
     @Override
@@ -82,5 +84,10 @@ public final class CardImpl implements Card, Comparable<Card> {
     @Override
     public int compareTo(final Card card) {
         return this.name.compareTo(card.getName());
+    }
+
+    @Override
+    public String getDescription() {
+        return this.description;
     }
 }
