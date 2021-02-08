@@ -5,9 +5,9 @@ import java.util.List;
 
 import controllers.Card;
 
-public class HandImpl implements Hand {
+public final class HandImpl implements Hand {
 
-    List<Card> cards;
+    private final List<Card> cards;
 
     public HandImpl() {
         cards = new ArrayList<>();
@@ -25,7 +25,6 @@ public class HandImpl implements Hand {
     @Override
     public void addCard(final Card c) {
         cards.add(c);
-
     }
 
     @Override
