@@ -1,14 +1,21 @@
 package application;
 
 import com.google.inject.Guice;
+
+
+
 import com.google.inject.Injector;
 
+import controllers.BattleController;
+import controllers.BattleControllerImpl;
+import controllers.Controller;
+import guicemodule.BattleModule;
 import guicemodule.ControllerModule;
-import guicemodules.FXMLLoaderModule;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import views.JavafxView;
+import views.View;
 import views.scene.SceneManager;
 import views.scene.layout.LAYOUT;
 
@@ -17,22 +24,24 @@ import views.scene.layout.LAYOUT;
  */
 public final class Main extends Application {
 
-    private static final int SCENE_WIDTH = 500;
-    private static final int SCENE_HEIGHT = 300;
+    /**
+     * starting layout to be loaded.
+     */
+    public static final LAYOUT INITIAL_LAYOUT = LAYOUT.BATTLE;
 
     @Override
     public void start(final Stage stage) throws Exception {
+        Injector injector = Guice.createInjector(new BattleModule());
+        SceneManager.provideControllerFactory(injector::getInstance);
 
-        Injector injector = Guice.createInjector(new ControllerModule());
+        BattleController b = injector.getInstance(BattleControllerImpl.class);
+        BattleController b1 = injector.getInstance(BattleControllerImpl.class);
+        System.out.println(b.equals(b1));
+        System.exit(1);
+        //b.setTest();
 
-        SceneManager.provideControllerFactory(Injector::getInstance);
-
-        Scene mainScene = SceneManager.of(LAYOUT.ACCOUNT).getScene();
-
-        // Stage configuration
-        stage.setTitle("Pogeshi");
-        stage.setScene(mainScene);
-        stage.show();
+        View view = new JavafxView(stage);
+        view.loadScene(INITIAL_LAYOUT);
     }
 
     /**
