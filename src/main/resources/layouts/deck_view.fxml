@@ -35,12 +35,12 @@
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                            <children>
-                              <Button fx:id="btn_save" layoutX="74.0" layoutY="7.0" mnemonicParsing="false" text="Salva" />
+                              <Button fx:id="btn_save" layoutX="74.0" layoutY="7.0" mnemonicParsing="false" onMouseClicked="#SaveDeck" text="Salva" />
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                            <children>
-                              <Button fx:id="btn_exit" layoutX="35.0" layoutY="7.0" mnemonicParsing="false" text="Esci senza salvare" />
+                              <Button fx:id="btn_exit" layoutX="35.0" layoutY="7.0" mnemonicParsing="false" onMouseClicked="#exitWhitoutSaving" text="Esci senza salvare" />
                            </children>
                         </AnchorPane>
                     </items>
