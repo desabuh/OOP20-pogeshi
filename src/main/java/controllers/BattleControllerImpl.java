@@ -13,9 +13,10 @@ import javafx.scene.layout.HBox;
 import models.Battle;
 import models.BattleImpl;
 
-public class BattleControllerImpl implements BattleController {
+public final class BattleControllerImpl implements BattleController {
     public static final int MAX_PLAYER_HEALTH = 30;
     public static final int MAX_ENEMY_HEALTH = 10;
+    public static final int TIME_BEFORE_HIDING_MESSAGE = 3000;
 
     private Player p = new PlayerImpl(MAX_PLAYER_HEALTH);
     private Enemy e = new EnemyImpl(MAX_ENEMY_HEALTH);
@@ -41,6 +42,8 @@ public class BattleControllerImpl implements BattleController {
     private Label LBLMaxMana;
     @FXML
     private Button BTNEndTurn;
+    @FXML
+    private Label LBLNoMana;
 
     @FXML
     public void initialize() {
@@ -82,38 +85,58 @@ public class BattleControllerImpl implements BattleController {
     }
 
     private void selectedCard(final int index) {
+        Card selected;
         if (b.currentTurn() instanceof Player) {
-            if (b.isPlayable(p.getHand().get(index), p.getUnusedCombatMana())) {
+            selected = p.getHand().get(index);
+            /**
+             * If the player has enough mana, the required mana for playing the card is spent, the various effects of the card
+             * are applied (damage/add shield) and the card is removed
+             * */
+            if (b.isPlayable(selected, p.getUnusedCombatMana())) {
                 System.out.println("Player!");
-                p.setUnusedCombatMana(p.getUnusedCombatMana() - p.getHand().get(index).getCost());
-                LBLEnemyDamage.setText("-" + String.valueOf(p.getHand().get(index).getDamage()));
-                e.damageEnemy(p.getHand().get(index).getDamage());
-                p.addShield(p.getHand().get(index).getShield());
-                LBLEnemyHealth.setText(String.valueOf(e.getHealth()));
+                p.setUnusedCombatMana(p.getUnusedCombatMana() - selected.getCost());
+                e.damageEnemy(selected.getDamage());
+                p.addShield(selected.getShield());
                 p.removeCard(index);
                 HBPlayerHand.getChildren().remove(index);
                 updateHand(index);
-                LBLEnemyDamage.setVisible(true);
-                LBLPlayerDamage.setVisible(false);
-                LBLAvailableMana.setText(String.valueOf(p.getUnusedCombatMana()));
+                updateLabels(selected);
             } else {
-                System.out.println("Not enough mana!");
+                /**
+                 * This is used to display the "Not enough mana!" message on the GUI for 3 seconds before automatically hiding it
+                 * */
+                new Thread() {
+                    public void run() {
+                        try {
+                            LBLNoMana.setVisible(true);
+                            Thread.sleep(TIME_BEFORE_HIDING_MESSAGE);
+                            LBLNoMana.setVisible(false);
+                        } catch (InterruptedException e) {
+                            System.out.println("The thread died while sleeping");
+                        } finally {
+                            this.interrupt();
+                        }
+                    }
+                }.start();
             }
         } else {
+            /**
+             * The enemy has no mana and a card can always be played
+             * */
+            selected = e.getHand().get(index);
             System.out.println("Enemy!");
-            LBLPlayerDamage.setText("-" + String.valueOf(e.getHand().get(index).getDamage()));
-            p.damagePlayer(e.getHand().get(index).getDamage());
-            e.addShield(e.getHand().get(index).getShield());
+            p.damagePlayer(selected.getDamage());
+            e.addShield(selected.getShield());
             e.removeCard(index);
-            LBLPlayerHealth.setText(String.valueOf(p.getHealth()));
-            LBLPlayerShield.setText(String.valueOf(p.getShield()));
-            LBLEnemyShield.setText(String.valueOf(e.getShield()));
-            LBLEnemyDamage.setVisible(false);
-            LBLPlayerDamage.setVisible(true);
+            updateLabels(selected);
         }
         b.checkBattleEnd();
     }
 
+    /**
+     * This is used instead of removing all the buttons and regenerating them.
+     * Only their index is updated
+     * */
     private void updateHand(final int startingIndex) {
         List<Card> hand = new ArrayList<>(p.getHand());
         for (int i = startingIndex; i < hand.size(); i++) {
@@ -128,6 +151,23 @@ public class BattleControllerImpl implements BattleController {
                 }
 
             });
+        }
+    }
+
+    private void updateLabels(final Card c) {
+        if (b.currentTurn() instanceof Player) {
+            LBLEnemyDamage.setText("-" + String.valueOf(c.getDamage()));
+            LBLEnemyHealth.setText(String.valueOf(e.getHealth()));
+            LBLAvailableMana.setText(String.valueOf(p.getUnusedCombatMana()));
+            LBLEnemyDamage.setVisible(true);
+            LBLPlayerDamage.setVisible(false);
+        } else {
+            LBLPlayerDamage.setText("-" + String.valueOf(c.getDamage()));
+            LBLPlayerHealth.setText(String.valueOf(p.getHealth()));
+            LBLPlayerShield.setText(String.valueOf(p.getShield()));
+            LBLEnemyShield.setText(String.valueOf(e.getShield()));
+            LBLEnemyDamage.setVisible(false);
+            LBLPlayerDamage.setVisible(true);
         }
     }
 
