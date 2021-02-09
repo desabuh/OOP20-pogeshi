@@ -1,9 +1,5 @@
 package models;
 
-import controllers.Card;
-import controllers.EnemyImpl;
-import controllers.PlayerImpl;
-import controllers.Character;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -34,7 +30,7 @@ public final class BattleImpl implements Battle {
 
     @Override
     public Character currentTurn() {
-        return turn == Turn.PLAYER ? new PlayerImpl(0) : new EnemyImpl(0);
+        return turn == Turn.PLAYER ? new PlayerImp(new DeckImpl()) : new EnemyImp(new DeckImpl());
     }
 
     @Override
