@@ -4,8 +4,6 @@ import java.io.File;
 import java.lang.*;
 import java.net.URL;
 
-import controllers.Player;
-import controllers.PlayerImpl;
 import javafx.application.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
