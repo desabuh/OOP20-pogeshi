@@ -31,7 +31,7 @@ public final class WorldMapRenderFactory implements RenderFactory {
     public Render render(final Player player) {
         return new RenderBuilder()
                 .setHeigth(PLAYER_RENDER_SIZE)
-                .setWeigth(PLAYER_RENDER_SIZE)
+                .setWidth(PLAYER_RENDER_SIZE)
                 .setLayer(ENTITY_LAYER)
                 .build();
     }
@@ -40,7 +40,7 @@ public final class WorldMapRenderFactory implements RenderFactory {
     public Render render(final Enemy enemy) {
         return new RenderBuilder()
                 .setHeigth(ENEMY_RENDER_SIZE)
-                .setWeigth(ENEMY_RENDER_SIZE)
+                .setWidth(ENEMY_RENDER_SIZE)
                 .setLayer(ENTITY_LAYER)
                 .build();
     }
@@ -49,7 +49,7 @@ public final class WorldMapRenderFactory implements RenderFactory {
     public Render renderBackGround() {
         return new RenderBuilder()
                 .setHeigth(ENEMY_RENDER_SIZE)
-                .setWeigth(ENEMY_RENDER_SIZE)
+                .setWidth(ENEMY_RENDER_SIZE)
                 .setLayer(ENTITY_LAYER)
                 .build();
     }
