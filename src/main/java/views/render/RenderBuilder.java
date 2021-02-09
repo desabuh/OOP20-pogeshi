@@ -6,20 +6,9 @@ package views.render;
  *
  */
 public final class RenderBuilder {
-    private Sprite sprite;
     private int weigth;
     private int height;
     private int layer;
-
-    /**
-     * 
-     * @param sprite to be displayed
-     * @return a RenderBuilder
-     */
-    public RenderBuilder setSprite(final Sprite sprite) {
-        this.sprite = sprite;
-        return this;
-    }
 
     /**
      * 
@@ -56,7 +45,7 @@ public final class RenderBuilder {
      * @return a new Render object
      */
     public Render build() {
-        return new Render(sprite, weigth, height, layer);
+        return new Render(weigth, height, layer);
     }
 
 

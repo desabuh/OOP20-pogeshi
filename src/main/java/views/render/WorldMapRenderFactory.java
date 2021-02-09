@@ -32,7 +32,6 @@ public final class WorldMapRenderFactory implements RenderFactory {
         return new RenderBuilder()
                 .setHeigth(PLAYER_RENDER_SIZE)
                 .setWeigth(PLAYER_RENDER_SIZE)
-                .setSprite(null)
                 .setLayer(ENTITY_LAYER)
                 .build();
     }
@@ -42,7 +41,6 @@ public final class WorldMapRenderFactory implements RenderFactory {
         return new RenderBuilder()
                 .setHeigth(ENEMY_RENDER_SIZE)
                 .setWeigth(ENEMY_RENDER_SIZE)
-                .setSprite(null)
                 .setLayer(ENTITY_LAYER)
                 .build();
     }
@@ -52,7 +50,6 @@ public final class WorldMapRenderFactory implements RenderFactory {
         return new RenderBuilder()
                 .setHeigth(ENEMY_RENDER_SIZE)
                 .setWeigth(ENEMY_RENDER_SIZE)
-                .setSprite(null)
                 .setLayer(ENTITY_LAYER)
                 .build();
     }
