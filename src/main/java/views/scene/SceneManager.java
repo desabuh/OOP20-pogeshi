@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
+import controllers.Controller;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -29,7 +30,7 @@ public final class SceneManager {
     /**
      * static factory rule to provide a controller for the current Loader.
      */
-    public static Callback<Class<? extends Controller>, Controller> FACTORY;
+    public static Callback<Class<?>, Object> FACTORY;
 
     /**
      * actual Scene instance.
@@ -57,7 +58,13 @@ public final class SceneManager {
     private SceneManager(final LAYOUT layout) {
         this.loader = new FXMLLoader();
         this.loader.setControllerFactory(FACTORY);
-        Parent parent = this.loader.load(ClassLoader.getSystemResourceAsStream(layout.getPathString()));
+        Parent parent = null;
+        try {
+            parent = this.loader.load(ClassLoader.getSystemResourceAsStream(layout.getPathString()));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         this.providedScene =  new Scene(parent);
     }
 
@@ -81,7 +88,7 @@ public final class SceneManager {
      * static method used to provide an alternative factory to the standard one for providing controllers.
      * @param controllerFactory alternative controller factory to provide controllers
      */
-    public static void provideControllerFactory(final Callback<Class<? extends Controller>, Controller> controllerFactory) {
+    public static void provideControllerFactory(final Callback<Class<?>, Object> controllerFactory) {
         FACTORY = controllerFactory;
     }
 
@@ -90,11 +97,10 @@ public final class SceneManager {
      * method used to switch to another scene(*working*).
      * @throws IOException if an error occured when loading the layout
      * @param layout layout enum provided
-     * @return scene to be loaded
      */
-    public Scene loadScene(final LAYOUT layout) throws IOException {
-        final Parent sceneRoot = FXMLLoader.load(layout);
-        return new Scene(sceneRoot, 100, 100);
+    public void loadScene(final LAYOUT layout) throws IOException {
+        //final Parent sceneRoot = FXMLLoader.load(layout);
+        //return new Scene(sceneRoot, 100, 100);
     }
 
 

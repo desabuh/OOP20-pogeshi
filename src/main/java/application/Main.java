@@ -34,12 +34,6 @@ public final class Main extends Application {
         Injector injector = Guice.createInjector(new BattleModule());
         SceneManager.provideControllerFactory(injector::getInstance);
 
-        BattleController b = injector.getInstance(BattleControllerImpl.class);
-        BattleController b1 = injector.getInstance(BattleControllerImpl.class);
-        System.out.println(b.equals(b1));
-        System.exit(1);
-        //b.setTest();
-
         View view = new JavafxView(stage);
         view.loadScene(INITIAL_LAYOUT);
     }

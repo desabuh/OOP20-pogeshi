@@ -3,6 +3,6 @@
  */
 package controllers;
 
-public interface BattleController {
-    
+public interface BattleController extends Controller {
+
 }

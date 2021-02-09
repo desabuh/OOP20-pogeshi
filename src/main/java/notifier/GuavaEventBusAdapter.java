@@ -8,8 +8,9 @@ import listener.Listener;
 /**
  * implementation of {@link EventBus}
  * to notify his {@link Listener}s, adapter for Guava EventBus API.
+ * (this adapter is used as a wrapper to allow {@link EventBus} subtypes and Guava Eventbus to work together) 
  * 
- * @param <T> event type lo notify its listeners
+ * @param <T> event type to notify its listeners
  * 
  * @see com.google.common.eventbus.EventBus
  * 
