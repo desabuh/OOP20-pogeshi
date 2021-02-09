@@ -1,5 +1,6 @@
 package views;
 
+import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
 import views.drawer.CanvasDrawer;
@@ -16,8 +17,8 @@ public final class WorldMapView extends JavafxView {
         this.drawer = new CanvasDrawer((Canvas) this.getScene().lookup("#canvasMap"));
     }
 
-     void updateEntity(final Render render) {
-        this.drawer.draw(render);
+    void updateEntity(final Render render) {
+       Platform.runLater(() -> this.drawer.draw(render));
     }
 
 
