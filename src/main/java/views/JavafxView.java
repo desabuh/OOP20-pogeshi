@@ -10,7 +10,7 @@ import views.scene.layout.LAYOUT;
  * View implementation for JavaFX.
  *
  */
-public final class JavafxView implements View {
+public class JavafxView implements View {
     /**
      * width of the view.
      */
@@ -30,11 +30,16 @@ public final class JavafxView implements View {
 
     public JavafxView(final Stage stage) {
         this.stage = stage;
+        this.actualScene = stage.getScene();
+    }
+
+    public final Scene getScene() {
+        return this.actualScene;
     }
 
 
     @Override
-    public void loadScene(final LAYOUT layout) {
+    public final void loadScene(final LAYOUT layout) {
         this.actualScene = SceneManager.of(layout).getScene();
         this.stage.setTitle(TITLE);
         stage.setScene(this.actualScene);
