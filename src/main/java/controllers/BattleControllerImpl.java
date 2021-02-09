@@ -2,7 +2,6 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,8 +20,9 @@ import models.Player;
 import models.PlayerImp;
 
 public final class BattleControllerImpl implements BattleController {
-    public static final int MAX_PLAYER_HEALTH = 30;
-    public static final int MAX_ENEMY_HEALTH = 10;
+    /**
+     * Time before hiding the "Not enough mana" label after displaying it.
+     * */
     public static final int TIME_BEFORE_HIDING_MESSAGE = 3000;
 
     /*private Player p = new PlayerImpl(MAX_PLAYER_HEALTH);
@@ -57,12 +57,6 @@ public final class BattleControllerImpl implements BattleController {
 
     @FXML
     public void initialize() {
-       /* p.addCard(new CardImpl("Carta prova", 7, 3, 0));
-        p.addCard(new CardImpl("Carta prova 2", 1, 1, 0));
-        e.addCard(new CardImpl("Carta nemico", 0, 1, 0));
-        e.addCard(new CardImpl("Carta nemico 2", 0, 0, 2));*/
-        /*p.getDeck().addCard(new CardImpl(3, 0, 1, "Carta prova", "ciao"));
-        p.getDeck().addCard(new CardImpl(3, 0, 10, "Carta prova costosa", "ciao"));*/
         p.getHand().addCard(new CardImpl(3, 0, 1, "Carta prova", "ciao"));
         p.getHand().addCard(new CardImpl(3, 0, 10, "Carta prova costosa", "ciao"));
         LBLPlayerHealth.setText(String.valueOf(p.getHealt()));
@@ -92,7 +86,6 @@ public final class BattleControllerImpl implements BattleController {
                     BTNEndTurn.fire();
                 } else {
                     p.setMana(p.getMana() + 1);
-                    System.out.println(p.getMana());
                     playerUnusedCombatMana = p.getMana();
                     LBLAvailableMana.setText(String.valueOf(playerUnusedCombatMana));
                     LBLMaxMana.setText(String.valueOf(p.getMana()));
@@ -110,9 +103,7 @@ public final class BattleControllerImpl implements BattleController {
              * are applied (damage/add shield) and the card is removed
              * */
             if (b.isPlayable(selected, playerUnusedCombatMana)) {
-                System.out.println("Player!");
                 playerUnusedCombatMana -= selected.getCost();
-                //e.set
                 //e.damageEnemy(selected.getDamage());
                 p.setShield(p.getShield() + selected.getDefense());
                 p.getHand().getCards().remove(index);
