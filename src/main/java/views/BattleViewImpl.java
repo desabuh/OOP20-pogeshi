@@ -1,8 +1,6 @@
 package views;
 
 import java.io.File;
-import java.lang.*;
-import java.net.URL;
 
 import javafx.application.*;
 import javafx.fxml.FXML;
