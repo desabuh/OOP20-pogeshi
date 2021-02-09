@@ -19,6 +19,7 @@ public final class CanvasDrawer implements Drawer<Canvas> {
     public void draw(final Render render) {
         GraphicsContext gc = this.canvas.getGraphicsContext2D();
         gc.setFill(Color.GREEN);
+        gc.fillRect(100, 100, render.getWidth(), render.getHeigth());
     }
 
 }
