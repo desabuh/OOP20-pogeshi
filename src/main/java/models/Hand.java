@@ -2,8 +2,6 @@ package models;
 
 import java.util.List;
 
-import controllers.Card;
-
 public interface Hand {
     List<Card> getCards();
 
