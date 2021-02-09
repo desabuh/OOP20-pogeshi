@@ -3,9 +3,6 @@
  */
 package models;
 
-import controllers.Card;
-import controllers.Character;
-
 public interface Battle {
     /**
      * Switches the turn from player to enemy or viceversa.
@@ -20,15 +17,15 @@ public interface Battle {
 
     //Optional<? extends Character> playCard(Card c, int mana);
     /**
-     * Since the controller doesn't know the current turn.
-     * @return the instance of the character whose turn is
+     * @return the instance of the character whose turn is.
+     * @implNote Useful since the Battle controller does not know which turn currently is, but has only the instances of the characters that play the battle
      * */
     Character currentTurn();
 
     /**
      * Checks if the card is playable with a certain amount of mana.
-     * @param c: the card that needs to the played
-     * @param mana: the mana of the character that needs to play the card
+     * @param c The card that needs to be played
+     * @param mana The amount of mana available
      * @return TRUE if the card can be played, FALSE otherwise
      * */
     boolean isPlayable(Card c, int mana);
