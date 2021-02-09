@@ -11,7 +11,6 @@ public final class RenderBuilder {
     private int height;
     private int layer;
 
-
     /**
      * 
      * @param sprite to be displayed
