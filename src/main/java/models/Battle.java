@@ -13,7 +13,7 @@ public interface Battle {
      * Checks if the battle needs to end.
      * @return TRUE if it needs to end, FALSE otherwise
      * */
-    boolean checkBattleEnd();
+    boolean checkBattleEnd(int healthPlayer, int healthOpponent);
 
     //Optional<? extends Character> playCard(Card c, int mana);
     /**
