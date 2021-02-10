@@ -10,7 +10,7 @@ public interface Card {
 
     int getAttack();
 
-    int getDefense();
+    int getShield();
 
     String getName();
 

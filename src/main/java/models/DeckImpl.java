@@ -1,12 +1,35 @@
 package models;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
+
 public final class DeckImpl implements Deck {
     private LinkedList<Card> cards = new LinkedList<>();
+
+    public DeckImpl() {
+        Gson gson = new Gson();
+        try {
+            Type t = new TypeToken<LinkedList<CardImpl>>() { }.getType();
+            this.cards = gson.fromJson(new FileReader("res/jsons/ListOfCards.json"), t);
+        } catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        for (int i = (this.cards.size() - 1); i > 9 ; i--) {
+            this.cards.remove(i);
+        }
+    }
 
     @Override
     public Optional<Card> popCard() {

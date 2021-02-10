@@ -1,0 +1,122 @@
+[
+  {
+    "cost": "1",
+    "attack": "1",
+    "shield": "1",
+    "name": "Card1",
+    "description": "DESC",
+    "resourcePath": "res/images/card1.png"
+  },
+  {
+    "cost": "3",
+    "attack": "5",
+    "shield": "2",
+    "name": "Card2",
+    "description": "DESC",
+    "resourcePath": "res/images/card2.png"
+  },
+  {
+    "cost": "2",
+    "attack": "1",
+    "shield": "2",
+    "name": "Card3",
+    "description": "DESC",
+    "resourcePath": "res/images/card3.png"
+  },
+  {
+    "cost": "4",
+    "attack": "3",
+    "shield": "3",
+    "name": "Card4",
+    "description": "DESC",
+    "resourcePath": "res/images/card4.png"
+  },
+  {
+    "cost": "5",
+    "attack": "6",
+    "shield": "1",
+    "name": "Card5",
+    "description": "DESC",
+    "resourcePath": "res/images/card5.png"
+  },
+  {
+    "cost": "3",
+    "attack": "1",
+    "shield": "4",
+    "name": "Card6",
+    "description": "DESC",
+    "resourcePath": "res/images/card6.png"
+  },
+  {
+    "cost": "8",
+    "attack": "10",
+    "shield": "10",
+    "name": "Card7",
+    "description": "DESC",
+    "resourcePath": "res/images/card7.png"
+  },
+  {
+    "cost": "6",
+    "attack": "1",
+    "shield": "10",
+    "name": "Card8",
+    "description": "DESC",
+    "resourcePath": "res/images/card8.png"
+  },
+  {
+    "cost": "1",
+    "attack": "0",
+    "shield": "2",
+    "name": "Card9",
+    "description": "DESC",
+    "resourcePath": "res/images/card9.png"
+  },
+  {
+    "cost": "7",
+    "attack": "5",
+    "shield": "5",
+    "name": "Card10",
+    "description": "DESC",
+    "resourcePath": "res/images/card10.png"
+  },
+  {
+    "cost": "1",
+    "attack": "3",
+    "shield": "1",
+    "name": "Card11",
+    "description": "DESC",
+    "resourcePath": "res/images/card11.png"
+  },
+  {
+    "cost": "3",
+    "attack": "4",
+    "shield": "3",
+    "name": "Card12",
+    "description": "DESC",
+    "resourcePath": "res/images/card12.png"
+  },
+  {
+    "cost": "0",
+    "attack": "0",
+    "shield": "1",
+    "name": "Card13",
+    "description": "DESC",
+    "resourcePath": "res/images/card13.png"
+  },
+  {
+    "cost": "5",
+    "attack": "7",
+    "shield": "7",
+    "name": "Card14",
+    "description": "DESC",
+    "resourcePath": "res/images/card14.png"
+  },
+  {
+    "cost": "10",
+    "attack": "20",
+    "shield": "20",
+    "name": "Card15",
+    "description": "DESC",
+    "resourcePath": "res/images/card15.png"
+  }
+]
