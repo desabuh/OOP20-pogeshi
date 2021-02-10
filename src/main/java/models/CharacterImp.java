@@ -8,7 +8,7 @@ public abstract class CharacterImp implements Character {
     protected int shield;
 
     @Override
-    public final int getHealt() {
+    public final int getHealth() {
         return this.health;
     }
 

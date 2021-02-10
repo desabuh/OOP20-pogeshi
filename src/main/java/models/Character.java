@@ -7,7 +7,7 @@ package models;
  */
 public interface Character {
 
-    int getHealt();
+    int getHealth();
 
     void setHealth(int value);
 
