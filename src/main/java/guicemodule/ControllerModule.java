@@ -6,6 +6,11 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 
+import guicemodule.annotation.AccountController;
+import guicemodule.annotation.BattleController;
+import guicemodule.annotation.MainController;
+import guicemodule.annotation.WorldMapController;
+
 /**
  * Provides {@link Controller} and derived bindings.
  *

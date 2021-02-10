@@ -1,27 +1,41 @@
 package application;
 
+import com.google.inject.Guice;
+
+
+
+import com.google.inject.Injector;
+
+import controllers.BattleController;
+import controllers.BattleControllerImpl;
+import controllers.Controller;
+import guicemodule.BattleModule;
+import guicemodule.ControllerModule;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import views.JavafxView;
+import views.View;
+import views.scene.SceneManager;
+import views.scene.layout.LAYOUT;
 
 /**
  * This class represent the Main class of the JavaFX-based application.
  */
 public final class Main extends Application {
 
-    private static final int SCENE_WIDTH = 500;
-    private static final int SCENE_HEIGHT = 300;
+    /**
+     * starting layout to be loaded.
+     */
+    public static final LAYOUT INITIAL_LAYOUT = LAYOUT.BATTLE;
 
     @Override
     public void start(final Stage stage) throws Exception {
-        final Parent root = FXMLLoader.load(ClassLoader.getSystemResource("layouts/main.fxml"));
-        final Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
-        // Stage configuration
-        stage.setTitle("JavaFX - Complete Example");
-        stage.setScene(scene);
-        stage.show();
+        Injector injector = Guice.createInjector(new BattleModule());
+        SceneManager.provideControllerFactory(injector::getInstance);
+
+        View view = new JavafxView(stage);
+        view.loadScene(INITIAL_LAYOUT);
     }
 
     /**
