@@ -9,10 +9,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
 
 public final class DeckImpl implements Deck {
     private LinkedList<Card> cards = new LinkedList<>();
@@ -30,6 +30,10 @@ public final class DeckImpl implements Deck {
         for (int i = (this.cards.size() - 1); i > 9 ; i--) {
             this.cards.remove(i);
         }
+    }
+
+    public DeckImpl(final List<Card> cards) {
+        this.cards = (LinkedList<Card>) cards;
     }
 
     @Override
