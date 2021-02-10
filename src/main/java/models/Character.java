@@ -17,7 +17,7 @@ public interface Character {
 
     int getShield();
 
-    void setShield(int value); //TODO: discuss with others, not in the project?
+    void setShield(int value);
 
 }
 
