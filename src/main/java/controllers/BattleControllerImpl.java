@@ -1,13 +1,19 @@
 package controllers;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import models.Battle;
 import models.BattleImpl;
@@ -24,6 +30,10 @@ public final class BattleControllerImpl implements BattleController {
      * Time before hiding the "Not enough mana" label after displaying it.
      * */
     public static final int TIME_BEFORE_HIDING_MESSAGE = 3000;
+    /**
+     * The number of cards the player starts a new battle with.
+     * */
+    public static final int BASE_STARTING_CARDS = 3;
 
     /*private Player p = new PlayerImpl(MAX_PLAYER_HEALTH);
     private Enemy e = new EnemyImpl(MAX_ENEMY_HEALTH);*/
@@ -47,21 +57,30 @@ public final class BattleControllerImpl implements BattleController {
     @FXML
     private Label LBLEnemyDamage;
     @FXML
-    private Label LBLAvailableMana;
-    @FXML
-    private Label LBLMaxMana;
-    @FXML
     private Button BTNEndTurn;
     @FXML
     private Label LBLNoMana;
+    @FXML
+    private Label LBLMana;
+    @FXML
+    private ImageView IMGPlayer;
+    @FXML
+    private ImageView IMGEnemy;
 
     @FXML
     public void initialize() {
-        p.getHand().addCard(new CardImpl(3, 0, 1, "Carta prova", "ciao"));
-        p.getHand().addCard(new CardImpl(3, 0, 10, "Carta prova costosa", "ciao"));
+        p.getDeck().addCard(new CardImpl(3, 0, 1, "Carta prova", "ciao"));
+        p.getDeck().addCard(new CardImpl(3, 0, 10, "Carta prova costosa", "ciao"));
+        IMGPlayer.setImage(new Image(new File("res" + File.separator + "images" + File.separator + "PlayerImage.png").toURI().toString()));
+        IMGEnemy.setImage(new Image(new File("res" + File.separator + "images" + File.separator + "EnemyImage.png").toURI().toString()));
+        for (int i = 0; i < BASE_STARTING_CARDS; i++) {
+            Optional<Card> next = p.getDeck().popCard();
+            if (next.isPresent()) {
+                p.getHand().addCard(next.get());
+            }
+        }
         LBLPlayerHealth.setText(String.valueOf(p.getHealt()));
-        LBLAvailableMana.setText(String.valueOf(playerUnusedCombatMana));
-        LBLMaxMana.setText(String.valueOf(p.getMana()));
+        updateManaLabel(playerUnusedCombatMana, p.getMana());
         List<Card> hand = new ArrayList<>(p.getHand().getCards());
         for (int i = 0; i < hand.size(); i++) {
             final int inHand = i;
@@ -87,8 +106,7 @@ public final class BattleControllerImpl implements BattleController {
                 } else {
                     p.setMana(p.getMana() + 1);
                     playerUnusedCombatMana = p.getMana();
-                    LBLAvailableMana.setText(String.valueOf(playerUnusedCombatMana));
-                    LBLMaxMana.setText(String.valueOf(p.getMana()));
+                    updateManaLabel(playerUnusedCombatMana, p.getMana());
                 }
             }
         });
@@ -139,7 +157,18 @@ public final class BattleControllerImpl implements BattleController {
             e.removeCard(index);
             updateLabels(selected);*/
         }
-        b.checkBattleEnd();
+        if (b.checkBattleEnd(p.getHealt(), 3)) {
+            Alert battleFinish = new Alert(AlertType.INFORMATION);
+            if (b.currentTurn() instanceof Player) {
+                battleFinish.setTitle("Victory!");
+                battleFinish.setContentText("You won the fight!");
+            } else {
+                battleFinish.setTitle("Defeat!");
+                battleFinish.setContentText("You died!");
+            }
+            battleFinish.showAndWait();
+            System.exit(0);
+        }
     }
 
     /**
@@ -167,7 +196,7 @@ public final class BattleControllerImpl implements BattleController {
         if (b.currentTurn() instanceof Player) {
             LBLEnemyDamage.setText("-" + String.valueOf(c.getAttack()));
             //LBLEnemyHealth.setText(String.valueOf(e.getHealth()));
-            LBLAvailableMana.setText(String.valueOf(playerUnusedCombatMana));
+            updateManaLabel(playerUnusedCombatMana, p.getMana());
             LBLEnemyDamage.setVisible(true);
             LBLPlayerDamage.setVisible(false);
         } else {
@@ -178,6 +207,10 @@ public final class BattleControllerImpl implements BattleController {
             LBLEnemyDamage.setVisible(false);
             LBLPlayerDamage.setVisible(true);
         }
+    }
+
+    private void updateManaLabel(final int unspent, final int max) {
+        LBLMana.setText("Mana: " + String.valueOf(unspent) + " / " + String.valueOf(max));
     }
 
 }
