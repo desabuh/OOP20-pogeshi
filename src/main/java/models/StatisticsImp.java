@@ -7,7 +7,15 @@ public final class StatisticsImp implements Statistics {
     private int differentCardsUnlocked;
 
     public StatisticsImp() {
-        //TODO: IF (file exist); THEN {load Statistics}; ELSE {create new file and generate default Statistics};
+        this.wins = 0;
+        this.loses = 0;
+        this.differentCardsUnlocked = 10;
+    }
+
+    public StatisticsImp(final int wins, final int loses, final int differentCardsUnlocked) {
+        this.wins = wins;
+        this.loses = loses;
+        this.differentCardsUnlocked = differentCardsUnlocked;
     }
 
     @Override
