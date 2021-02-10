@@ -17,19 +17,21 @@ public final class AccountImp implements Account {
     private Deck deck;
     private List<Card> remainingCards;
     private Statistics statistics;
-    private static final String SAVES_PATH = "..\\..\\..\\res\\saves\\";
+    private static final String SAVES_PATH = "res\\saves\\";
+    private final Gson gson;
 
     //TODO: Do separated files for Deck, RemainingCards, Statistics, AllCards because it's easier to add new things to it.
     public AccountImp() throws IOException {
+        gson = new GsonBuilder().setPrettyPrinting().create();
         File deckFile = new File(SAVES_PATH + "Deck.json");
         if (deckFile.exists()) {
             loadDeckSaves();
         } else {
             deckFile.createNewFile();
-            //this.deck = new Deck(); 
+            this.deck = new DeckImpl();
             //TODO: Set deck to default values
             saveDeck();
-        }
+        }/*
         File remainingCardsFile = new File(SAVES_PATH + "RemainingCards.json");
         if (remainingCardsFile.exists()) {
             loadRemainingCardsSaves();
@@ -45,7 +47,7 @@ public final class AccountImp implements Account {
             statisticsFile.createNewFile();
             this.statistics = new StatisticsImp(); 
             saveStatistics();
-        }
+        }*/
     }
 
     @Override
@@ -113,7 +115,6 @@ public final class AccountImp implements Account {
     }
 
     private void saveDeck() {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
             Writer writer = new FileWriter(SAVES_PATH + "");
             //String json = gson.toJson(this.deck);

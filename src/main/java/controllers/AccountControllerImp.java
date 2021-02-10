@@ -8,8 +8,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import models.Account;
+import models.AccountImp;
 
 public final class AccountControllerImp implements AccountController {
+
+    private Account account;
 
     private void changeStage(final MouseEvent  e, final String fxmlFileName) {
         try {
@@ -73,7 +77,13 @@ public final class AccountControllerImp implements AccountController {
     @Override
     public void giocaClick() {
         // TODO: Temp function
-
+        //test function
+        try {
+            account = new AccountImp();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     @Override
