@@ -43,22 +43,7 @@
       <ImageView fx:id="IMGEnemy" fitHeight="293.0" fitWidth="313.0" layoutX="1395.0" layoutY="243.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="BTNEndTurn" layoutX="1680.0" layoutY="700.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="107.0" text="Passa turno" />
       <HBox fx:id="HBPlayerHand" layoutX="21.0" layoutY="767.0" prefHeight="284.0" prefWidth="1870.0" />
-      <Label fx:id="LBLPlayerShield1" alignment="CENTER" layoutX="716.0" layoutY="700.0" prefHeight="45.0" prefWidth="125.0" text="Mana:" textFill="#00fcff">
-         <font>
-            <Font size="25.0" />
-         </font>
-      </Label>
-      <Label fx:id="LBLAvailableMana" alignment="CENTER" layoutX="813.0" layoutY="700.0" prefHeight="45.0" prefWidth="57.0" text="3" textFill="#00fcff">
-         <font>
-            <Font size="25.0" />
-         </font>
-      </Label>
-      <Label fx:id="LBLSeparator" alignment="CENTER" layoutX="851.0" layoutY="700.0" prefHeight="45.0" prefWidth="39.0" text="/" textFill="#00fcff">
-         <font>
-            <Font size="25.0" />
-         </font>
-      </Label>
-      <Label fx:id="LBLMaxMana" alignment="CENTER" layoutX="870.0" layoutY="700.0" prefHeight="45.0" prefWidth="70.0" text="3" textFill="#00fcff">
+      <Label fx:id="LBLMana" alignment="CENTER" layoutX="633.0" layoutY="700.0" prefHeight="45.0" prefWidth="259.0" text="Mana:" textFill="#00fcff">
          <font>
             <Font size="25.0" />
          </font>
