@@ -22,6 +22,8 @@ public final class BattleViewImpl extends Application implements BattleView {
     private Label LBLEnemyDamage;
     @FXML
     private Label LBLPlayerDamage;
+    @FXML
+    private Label LBLMana;
 
     @Override
     public void start(final Stage stage) throws Exception {
@@ -47,5 +49,10 @@ public final class BattleViewImpl extends Application implements BattleView {
         LBLEnemyDamage.setText("-" + String.valueOf(amount));
         LBLEnemyDamage.setVisible(true);
     }
+
+    public void updateManaLabel(final int unspent, final int max) {
+        LBLMana.setText("Mana: " + String.valueOf(unspent) + " / " + String.valueOf(max));
+    }
+
 
 }
