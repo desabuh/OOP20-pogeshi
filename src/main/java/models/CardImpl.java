@@ -3,16 +3,18 @@ package models;
 public final class CardImpl implements Card, Comparable<Card> {
     private int cost;
     private int attack;
-    private int defense;
+    private int shield;
     private String name;
     private String resourcePath;
+    private String description;
 
-    public CardImpl(final int attack, final int defense, final int cost, final String name, final String resourcePath) {
+    public CardImpl(final int attack, final int shield, final int cost, final String name, final String resourcePath, final String description) {
         this.cost = cost;
         this.attack = attack;
-        this.defense = defense;
+        this.shield = shield;
         this.name = name;
         this.resourcePath = resourcePath;
+        this.description = description;
     }
 
     @Override
@@ -26,8 +28,8 @@ public final class CardImpl implements Card, Comparable<Card> {
     }
 
     @Override
-    public int getDefense() {
-        return this.defense;
+    public int getShield() {
+        return this.shield;
     }
 
     @Override
@@ -46,7 +48,7 @@ public final class CardImpl implements Card, Comparable<Card> {
         int result = 1;
         result = prime * result + attack;
         result = prime * result + cost;
-        result = prime * result + defense;
+        result = prime * result + shield;
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
@@ -66,7 +68,7 @@ public final class CardImpl implements Card, Comparable<Card> {
         if (cost != other.cost) {
             return false;
         }
-        if (defense != other.defense) {
+        if (shield != other.shield) {
             return false;
         }
         if (name == null) {
@@ -82,5 +84,10 @@ public final class CardImpl implements Card, Comparable<Card> {
     @Override
     public int compareTo(final Card card) {
         return this.name.compareTo(card.getName());
+    }
+
+    @Override
+    public String getDescription() {
+        return this.description;
     }
 }

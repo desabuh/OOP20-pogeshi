@@ -10,9 +10,11 @@ public interface Card {
 
     int getAttack();
 
-    int getDefense();
+    int getShield();
 
     String getName();
 
     String getResourcePath();
+
+    String getDescription();
 }
