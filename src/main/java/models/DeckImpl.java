@@ -1,5 +1,6 @@
 package models;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.lang.reflect.Type;
@@ -20,7 +21,7 @@ public final class DeckImpl implements Deck {
         Gson gson = new Gson();
         try {
             Type t = new TypeToken<LinkedList<CardImpl>>() { }.getType();
-            this.cards = gson.fromJson(new FileReader("res/jsons/ListOfCards.json"), t);
+            this.cards = gson.fromJson(new FileReader("res" + File.separator + "jsons" + File.separator + "ListOfCards.json"), t);
         } catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

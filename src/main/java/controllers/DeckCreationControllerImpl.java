@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -52,7 +53,7 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
         Gson gson = new Gson();
         try {
             Type t = new TypeToken<LinkedList<CardImpl>>() { }.getType();
-            this.cards = gson.fromJson(new FileReader("res/jsons/ListOfCards.json"), t);
+            this.cards = gson.fromJson(new FileReader("res" + File.separator + "jsons" + File.separator + "ListOfCards.json"), t);
         } catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
             e.printStackTrace();
         }
