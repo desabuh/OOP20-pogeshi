@@ -10,10 +10,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import models.Account;
 import models.AccountImp;
+import models.Card;
+import models.CardImpl;
 
 public final class AccountControllerImp implements AccountController {
 
-    private Account account;
+    private Account account = new AccountImp();
 
     private void changeStage(final MouseEvent  e, final String fxmlFileName) {
         try {
@@ -48,7 +50,7 @@ public final class AccountControllerImp implements AccountController {
     @FXML
     @Override
     public void nuovaPartitaClick() {
-        // TODO: Delete save file
+        account.deleteSaves();
         giocaClick();
     }
     /*TODO: Change it later
@@ -78,12 +80,7 @@ public final class AccountControllerImp implements AccountController {
     public void giocaClick() {
         // TODO: Temp function
         //test function
-        try {
-            account = new AccountImp();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        account.addCardToDeck(new CardImpl(1, 1, 1, "Card1", "Path1", "description1"));
     }
 
     @Override

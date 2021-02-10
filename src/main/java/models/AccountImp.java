@@ -1,16 +1,16 @@
 package models;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
+import java.lang.reflect.Type;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
 
 public final class AccountImp implements Account {
 
@@ -18,48 +18,49 @@ public final class AccountImp implements Account {
     private List<Card> remainingCards;
     private Statistics statistics;
     private static final String SAVES_PATH = "res\\saves\\";
+    private static final String JSONS_PATH = "res\\jsons\\";
     private final Gson gson;
 
-    //TODO: Do separated files for Deck, RemainingCards, Statistics, AllCards because it's easier to add new things to it.
-    public AccountImp() throws IOException {
+    //TODO: code it  again in a way for not repeating code (if you have time)
+    public AccountImp() {
+
         gson = new GsonBuilder().setPrettyPrinting().create();
         File deckFile = new File(SAVES_PATH + "Deck.json");
-        if (deckFile.exists()) {
-            loadDeckSaves();
-        } else {
-            deckFile.createNewFile();
-            this.deck = new DeckImpl();
-            //TODO: Set deck to default values
-            saveDeck();
-        }/*
-        File remainingCardsFile = new File(SAVES_PATH + "RemainingCards.json");
-        if (remainingCardsFile.exists()) {
-            loadRemainingCardsSaves();
-        } else {
-            remainingCardsFile.createNewFile();
-            this.remainingCards = new ArrayList<Card>(); 
-            saveRemainingCards();
-        }
-        File statisticsFile = new File(SAVES_PATH + "Statistics.json");
-        if (statisticsFile.exists()) {
-            loadStatisticsSaves();
-        } else {
-            statisticsFile.createNewFile();
-            this.statistics = new StatisticsImp(); 
-            saveStatistics();
-        }*/
-    }
 
+        try {
+            if (deckFile.exists()) {
+                loadDeckSaves();
+            } else {
+                createSavesDeck();
+            }
+            File remainingCardsFile = new File(SAVES_PATH + "RemainingCards.json");
+            if (remainingCardsFile.exists()) {
+                loadRemainingCardsSaves();
+            } else {
+                createSavesRemainingCards();
+            }
+            File statisticsFile = new File(SAVES_PATH + "Statistics.json");
+            if (statisticsFile.exists()) {
+                loadStatisticsSaves();
+            } else {
+                createSavesStatistics();
+            }
+        } catch (IOException e) {
+         // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    //TODO: to test
     @Override
     public Deck getDeck() {
         return this.deck;
     }
-
+    //TODO: to test
     @Override
     public List<Card> getRemainingCards() {
         return this.remainingCards;
     }
-
+    //TODO: to test
     @Override
     public Statistics getStatistics() {
         return this.statistics;
@@ -75,7 +76,7 @@ public final class AccountImp implements Account {
         }
         this.remainingCards.add(card);
     }
-
+    //TODO: to test
     @Override
     public void lose() {
         statistics.updateOnLose();
@@ -88,52 +89,123 @@ public final class AccountImp implements Account {
             deck.addCard(card);
         }
     }
-
+    //TODO: to test
     @Override
     public void removeCardFromDeck(final Card card) {
         this.deck.removeCard(card);
         remainingCards.add(card);
     }
-
+    //TODO: to test
+    @Override
     public void save() {
-        saveDeck();
-        saveRemainingCards();
-    }
-
-    private void loadDeckSaves() {
-     // TODO Auto-generated method stub
-    }
-
-    private void loadRemainingCardsSaves() {
-        // TODO Auto-generated method stub
-
-    }
-
-    private void loadStatisticsSaves() {
-        // TODO Auto-generated method stub
-
-    }
-
-    private void saveDeck() {
         try {
-            Writer writer = new FileWriter(SAVES_PATH + "");
-            //String json = gson.toJson(this.deck);
-            JsonElement json = gson.toJsonTree(this.deck);
-            gson.toJson(json, writer);
+            saveDeck();
+            saveRemainingCards();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
-    private void saveRemainingCards() {
-        // TODO Auto-generated method stub
-
+    public void deleteSaves() {
+        try {
+            File file = new File(SAVES_PATH + "Deck.json");
+            deleteFile(file);
+            file = new File(SAVES_PATH + "RemainingCards.json");
+            deleteFile(file);
+            file = new File(SAVES_PATH + "Statistics.json");
+            deleteFile(file);
+            createSaves();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
-    private void saveStatistics() {
-        // TODO Auto-generated method stub
+    private void createSaves() throws IOException {
+        createSavesDeck();
+        createSavesRemainingCards();
+        createSavesStatistics();
+    }
 
+    private void createSavesDeck() throws IOException {
+        File file = new File(SAVES_PATH + "Deck.json");
+        createFile(file);
+        loadDefaultDeck();
+        saveDeck();
+    }
+
+    private void createSavesRemainingCards() throws IOException {
+        File file = new File(SAVES_PATH + "RemainingCards.json");
+        createFile(file);
+        this.remainingCards = new LinkedList<Card>();
+        saveRemainingCards();
+    }
+
+    private void createSavesStatistics() throws IOException {
+        File file = new File(SAVES_PATH + "Statistics.json");
+        createFile(file);
+        this.statistics = new StatisticsImp();
+        saveStatistics();
+}
+
+    private void loadDeckSaves() throws IOException {
+        FileReader reader = new FileReader(SAVES_PATH + "Deck.json");
+        Type linkedListType = new TypeToken<LinkedList<CardImpl>>() { }.getType();
+        List<Card> cards = gson.fromJson(reader, linkedListType);
+        this.deck = new DeckImpl(cards);
+        reader.close();
+    }
+    //TODO: change DefaultDeck.json later with real default deck
+    private void loadDefaultDeck() throws IOException {
+        FileReader reader = new FileReader(JSONS_PATH + "DefaultDeck.json");
+        Type linkedListType = new TypeToken<LinkedList<CardImpl>>() { }.getType();
+        List<Card> cards = gson.fromJson(reader, linkedListType);
+        this.deck = new DeckImpl(cards);
+        reader.close();
+    }
+
+    private void loadRemainingCardsSaves() throws IOException {
+        FileReader reader = new FileReader(SAVES_PATH + "RemainingCards.json");
+        Type linkedListType = new TypeToken<LinkedList<CardImpl>>() { }.getType();
+        this.remainingCards = gson.fromJson(reader, linkedListType);
+        reader.close();
+    }
+
+    private void loadStatisticsSaves() throws IOException {
+        FileReader reader = new FileReader(SAVES_PATH + "Statistics.json");
+        this.statistics = gson.fromJson(reader, StatisticsImp.class);
+        reader.close();
+    }
+
+    private void saveDeck() throws IOException {
+        FileWriter writer = new FileWriter(SAVES_PATH + "Deck.json");
+        gson.toJson(this.deck.getCards(), writer);
+        writer.close();
+    }
+
+    private void saveRemainingCards() throws IOException {
+        FileWriter writer = new FileWriter(SAVES_PATH + "RemainingCards.json");
+        gson.toJson(this.remainingCards, writer);
+        writer.close();
+    }
+
+    private void saveStatistics() throws IOException {
+        FileWriter writer = new FileWriter(SAVES_PATH + "Statistics.json");
+        gson.toJson(this.statistics, writer);
+        writer.close();
+    }
+
+    private void createFile(final File file) throws IOException {
+        if (!file.createNewFile()) {
+            System.err.println("Failed to create the file");
+        }
+    }
+
+    private void deleteFile(final File file) throws IOException {
+        if (!file.delete()) {
+            System.err.println("Failed to delete the file");
+        }
     }
 
 }
