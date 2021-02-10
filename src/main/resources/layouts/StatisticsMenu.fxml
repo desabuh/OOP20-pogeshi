@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane fx:id="StatisticsMenu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AccountControllerImp">
+   <children>
+      <Label fx:id="labelStatisticsTitle" layoutX="229.0" layoutY="59.0" prefHeight="35.0" prefWidth="142.0" text="STATISTICHE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelWins" layoutX="254.0" layoutY="130.0" prefHeight="17.0" prefWidth="155.0" text="Vittorie:" />
+      <Label fx:id="labelLoses" layoutX="254.0" layoutY="160.0" prefHeight="17.0" prefWidth="155.0" text="Sconfitte:" />
+      <Label fx:id="labelUnlockedCards" layoutX="254.0" layoutY="190.0" prefHeight="17.0" prefWidth="155.0" text="Unlocked cards:" />
+      <Button fx:id="buttonIndietro" layoutX="40.0" layoutY="34.0" mnemonicParsing="false" onMouseClicked="#indietroClick" prefHeight="25.0" prefWidth="72.0" text="Indietro" />
+   </children>
+</Pane>
