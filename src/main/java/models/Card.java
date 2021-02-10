@@ -6,6 +6,8 @@ package models;
 
 public interface Card {
 
+    int getId();
+
     int getCost();
 
     int getAttack();

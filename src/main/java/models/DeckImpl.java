@@ -23,7 +23,6 @@ public final class DeckImpl implements Deck {
             Type t = new TypeToken<LinkedList<CardImpl>>() { }.getType();
             this.cards = gson.fromJson(new FileReader("res" + File.separator + "jsons" + File.separator + "ListOfCards.json"), t);
         } catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -32,7 +31,7 @@ public final class DeckImpl implements Deck {
         }
     }
 
-    public DeckImpl(final List<Card> cards) {
+    public DeckImpl(final LinkedList<Card> cards) {
         this.cards = (LinkedList<Card>) cards;
     }
 

@@ -8,10 +8,10 @@ import java.lang.reflect.Type;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -27,6 +27,8 @@ import models.DeckImpl;
 public final class DeckCreationControllerImpl implements DeckCreationController {
 
     private Deck deck = new DeckImpl();
+//    private Account playerAccount = new AccountImp();
+//    private Deck deck = playerAccount.getDeck();
 
     @FXML
     private ListView<String> listDeck;
@@ -121,6 +123,7 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
 
     @Override
     public void saveDeck() {
+//        this.playerAccount.save();
     }
 
     @Override
