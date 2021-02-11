@@ -24,6 +24,9 @@ import models.CardImpl;
 import models.Deck;
 import models.DeckImpl;
 
+/**
+ *  A {@link controllers.DeckCreationController} implementation.
+ */
 public final class DeckCreationControllerImpl implements DeckCreationController {
 
     private Deck deck = new DeckImpl();
@@ -50,6 +53,9 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
     private Label lblNumCards;
     private List<Card> cards;
 
+    /**
+     * Start blocking the outside cards list and loading cards from json.
+     */
     public void initialize() {
         this.listCards.setEditable(false);
         Gson gson = new Gson();
@@ -95,7 +101,7 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
 
     @Override
     public void removeCardFromDeck() {
-        if (this.listDeck.getItems().size() == 10) {
+        if (this.deck.isDeckFull()) {
             Card cardToRemove = this.deck.getCards().stream().filter(c -> c.getName().equals(this.listDeck.getSelectionModel().getSelectedItem())).findAny().get();
             this.deck.removeCard(cardToRemove);
             this.listCards.getItems().add(this.listDeck.getSelectionModel().getSelectedItem());
@@ -109,7 +115,7 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
 
     @Override
     public void addCardToDeck() {
-        if (this.listDeck.getItems().size() == 9) {
+        if (!this.deck.isDeckFull()) {
             Card cardToAdd = this.cards.stream().filter(c -> c.getName().equals(this.listCards.getSelectionModel().getSelectedItem())).findAny().get();
             this.deck.addCard(cardToAdd);
             this.listDeck.getItems().add(this.listCards.getSelectionModel().getSelectedItem());
