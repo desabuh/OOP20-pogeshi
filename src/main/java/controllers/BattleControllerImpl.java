@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import models.Battle;
 import models.BattleImpl;
@@ -34,6 +35,10 @@ public final class BattleControllerImpl implements BattleController {
      * The number of cards the player starts a new battle with.
      * */
     public static final int BASE_STARTING_CARDS = 3;
+    /**
+     * How wide the cards currently in the hand is displayed.
+     * */
+    public static final int CARD_WIDTH = 150;
 
     /*private Player p = new PlayerImpl(MAX_PLAYER_HEALTH);
     private Enemy e = new EnemyImpl(MAX_ENEMY_HEALTH);*/
@@ -69,8 +74,8 @@ public final class BattleControllerImpl implements BattleController {
 
     @FXML
     public void initialize() {
-        p.getDeck().addCard(new CardImpl(3, 0, 1, "Carta prova", "ciao"));
-        p.getDeck().addCard(new CardImpl(3, 0, 10, "Carta prova costosa", "ciao"));
+        p.getDeck().addCard(new CardImpl(3, 0, 1, "Carta prova", "res" + File.separator + "images" + File.separator + "AceOfHearts.png"));
+        p.getDeck().addCard(new CardImpl(3, 0, 10, "Carta prova costosa", "res" + File.separator + "images" + File.separator + "AceOfHearts.png"));
         IMGPlayer.setImage(new Image(new File("res" + File.separator + "images" + File.separator + "PlayerImage.png").toURI().toString()));
         IMGEnemy.setImage(new Image(new File("res" + File.separator + "images" + File.separator + "EnemyImage.png").toURI().toString()));
         for (int i = 0; i < BASE_STARTING_CARDS; i++) {
@@ -83,17 +88,12 @@ public final class BattleControllerImpl implements BattleController {
         updateManaLabel(playerUnusedCombatMana, p.getMana());
         List<Card> hand = new ArrayList<>(p.getHand().getCards());
         for (int i = 0; i < hand.size(); i++) {
-            final int inHand = i;
-            Button b = new Button(hand.get(i).getName());
-            b.setOnAction(new EventHandler<ActionEvent>() {
-                private final int indexInHand = inHand;
-                @Override
-                public void handle(final ActionEvent event) {
-                    selectedCard(indexInHand);
-                }
-
-            });
-            HBPlayerHand.getChildren().add(b);
+            ImageView card = new ImageView();
+            card.setImage(new Image(new File(p.getHand().getCards().get(i).getResourcePath()).toURI().toString()));
+            card.setFitWidth(CARD_WIDTH);
+            card.setPreserveRatio(true);
+            attachSelectEvent(card, i);
+            HBPlayerHand.getChildren().add(card);
         }
         BTNEndTurn.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -178,17 +178,7 @@ public final class BattleControllerImpl implements BattleController {
     private void updateHand(final int startingIndex) {
         List<Card> hand = new ArrayList<>(p.getHand().getCards());
         for (int i = startingIndex; i < hand.size(); i++) {
-            final int inHand = i;
-
-            Button b = (Button) HBPlayerHand.getChildren().get(i);
-            b.setOnAction(new EventHandler<ActionEvent>() {
-                private final int indexInHand = inHand;
-                @Override
-                public void handle(final ActionEvent event) {
-                    selectedCard(indexInHand);
-                }
-
-            });
+            attachSelectEvent((ImageView) HBPlayerHand.getChildren().get(i), i);
         }
     }
 
@@ -211,6 +201,18 @@ public final class BattleControllerImpl implements BattleController {
 
     private void updateManaLabel(final int unspent, final int max) {
         LBLMana.setText("Mana: " + String.valueOf(unspent) + " / " + String.valueOf(max));
+    }
+
+    private void attachSelectEvent(final ImageView img,  final int i) {
+        img.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(final MouseEvent event) {
+                // TODO Auto-generated method stub
+                selectedCard(i);
+            }
+
+        });
+
     }
 
 }
