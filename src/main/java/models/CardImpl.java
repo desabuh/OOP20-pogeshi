@@ -1,7 +1,119 @@
 package models;
 
+/**
+ * A {@link models.Card} implementation.
+ */
 public final class CardImpl implements Card, Comparable<Card> {
 
+    /**
+     * A Builder for CardImpl.
+     */
+    public static final class Builder {
+        private int id;
+        private int cost;
+        private int attack;
+        private int shield;
+        private String name;
+        private String resourcePath;
+        private String description;
+
+        /**
+         * Constructs a CardImpl Builder.
+         */
+        public Builder() { }
+
+        /**
+         * Set the name of the card.
+         *
+         * @param name the name to assign to the card
+         * @return this builder
+         */
+        public Builder name(final String name) {
+            this.name = name;
+            return this;
+        }
+
+        /**
+         * Set the cost of the card.
+         *
+         * @param cost the cost to assign to the card
+         * @return this builder
+         */
+        public Builder cost(final int cost) {
+            this.cost = cost;
+            return this;
+        }
+
+        /**
+         * Set the resource path of the card image.
+         *
+         * @param path the path of the card image to assign to the card
+         * @return this builder
+         */
+        public Builder resourcePath(final String path) {
+            this.resourcePath = path;
+            return this;
+        }
+
+        /**
+         * Set the description of the card.
+         *
+         * @param description the description to assign to the card
+         * @return this builder
+         */
+        public Builder description(final String description) {
+            this.description = description;
+            return this;
+        }
+
+        /**
+         * Set the attack of the card.
+         *
+         * @param attack the attack to assign to the card
+         * @return this builder
+         */
+        public Builder attack(final int attack) {
+            this.attack = attack;
+            return this;
+        }
+
+        /**
+         * Set the shield of the card.
+         *
+         * @param shield the shield to assign to the card
+         * @return the builder
+         */
+        public Builder shield(final int shield) {
+            this.shield = shield;
+            return this;
+        }
+
+        /**
+         * Set the id of the card.
+         *
+         * @param id the id to assign to the card
+         * @return this builder
+         */
+        public Builder id(final int id) {
+            this.id = id;
+            return this;
+        }
+
+        /**
+         * Returns a newly-created Card.
+         *
+         * @throws IllegalStateException when one or more parameters are not set
+         * @return A card
+         */
+        public Card build() throws IllegalStateException {
+            if (this.name == null || this.description == null || this.resourcePath == null) {
+                throw new IllegalStateException();
+            }
+            return new CardImpl(this.attack, this.shield, this.cost, this.name, this.resourcePath, this.description, this.id);
+        }
+    }
+
+    
     private int id;
     private int cost;
     private int attack;
@@ -117,57 +229,5 @@ public final class CardImpl implements Card, Comparable<Card> {
     @Override
     public int getId() {
         return this.id;
-    }
-
-    public static final class Builder {
-        private int id;
-        private int cost;
-        private int attack;
-        private int shield;
-        private String name;
-        private String resourcePath;
-        private String description;
-
-        public Builder name(final String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder cost(final int cost) {
-            this.cost = cost;
-            return this;
-        }
-
-        public Builder resourcePath(final String path) {
-            this.resourcePath = path;
-            return this;
-        }
-
-        public Builder description(final String description) {
-            this.description = description;
-            return this;
-        }
-
-        public Builder attack(final int attack) {
-            this.attack = attack;
-            return this;
-        }
-
-        public Builder shield(final int shield) {
-            this.shield = shield;
-            return this;
-        }
-
-        public Builder id(final int id) {
-            this.id = id;
-            return this;
-        }
-
-        public Card build() throws IllegalStateException {
-            if (this.name == null || this.description == null || this.resourcePath == null) {
-                throw new IllegalStateException("");
-            }
-            return new CardImpl(this.attack, this.shield, this.cost, this.name, this.resourcePath, this.description, this.id);
-        }
     }
 }

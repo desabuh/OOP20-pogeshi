@@ -14,9 +14,17 @@ import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
+/**
+ * A {@link models.Deck} implementation.
+ */
 public final class DeckImpl implements Deck {
+
+    private static final int NUMBER_OF_DECK_CARDS = 10;
     private LinkedList<Card> cards = new LinkedList<>();
 
+    /**
+     * Instantiates a standard deck.
+     */
     public DeckImpl() {
         Gson gson = new Gson();
         try {
@@ -26,11 +34,16 @@ public final class DeckImpl implements Deck {
             e.printStackTrace();
         }
 
-        for (int i = (this.cards.size() - 1); i > 9 ; i--) {
+        for (int i = (this.cards.size() - 1); i > NUMBER_OF_DECK_CARDS - 1; i--) {
             this.cards.remove(i);
         }
     }
 
+    /**
+     * Instantiates a new deck from a list of cards.
+     *
+     * @param cards the cards of the deck
+     */
     public DeckImpl(final LinkedList<Card> cards) {
         this.cards = (LinkedList<Card>) cards;
     }
@@ -71,14 +84,14 @@ public final class DeckImpl implements Deck {
 
     @Override
     public void addCard(final Card card) {
-        if (this.cards.size() < 10) {
+        if (this.cards.size() < NUMBER_OF_DECK_CARDS) {
             this.cards.add(card);
         }
     }
 
     @Override
     public boolean isDeckFull() {
-        return this.cards.size() == 10;
+        return this.cards.size() == NUMBER_OF_DECK_CARDS;
     }
 
     @Override
