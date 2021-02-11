@@ -80,7 +80,11 @@ public final class AccountControllerImp implements AccountController {
     public void giocaClick() {
         // TODO: Temp function
         //test function
-        account.addCardToDeck(new CardImpl(1, 1, 1, "Card1", "Path1", "description1"));
+        //account.removeCardFromDeck(new CardImpl(5, 2, 3, "Card2", "res/images/card2.png", "DESC"));
+        //account.addCardToDeck(new CardImpl(1, 1, 1, "Card1", "Path1", "description1"));
+        //account.save();
+        //account.deleteSaves();
+        //account.lose();
     }
 
     @Override
