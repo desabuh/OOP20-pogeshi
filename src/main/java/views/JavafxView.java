@@ -1,7 +1,10 @@
 package views;
 
+import com.google.inject.Inject;
+
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import views.render.Render;
 import views.scene.SceneManager;
 import views.scene.layout.LAYOUT;
 
@@ -10,7 +13,7 @@ import views.scene.layout.LAYOUT;
  * View implementation for JavaFX.
  *
  */
-public class JavafxView implements View {
+public abstract class JavafxView implements View {
     /**
      * width of the view.
      */
@@ -27,14 +30,17 @@ public class JavafxView implements View {
     private Scene actualScene;
     private final Stage stage;
 
-
-    public JavafxView(final Stage stage) {
+    public JavafxView(final Stage stage, final LAYOUT initialLayout) {
         this.stage = stage;
-        this.actualScene = stage.getScene();
+         //this.loadScene(LAYOUT.WORLDMAP);
     }
 
     public final Scene getScene() {
         return this.actualScene;
+    }
+
+    public final void setActualScene(final Scene actualScene) {
+        this.actualScene = actualScene;
     }
 
 
@@ -45,5 +51,8 @@ public class JavafxView implements View {
         stage.setScene(this.actualScene);
         stage.show();
     }
+
+    @Override
+    public abstract void updateEntity(Render render);
 
 }
