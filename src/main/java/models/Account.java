@@ -20,4 +20,6 @@ public interface Account {
 
     void save();
 
+    void deleteSaves();
+
 }

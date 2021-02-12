@@ -1,63 +1,65 @@
 package models;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
+import java.lang.reflect.Type;
+import com.google.gson.reflect.TypeToken;
 
 public final class AccountImp implements Account {
 
     private Deck deck;
     private List<Card> remainingCards;
     private Statistics statistics;
-    private static final String SAVES_PATH = "..\\..\\..\\res\\saves\\";
+    private static final String SAVES_PATH = "res\\saves\\";
+    private static final String JSONS_PATH = "res\\jsons\\";
+    private static final Type LINKED_LIST_TYPE = new TypeToken<LinkedList<CardImpl>>() { }.getType();
+    private final FileManagerImp<LinkedList<Card>> fileDeck;
+    private final FileManagerImp<LinkedList<Card>> fileRemainingCards;
+    private final FileManagerImp<Statistics> fileStatistics;
+    private final FileManagerImp<LinkedList<Card>> fileDefaultDeck;
 
-    //TODO: Do separated files for Deck, RemainingCards, Statistics, AllCards because it's easier to add new things to it.
-    public AccountImp() throws IOException {
-        File deckFile = new File(SAVES_PATH + "Deck.json");
-        if (deckFile.exists()) {
-            loadDeckSaves();
-        } else {
-            deckFile.createNewFile();
-            //this.deck = new Deck(); 
-            //TODO: Set deck to default values
-            saveDeck();
-        }
-        File remainingCardsFile = new File(SAVES_PATH + "RemainingCards.json");
-        if (remainingCardsFile.exists()) {
-            loadRemainingCardsSaves();
-        } else {
-            remainingCardsFile.createNewFile();
-            this.remainingCards = new ArrayList<Card>(); 
-            saveRemainingCards();
-        }
-        File statisticsFile = new File(SAVES_PATH + "Statistics.json");
-        if (statisticsFile.exists()) {
-            loadStatisticsSaves();
-        } else {
-            statisticsFile.createNewFile();
-            this.statistics = new StatisticsImp(); 
-            saveStatistics();
+    public AccountImp() {
+
+        this.fileDeck = new FileManagerImp<LinkedList<Card>>(SAVES_PATH + "Deck.json");
+        this.fileRemainingCards = new FileManagerImp<LinkedList<Card>>(SAVES_PATH + "RemainingCards.json");
+        this.fileStatistics = new FileManagerImp<Statistics>(SAVES_PATH + "Statistics.json");
+        this.fileDefaultDeck = new FileManagerImp<LinkedList<Card>>(JSONS_PATH + "DefaultDeck.json");
+
+        try {
+            if (!this.fileDeck.fileExist()) {
+                if (this.fileDefaultDeck.fileExist()) {
+                    this.fileDeck.save(this.fileDefaultDeck.load(LINKED_LIST_TYPE));
+                } else {
+                    throw new IOException("DefaultDeck.json is missing");
+                }
+            }
+            this.deck = new DeckImpl(this.fileDeck.load(LINKED_LIST_TYPE));
+            if (!this.fileRemainingCards.fileExist()) {
+                this.fileRemainingCards.save(new LinkedList<Card>());
+            }
+            this.remainingCards = this.fileRemainingCards.load(LINKED_LIST_TYPE);
+            if (!fileStatistics.fileExist()) {
+                this.fileStatistics.save(new StatisticsImp(0, 0, 10));
+            }
+            this.statistics = fileStatistics.load(StatisticsImp.class);
+        } catch (IOException e) {
+         // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
-
+    //TODO: to test
     @Override
     public Deck getDeck() {
         return this.deck;
     }
-
+    //TODO: to test
     @Override
     public List<Card> getRemainingCards() {
         return this.remainingCards;
     }
-
+    //TODO: to test
     @Override
     public Statistics getStatistics() {
         return this.statistics;
@@ -67,72 +69,56 @@ public final class AccountImp implements Account {
     public void win() {
         Card card = new Card(); //TODO: generate random card
         if (this.deck.getCards().contains(card) || remainingCards.contains(card)) {
-            statistics.updateOnWin(true);
+            this.statistics.updateOnWin(true);
         } else {
-            statistics.updateOnWin(false);
+            this.statistics.updateOnWin(false);
         }
         this.remainingCards.add(card);
+        this.fileStatistics.save(this.statistics);
+        this.fileRemainingCards.save((LinkedList<Card>) this.remainingCards);
     }
 
     @Override
     public void lose() {
-        statistics.updateOnLose();
+        this.statistics.updateOnLose();
+        this.fileStatistics.save(this.statistics);
     }
 
     @Override
     public void addCardToDeck(final Card card) {
-        if (remainingCards.contains(card)) {
-            remainingCards.remove(card);
-            deck.addCard(card);
+        if (this.remainingCards.contains(card) && !this.deck.isDeckFull()) {
+            this.remainingCards.remove(card);
+            this.deck.addCard(card);
         }
     }
 
     @Override
     public void removeCardFromDeck(final Card card) {
-        this.deck.removeCard(card);
-        remainingCards.add(card);
+        if (this.deck.isCardInDeck(card)) {
+            this.deck.removeCard(card);
+            this.remainingCards.add(card);
+        }
     }
 
+    @Override
     public void save() {
-        saveDeck();
-        saveRemainingCards();
+        this.fileDeck.save((LinkedList<Card>) this.deck.getCards());
+        this.fileRemainingCards.save((LinkedList<Card>) this.remainingCards);
     }
 
-    private void loadDeckSaves() {
-     // TODO Auto-generated method stub
-    }
-
-    private void loadRemainingCardsSaves() {
-        // TODO Auto-generated method stub
-
-    }
-
-    private void loadStatisticsSaves() {
-        // TODO Auto-generated method stub
-
-    }
-
-    private void saveDeck() {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    @Override
+    public void deleteSaves() {
         try {
-            Writer writer = new FileWriter(SAVES_PATH + "");
-            //String json = gson.toJson(this.deck);
-            JsonElement json = gson.toJsonTree(this.deck);
-            gson.toJson(json, writer);
+            this.fileDeck.save(this.fileDefaultDeck.load(LINKED_LIST_TYPE));
+            this.deck = new DeckImpl(this.fileDeck.load(LINKED_LIST_TYPE));
+            this.fileRemainingCards.save(new LinkedList<Card>());
+            this.remainingCards = this.fileRemainingCards.load(LINKED_LIST_TYPE);
+            this.fileStatistics.save(new StatisticsImp(0, 0, 10));
+            this.statistics = this.fileStatistics.load(StatisticsImp.class);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-    }
-
-    private void saveRemainingCards() {
-        // TODO Auto-generated method stub
-
-    }
-
-    private void saveStatistics() {
-        // TODO Auto-generated method stub
-
     }
 
 }
