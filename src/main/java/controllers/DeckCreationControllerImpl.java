@@ -19,19 +19,19 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import models.Account;
+import models.AccountImp;
 import models.Card;
 import models.CardImpl;
 import models.Deck;
-import models.DeckImpl;
 
 /**
  *  A {@link controllers.DeckCreationController} implementation.
  */
 public final class DeckCreationControllerImpl implements DeckCreationController {
 
-    private Deck deck = new DeckImpl();
-//    private Account playerAccount = new AccountImp();
-//    private Deck deck = playerAccount.getDeck();
+    private Account playerAccount = new AccountImp();
+    private Deck deck = playerAccount.getDeck();
 
     @FXML
     private ListView<String> listDeck;
@@ -70,6 +70,8 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
         this.cards.stream().filter(card -> !this.deck.isCardInDeck(card)).forEach(card -> this.listCards.getItems().add(card.getName()));
         this.listCards.setDisable(true);
         this.listDeck.setDisable(false);
+        this.listDeck.getSelectionModel().select(0);
+        this.changeCardDescription();
     }
 
     @Override
@@ -129,7 +131,7 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
 
     @Override
     public void saveDeck() {
-//        this.playerAccount.save();
+       this.playerAccount.save();
     }
 
     @Override
