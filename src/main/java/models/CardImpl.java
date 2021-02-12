@@ -9,6 +9,7 @@ public final class CardImpl implements Card, Comparable<Card> {
      * A Builder for CardImpl.
      */
     public static final class Builder {
+
         private int id;
         private int cost;
         private int attack;
@@ -113,7 +114,6 @@ public final class CardImpl implements Card, Comparable<Card> {
         }
     }
 
-    
     private int id;
     private int cost;
     private int attack;

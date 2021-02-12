@@ -34,8 +34,8 @@ public final class DeckImpl implements Deck {
             e.printStackTrace();
         }
 
-        for (int i = (this.cards.size() - 1); i > NUMBER_OF_DECK_CARDS - 1; i--) {
-            this.cards.remove(i);
+        for (int i = this.cards.size(); i > NUMBER_OF_DECK_CARDS; i--) {
+            this.cards.remove(i - 1);
         }
     }
 
