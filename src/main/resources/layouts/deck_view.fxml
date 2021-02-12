@@ -27,13 +27,12 @@
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                  <RowConstraints maxHeight="830.0" minHeight="10.0" prefHeight="120.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="830.0" minHeight="0.0" prefHeight="526.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="492.0" minHeight="10.0" prefHeight="241.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="492.0" minHeight="10.0" prefHeight="183.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="830.0" minHeight="10.0" prefHeight="123.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="830.0" minHeight="0.0" prefHeight="772.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="492.0" minHeight="10.0" prefHeight="185.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <GridPane prefHeight="192.0" prefWidth="640.0" GridPane.rowIndex="3">
+                  <GridPane prefHeight="192.0" prefWidth="640.0" GridPane.rowIndex="2">
                     <columnConstraints>
                       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -51,10 +50,10 @@
                       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints maxHeight="201.0" minHeight="10.0" prefHeight="154.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="295.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="295.0" minHeight="10.0" prefHeight="76.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="295.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="339.0" minHeight="10.0" prefHeight="315.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="295.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="295.0" minHeight="10.0" prefHeight="194.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="295.0" minHeight="10.0" prefHeight="103.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <padding>
                         <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
@@ -62,31 +61,37 @@
                      <children>
                         <Pane nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="430.0" stroke="BLACK" strokeType="INSIDE" width="540.0" />
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="176.0" stroke="BLACK" strokeType="INSIDE" width="540.0" />
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="673.0" stroke="BLACK" strokeType="INSIDE" width="540.0" />
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="318.0" stroke="BLACK" strokeType="INSIDE" width="540.0" />
                               <BorderPane layoutY="5.0" prefHeight="167.0" prefWidth="540.0">
                                  <rotationAxis>
                                     <Point3D />
                                  </rotationAxis>
+                                 <padding>
+                                    <Insets bottom="-1.0" />
+                                 </padding>
                                  <center>
-                                    <ImageView fx:id="imgCard" fitHeight="162.0" fitWidth="520.0" pickOnBounds="true" preserveRatio="true" smooth="false" BorderPane.alignment="CENTER">
+                                    <ImageView fx:id="imgCard" fitHeight="308.0" fitWidth="520.0" pickOnBounds="true" preserveRatio="true" smooth="false" BorderPane.alignment="CENTER">
                                        <viewport>
                                           <Rectangle2D />
                                        </viewport>
                                     </ImageView>
                                  </center>
-                                 <padding>
-                                    <Insets bottom="-1.0" />
-                                 </padding>
                               </BorderPane>
-                              <Label fx:id="lblCardDesc" alignment="TOP_LEFT" layoutX="18.0" layoutY="257.0" prefHeight="82.0" prefWidth="505.0" text="Questa è la descrizione di una carta a caso e non so cosa scrivere. Questa carta permette di pushare i commit sul master e disintegrare l'intera repository. Usala con attenzione" textAlignment="CENTER" wrapText="true">
+                              <Label fx:id="lblCardDesc" alignment="CENTER" layoutX="18.0" layoutY="390.0" prefHeight="164.0" prefWidth="505.0" text="Questa è la descrizione di una carta a caso e non so cosa scrivere. Questa carta permette di pushare i commit sul master e disintegrare l'intera repository. Usala con attenzione" textAlignment="CENTER" wrapText="true">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
                               </Label>
                            </children>
                         </Pane>
-                        <Label fx:id="lblCardName" alignment="CENTER" contentDisplay="CENTER" text="Nome mostro" GridPane.rowIndex="1" />
+                        <Label fx:id="lblCardName" alignment="CENTER" contentDisplay="CENTER" text="Nome mostro" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font></Label>
                         <GridPane GridPane.rowIndex="3">
                           <columnConstraints>
                             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
