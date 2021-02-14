@@ -1,5 +1,6 @@
 // Declaration of the Gradle extension to use
 plugins {
+    eclipse
     java
     application
     /*

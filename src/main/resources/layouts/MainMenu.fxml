@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane fx:controller="controllers.AccountControllerImp" fx:id="MainMenu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="lableMenuTitle" alignment="CENTER" layoutX="178.0" layoutY="40.0" prefHeight="33.0" prefWidth="244.0" text="MENU PRINCIPALE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="buttonGioca" layoutX="178.0" layoutY="100.0" mnemonicParsing="false" onMouseClicked="#giocaClick" prefHeight="33.0" prefWidth="244.0" text="GIOCA" />
+      <Button fx:id="buttonNuovaPartita" layoutX="178.0" layoutY="150.0" mnemonicParsing="false" onMouseClicked="#nuovaPartitaClick" prefHeight="33.0" prefWidth="244.0" text="NUOVA PARTITA" />
+      <Button fx:id="buttonFormaDeck" layoutX="178.0" layoutY="200.0" mnemonicParsing="false" onMouseClicked="#formaDeckClick" prefHeight="33.0" prefWidth="244.0" text="FORMA DECK" />
+      <Button fx:id="buttonStatistiche" layoutX="178.0" layoutY="250.0" mnemonicParsing="false" onMouseClicked="#statisticheClick" prefHeight="33.0" prefWidth="244.0" text="STATISTICHE" />
+      <Button fx:id="buttonEsci" layoutX="178.0" layoutY="300.0" mnemonicParsing="false" onMouseClicked="#esciClick" prefHeight="33.0" prefWidth="244.0" text="ESCI" />
+   </children>
+</Pane>

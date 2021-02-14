@@ -1,20 +1,20 @@
 package models;
 
 public abstract class CharacterImp implements Character {
-    //TODO: ask about protected or how to do?
-    protected int healt;
+
+    protected int health;
     protected Point2D position;
     protected Deck deck;
     protected int shield;
 
     @Override
-    public final int getHealt() {
-        return this.healt;
+    public final int getHealth() {
+        return this.health;
     }
 
     @Override
     public final void setHealth(final int value) {
-        this.healt = value;
+        this.health = value;
     }
 
     @Override
