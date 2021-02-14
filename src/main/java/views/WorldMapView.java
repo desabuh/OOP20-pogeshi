@@ -3,6 +3,7 @@ package views;
 import com.google.inject.Inject;
 
 import javafx.application.Platform;
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
 import views.drawer.CanvasDrawer;
@@ -19,17 +20,17 @@ public final class WorldMapView extends JavafxView {
 
     private Drawer<Canvas> drawer;
 
-    //@Inject
+    @Inject
     public WorldMapView(final Stage stage) {
         super(stage, LAYOUT.WORLDMAP);
     }
 
-    public void updateEntity(final Render render) {
-        this.drawer = new CanvasDrawer((Canvas) this.getScene().lookup("#canvasMap"));
-        Platform.runLater(() -> this.drawer.draw(render));
+    public void updateEntity(final Render render, final Point2D src, final Point2D dest) {
+        if (this.drawer == null) {
+            this.drawer = new CanvasDrawer((Canvas) this.getScene().lookup("#canvasMap"));
+            Platform.runLater(() -> this.drawer.draw(render, (int) src.getX(), (int) dest.getY()));
+        }
+        Platform.runLater(() -> this.drawer.reDraw(src, dest));
     }
-
-
-
 
 }
