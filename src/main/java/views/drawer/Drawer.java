@@ -1,5 +1,6 @@
 package views.drawer;
 
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import views.render.Render;
 
@@ -11,8 +12,17 @@ import views.render.Render;
 public interface Drawer<T extends Node> {
 
     /**
-     * 
-     * @param render to draw on {@link <T>} component.
+     * function to draw a render in a specific destination.
+     * @param render to draw on {@link <T>} component
+     * @param x upper left bound xAxis
+     * @param y upper left bound yAxis
      */
-    void draw(Render render);
+    void draw(Render render, int x, int y);
+
+    /**
+     * 
+     * @param source upper left bound
+     * @param destination upper left bound
+     */
+    void reDraw(Point2D source, Point2D destination);
 }
