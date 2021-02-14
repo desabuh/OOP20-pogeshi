@@ -13,9 +13,8 @@ public interface Battle {
      * Checks if the battle needs to end.
      * @return TRUE if it needs to end, FALSE otherwise
      * */
-    boolean checkBattleEnd(int healthPlayer, int healthOpponent);
+    boolean checkBattleEnd();
 
-    //Optional<? extends Character> playCard(Card c, int mana);
     /**
      * @return the instance of the character whose turn is.
      * @implNote Useful since the Battle controller does not know which turn currently is, but has only the instances of the characters that play the battle
@@ -24,11 +23,18 @@ public interface Battle {
 
     /**
      * Checks if the card is playable with a certain amount of mana.
-     * @param c The card that needs to be played
-     * @param mana The amount of mana available
+     * @param index The index of the card in the character's hand
      * @return TRUE if the card can be played, FALSE otherwise
      * */
-    boolean isPlayable(Card c, int mana);
+    boolean playCard(int index);
+
+    Player getPlayer();
+
+    Enemy getEnemy();
+
+    void initializeCharacters();
+
+    int getPlayerUnusedCombatMana();
 
     /**
      * Enum indicating the current turn.
