@@ -42,10 +42,9 @@ public final class BattleControllerImpl implements BattleController {
 
     /*private Player p = new PlayerImpl(MAX_PLAYER_HEALTH);
     private Enemy e = new EnemyImpl(MAX_ENEMY_HEALTH);*/
-    private Player p = new PlayerImp(new DeckImpl());
-    private Enemy e = new EnemyImp(new DeckImpl());
+    //private Player p = new PlayerImp(new DeckImpl());
+    //private Enemy e = new EnemyImp(new DeckImpl());
     private Battle b = new BattleImpl();
-    private int playerUnusedCombatMana = p.getMana();
 
     @FXML
     private Label LBLPlayerHealth;
@@ -74,22 +73,15 @@ public final class BattleControllerImpl implements BattleController {
 
     @FXML
     public void initialize() {
-        p.getDeck().addCard(new CardImpl(3, 0, 1, "Carta prova", "res" + File.separator + "images" + File.separator + "AceOfHearts.png"));
-        p.getDeck().addCard(new CardImpl(3, 0, 10, "Carta prova costosa", "res" + File.separator + "images" + File.separator + "AceOfHearts.png"));
+        b.initializeCharacters();
         IMGPlayer.setImage(new Image(new File("res" + File.separator + "images" + File.separator + "PlayerImage.png").toURI().toString()));
         IMGEnemy.setImage(new Image(new File("res" + File.separator + "images" + File.separator + "EnemyImage.png").toURI().toString()));
-        for (int i = 0; i < BASE_STARTING_CARDS; i++) {
-            Optional<Card> next = p.getDeck().popCard();
-            if (next.isPresent()) {
-                p.getHand().addCard(next.get());
-            }
-        }
-        LBLPlayerHealth.setText(String.valueOf(p.getHealt()));
-        updateManaLabel(playerUnusedCombatMana, p.getMana());
-        List<Card> hand = new ArrayList<>(p.getHand().getCards());
+        LBLPlayerHealth.setText(String.valueOf(b.getPlayer().getHealt()));
+        updateManaLabel(b.getPlayerUnusedCombatMana(), b.getPlayer().getMana());
+        List<Card> hand = new ArrayList<>(b.getPlayer().getHand().getCards());
         for (int i = 0; i < hand.size(); i++) {
             ImageView card = new ImageView();
-            card.setImage(new Image(new File(p.getHand().getCards().get(i).getResourcePath()).toURI().toString()));
+            card.setImage(new Image(new File(hand.get(i).getResourcePath()).toURI().toString()));
             card.setFitWidth(CARD_WIDTH);
             card.setPreserveRatio(true);
             attachSelectEvent(card, i);
@@ -104,9 +96,7 @@ public final class BattleControllerImpl implements BattleController {
                     selectedCard(0);
                     BTNEndTurn.fire();
                 } else {
-                    p.setMana(p.getMana() + 1);
-                    playerUnusedCombatMana = p.getMana();
-                    updateManaLabel(playerUnusedCombatMana, p.getMana());
+                    updateManaLabel(b.getPlayerUnusedCombatMana(), b.getPlayer().getMana());
                 }
             }
         });
@@ -115,16 +105,12 @@ public final class BattleControllerImpl implements BattleController {
     private void selectedCard(final int index) {
         Card selected;
         if (b.currentTurn() instanceof Player) {
-            selected = p.getHand().getCards().get(index);
+            selected = b.getPlayer().getHand().getCards().get(index);
             /**
              * If the player has enough mana, the required mana for playing the card is spent, the various effects of the card
              * are applied (damage/add shield) and the card is removed
              * */
-            if (b.isPlayable(selected, playerUnusedCombatMana)) {
-                playerUnusedCombatMana -= selected.getCost();
-                //e.damageEnemy(selected.getDamage());
-                p.setShield(p.getShield() + selected.getDefense());
-                p.getHand().getCards().remove(index);
+            if (b.playCard(index)) {
                 HBPlayerHand.getChildren().remove(index);
                 updateHand(index);
                 updateLabels(selected);
@@ -150,14 +136,9 @@ public final class BattleControllerImpl implements BattleController {
             /**
              * The enemy has no mana and a card can always be played
              * */
-           /* selected = e.getHand().getCards().get(index);
-            System.out.println("Enemy!");
-            p.damagePlayer(selected.getDamage());
-            e.addShield(selected.getShield());
-            e.removeCard(index);
-            updateLabels(selected);*/
+            //b.playCard(0);
         }
-        if (b.checkBattleEnd(p.getHealt(), 3)) {
+        if (b.checkBattleEnd()) {
             Alert battleFinish = new Alert(AlertType.INFORMATION);
             if (b.currentTurn() instanceof Player) {
                 battleFinish.setTitle("Victory!");
@@ -172,12 +153,13 @@ public final class BattleControllerImpl implements BattleController {
     }
 
     /**
-     * This is used instead of removing all the buttons and regenerating them.
+     * This is used instead of removing all the images and regenerating them.
      * Only their index is updated
      * */
     private void updateHand(final int startingIndex) {
-        List<Card> hand = new ArrayList<>(p.getHand().getCards());
+        List<Card> hand = new ArrayList<>(b.getPlayer().getHand().getCards());
         for (int i = startingIndex; i < hand.size(); i++) {
+            System.out.println(startingIndex);
             attachSelectEvent((ImageView) HBPlayerHand.getChildren().get(i), i);
         }
     }
@@ -186,13 +168,13 @@ public final class BattleControllerImpl implements BattleController {
         if (b.currentTurn() instanceof Player) {
             LBLEnemyDamage.setText("-" + String.valueOf(c.getAttack()));
             //LBLEnemyHealth.setText(String.valueOf(e.getHealth()));
-            updateManaLabel(playerUnusedCombatMana, p.getMana());
+            updateManaLabel(b.getPlayerUnusedCombatMana(), b.getPlayer().getMana());
             LBLEnemyDamage.setVisible(true);
             LBLPlayerDamage.setVisible(false);
         } else {
             LBLPlayerDamage.setText("-" + String.valueOf(c.getAttack()));
-            LBLPlayerHealth.setText(String.valueOf(p.getHealt()));
-            LBLPlayerShield.setText(String.valueOf(p.getShield()));
+            LBLPlayerHealth.setText(String.valueOf(b.getPlayer().getHealt()));
+            LBLPlayerShield.setText(String.valueOf(b.getPlayer().getShield()));
             //LBLEnemyShield.setText(String.valueOf(e.getShield()));
             LBLEnemyDamage.setVisible(false);
             LBLPlayerDamage.setVisible(true);
