@@ -2,6 +2,7 @@ package views;
 
 import com.google.inject.Inject;
 
+import javafx.geometry.Point2D;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import views.render.Render;
@@ -32,17 +33,18 @@ public abstract class JavafxView implements View {
 
     public JavafxView(final Stage stage, final LAYOUT initialLayout) {
         this.stage = stage;
-         //this.loadScene(LAYOUT.WORLDMAP);
+        //this.loadScene(LAYOUT.WORLDMAP);
     }
 
     public final Scene getScene() {
         return this.actualScene;
     }
 
-    public final void setActualScene(final Scene actualScene) {
-        this.actualScene = actualScene;
-    }
 
+    @Override
+    public final void setScene(final Scene scene) {
+        this.actualScene = scene;
+    }
 
     @Override
     public final void loadScene(final LAYOUT layout) {
@@ -53,6 +55,6 @@ public abstract class JavafxView implements View {
     }
 
     @Override
-    public abstract void updateEntity(Render render);
+    public abstract void updateEntity(Render render, Point2D x, Point2D y);
 
 }
