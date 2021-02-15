@@ -76,7 +76,7 @@ public final class BattleControllerImpl implements BattleController {
         b.initializeCharacters();
         IMGPlayer.setImage(new Image(new File("res" + File.separator + "images" + File.separator + "PlayerImage.png").toURI().toString()));
         IMGEnemy.setImage(new Image(new File("res" + File.separator + "images" + File.separator + "EnemyImage.png").toURI().toString()));
-        LBLPlayerHealth.setText(String.valueOf(b.getPlayer().getHealt()));
+        LBLPlayerHealth.setText(String.valueOf(b.getPlayer().getHealth()));
         updateManaLabel(b.getPlayerUnusedCombatMana(), b.getPlayer().getMana());
         List<Card> hand = new ArrayList<>(b.getPlayer().getHand().getCards());
         for (int i = 0; i < hand.size(); i++) {
@@ -173,7 +173,7 @@ public final class BattleControllerImpl implements BattleController {
             LBLPlayerDamage.setVisible(false);
         } else {
             LBLPlayerDamage.setText("-" + String.valueOf(c.getAttack()));
-            LBLPlayerHealth.setText(String.valueOf(b.getPlayer().getHealt()));
+            LBLPlayerHealth.setText(String.valueOf(b.getPlayer().getHealth()));
             LBLPlayerShield.setText(String.valueOf(b.getPlayer().getShield()));
             //LBLEnemyShield.setText(String.valueOf(e.getShield()));
             LBLEnemyDamage.setVisible(false);
