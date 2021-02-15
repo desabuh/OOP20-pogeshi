@@ -28,7 +28,7 @@ public final class BattleImpl implements Battle {
 
     public BattleImpl() {
         p = new PlayerImp(new DeckImpl());
-        e = new EnemyImp(new DeckImpl());
+        e = new EnemyImp(new DeckImpl(), new Point2DImp(0,0));
     }
 
     @Override
@@ -51,8 +51,8 @@ public final class BattleImpl implements Battle {
         if (hasBeenInitialized) {
             throw new IllegalStateException("Both opponents of the battle have already been initialized.");
         }
-        p.getDeck().addCard(new CardImpl(3, 0, 1, "Carta prova", "res" + File.separator + "images" + File.separator + "AceOfHearts.png"));
-        p.getDeck().addCard(new CardImpl(3, 0, 10, "Carta prova costosa", "res" + File.separator + "images" + File.separator + "AceOfHearts.png"));
+        p.getDeck().addCard(new CardImpl.Builder().attack(3).shield(0).cost(1).description("").resourcePath("res" + File.separator + "images" + File.separator + "AceOfHearts.png").name("Sample card").build());
+        p.getDeck().addCard(new CardImpl.Builder().attack(3).shield(0).cost(10).description("").resourcePath("res" + File.separator + "images" + File.separator + "AceOfHearts.png").name("Sample expensive card").build());
         for (int i = 0; i < BASE_STARTING_CARDS; i++) {
             Optional<Card> next = p.getDeck().popCard();
             if (next.isPresent()) {
@@ -69,8 +69,8 @@ public final class BattleImpl implements Battle {
                 Card played = p.getHand().getCards().get(index);
                 System.out.println("Player!");
                 setPlayerUnusedCombatMana((getPlayerUnusedCombatMana() - played.getCost()));
-                if (played.getDefense() > 0) {
-                    p.setShield(p.getShield() + played.getDefense());
+                if (played.getShield() > 0) {
+                    p.setShield(p.getShield() + played.getShield());
                 }
                 p.getHand().removeCard(index);
             } else {
@@ -84,7 +84,7 @@ public final class BattleImpl implements Battle {
 
     @Override
     public Character currentTurn() {
-        return turn == Turn.PLAYER ? new PlayerImp(new DeckImpl()) : new EnemyImp(new DeckImpl());
+        return turn == Turn.PLAYER ? new PlayerImp(new DeckImpl()) : new EnemyImp(new DeckImpl(), new Point2DImp(0, 0));
     }
 
     private boolean isPlayable(final Card c) {
@@ -94,7 +94,7 @@ public final class BattleImpl implements Battle {
     // TODO: Check also the enemy's health when implemented
     @Override
     public boolean checkBattleEnd() {
-        return p.getHealt() <= 0 /*|| e.getHealt() <= 0*/;
+        return p.getHealth() <= 0 /*|| e.getHealt() <= 0*/;
     }
 
     public Player getPlayer() {
