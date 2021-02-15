@@ -8,14 +8,14 @@ import static org.junit.Assert.*;
 
 public class TestBattle {
     private Player p = new PlayerImp(new DeckImpl());
-    private Enemy e = new EnemyImp(new DeckImpl());
+    private Enemy e = new EnemyImp(new DeckImpl(), new Point2DImp(0, 0));
     private Battle b;
 
     @Test
     public void testCards() {
         b = new BattleImpl(p, e);
-        p.getDeck().addCard(new CardImpl(3, 0, 0, "Card name", "cardpath"));
-        p.getDeck().addCard(new CardImpl(0, 2, 0, "Card name 2", "cardpath"));
+        p.getDeck().addCard(new CardImpl.Builder().attack(3).shield(0).cost(0).name("Sample card").resourcePath("").build());
+        p.getDeck().addCard(new CardImpl.Builder().attack(0).shield(2).cost(0).name("Sample card 2").resourcePath("").build());
         /**
          * The deck should have 2 cards
          * */
@@ -30,7 +30,7 @@ public class TestBattle {
     @Test
     public void testPlayerShield() {
         b = new BattleImpl(p, e);
-        p.getDeck().addCard(new CardImpl(0, 2, 0, "Shield card", "cardpath")); // Adding a sample card in the player's deck that gives 2 shield
+        p.getDeck().addCard(new CardImpl.Builder().attack(0).shield(2).cost(0).name("Shield card").resourcePath("").build()); // Adding a sample card in the player's deck that gives 2 shield
         p.getHand().addCard(p.getDeck().popCard().get()); // Adding the card to the player's hand
         b.playCard(0); // Playing the card
         assertEquals(2, p.getShield());
