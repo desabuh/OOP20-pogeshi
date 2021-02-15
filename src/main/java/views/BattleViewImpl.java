@@ -31,7 +31,7 @@ public final class BattleViewImpl extends Application implements BattleView {
         final Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
         stage.setTitle("Pogeshi - Battle stage");
         stage.setScene(scene);
-
+        stage.setResizable(false);
         stage.show();
     }
 
