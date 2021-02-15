@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "cost": 3,
+    "attack": 5,
+    "shield": 2,
+    "name": "Card2",
+    "resourcePath": "res/images/card2.png",
+    "description": "DESC"
+  },
+  {
+    "id": 2,
+    "cost": 2,
+    "attack": 1,
+    "shield": 2,
+    "name": "Card3",
+    "resourcePath": "res/images/card3.png",
+    "description": "DESC"
+  },
+  {
+    "id": 4,
+    "cost": 5,
+    "attack": 6,
+    "shield": 1,
+    "name": "Card5",
+    "resourcePath": "res/images/card5.png",
+    "description": "DESC"
+  },
+  {
+    "id": 5,
+    "cost": 3,
+    "attack": 1,
+    "shield": 4,
+    "name": "Card6",
+    "resourcePath": "res/images/card6.png",
+    "description": "DESC"
+  },
+  {
+    "id": 8,
+    "cost": 1,
+    "attack": 0,
+    "shield": 2,
+    "name": "Card9",
+    "resourcePath": "res/images/card9.png",
+    "description": "DESC"
+  },
+  {
+    "id": 9,
+    "cost": 7,
+    "attack": 5,
+    "shield": 5,
+    "name": "Card10",
+    "resourcePath": "res/images/card10.png",
+    "description": "DESC"
+  },
+  {
+    "id": 11,
+    "cost": 3,
+    "attack": 4,
+    "shield": 3,
+    "name": "Card12",
+    "resourcePath": "res/images/card12.png",
+    "description": "DESC"
+  },
+  {
+    "id": 14,
+    "cost": 10,
+    "attack": 20,
+    "shield": 20,
+    "name": "Card15",
+    "resourcePath": "res/images/card15.png",
+    "description": "DESC"
+  },
+  {
+    "id": 12,
+    "cost": 0,
+    "attack": 0,
+    "shield": 1,
+    "name": "Card13",
+    "resourcePath": "res/images/card13.png",
+    "description": "DESC"
+  },
+  {
+    "id": 0,
+    "cost": 1,
+    "attack": 1,
+    "shield": 1,
+    "name": "Card1",
+    "resourcePath": "res/images/card1.png",
+    "description": "DESC"
+  }
+]

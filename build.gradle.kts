@@ -1,5 +1,6 @@
 // Declaration of the Gradle extension to use
 plugins {
+    eclipse
     java
     application
     /*
@@ -26,6 +27,7 @@ val supportedPlatforms = listOf("linux", "mac", "win")
 dependencies {
     implementation("com.google.inject:guice:5.0.0-BETA-1")
     implementation("com.google.guava:guava:28.1-jre")
+    implementation("com.google.code.gson:gson:2.8.6")
     // JavaFX: comment out if you do not need them
     for (platform in supportedPlatforms) {
         for (module in javaFXModules) {

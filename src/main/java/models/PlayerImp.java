@@ -20,7 +20,7 @@ public final class PlayerImp extends CharacterImp implements Player {
         setMana(1);
         setPosition(new Point2DImp(0, 0));
         this.deck = deck;
-        this.hand = new HandImp();  //TODO: modify in case the implemantation name isn't HandImp
+        this.hand = new HandImpl();  //TODO: modify in case the implemantation name isn't HandImp
     }
 
     /**
@@ -36,7 +36,7 @@ public final class PlayerImp extends CharacterImp implements Player {
         setShield(shield);
         setMana(mana);
         setPosition(position);
-        this.hand = new HandImp();  //TODO: modify in case the implemantation name isn't HandImp
+        this.hand = new HandImpl();  //TODO: modify in case the implemantation name isn't HandImp
     }
 
     /**
@@ -50,7 +50,7 @@ public final class PlayerImp extends CharacterImp implements Player {
         setShield(0);
         setMana(1);
         setPosition(position);
-        this.hand = new HandImp();  //TODO: modify in case the implemantation name isn't HandImp
+        this.hand = new HandImpl();  //TODO: modify in case the implemantation name isn't HandImp
     }
 
     @Override
