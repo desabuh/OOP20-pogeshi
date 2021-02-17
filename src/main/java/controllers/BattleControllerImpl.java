@@ -3,7 +3,6 @@ package controllers;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -40,10 +39,6 @@ public final class BattleControllerImpl implements BattleController {
      * */
     public static final int CARD_WIDTH = 150;
 
-    /*private Player p = new PlayerImpl(MAX_PLAYER_HEALTH);
-    private Enemy e = new EnemyImpl(MAX_ENEMY_HEALTH);*/
-    //private Player p = new PlayerImp(new DeckImpl());
-    //private Enemy e = new EnemyImp(new DeckImpl());
     private Battle b = new BattleImpl();
 
     @FXML
@@ -97,6 +92,7 @@ public final class BattleControllerImpl implements BattleController {
                     BTNEndTurn.fire();
                 } else {
                     updateManaLabel(b.getPlayerUnusedCombatMana(), b.getPlayer().getMana());
+                    addLatestCardToHand();
                 }
             }
         });
@@ -136,7 +132,7 @@ public final class BattleControllerImpl implements BattleController {
             /**
              * The enemy has no mana and a card can always be played
              * */
-            //b.playCard(0);
+            b.playCard(index);
         }
         if (b.checkBattleEnd()) {
             Alert battleFinish = new Alert(AlertType.INFORMATION);
@@ -175,7 +171,7 @@ public final class BattleControllerImpl implements BattleController {
             LBLPlayerDamage.setText("-" + String.valueOf(c.getAttack()));
             LBLPlayerHealth.setText(String.valueOf(b.getPlayer().getHealth()));
             LBLPlayerShield.setText(String.valueOf(b.getPlayer().getShield()));
-            //LBLEnemyShield.setText(String.valueOf(e.getShield()));
+            //LBLEnemyShield.setText(String.valueOf(b.getEnemy().getShield()));
             LBLEnemyDamage.setVisible(false);
             LBLPlayerDamage.setVisible(true);
         }
@@ -189,12 +185,23 @@ public final class BattleControllerImpl implements BattleController {
         img.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(final MouseEvent event) {
-                // TODO Auto-generated method stub
                 selectedCard(i);
             }
 
         });
 
+    }
+    /**
+     * Used to add the latest drawn card to the view.
+     * */
+    private void addLatestCardToHand() {
+        Card latest = b.getPlayer().getHand().getCards().get(b.getPlayer().getHand().getCards().size() - 1);
+        ImageView card = new ImageView();
+        card.setImage(new Image(new File(latest.getResourcePath()).toURI().toString()));
+        card.setFitWidth(CARD_WIDTH);
+        card.setPreserveRatio(true);
+        attachSelectEvent(card, HBPlayerHand.getChildren().size());
+        HBPlayerHand.getChildren().add(card);
     }
 
 }
