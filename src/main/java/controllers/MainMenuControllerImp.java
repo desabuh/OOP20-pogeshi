@@ -8,36 +8,27 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import models.Account;
-import models.AccountImp;
-import models.Card;
-import models.CardImpl;
+import models.Account.Account;
+import models.Account.AccountImp;
+import notifier.EventBus;
+import notifier.GuavaEventBusAdapter;
 
-public final class AccountControllerImp implements AccountController {
+public final class MainMenuControllerImp implements MainMenuController {
 
-    private Account account = new AccountImp();
+    private final Account account;
+    private final EventBus<Integer> event;
 
-    private void changeStage(final MouseEvent  e, final String fxmlFileName) {
-        try {
-            Parent secondarySceneTree = FXMLLoader.load(ClassLoader.getSystemResource("layouts/" + fxmlFileName + ".fxml"));
-            Scene secondaryScene = new Scene(secondarySceneTree);
-            Stage stage = (Stage) ((Parent) e.getSource()).getScene().getWindow();
-            stage.setScene(secondaryScene);
-            stage.show();
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
+    public MainMenuControllerImp() {
+        account = new AccountImp();
+        event = new GuavaEventBusAdapter<Integer>(new com.google.common.eventbus.EventBus());
     }
 
     /*TODO: Change it later
     @FXML
     @Override
     public void giocaClick() {
-        final Scene scene = SceneManager.of(LAYOUT.WORLDMAP).getScene();
-        this.setTitle("WorldMap");
-        this.setScene(scene);
-        this.show();
+        changeStage(e, "worldMap.fxml");
+        event.notifyListener(0);
     }
      */
 
@@ -53,15 +44,12 @@ public final class AccountControllerImp implements AccountController {
         account.deleteSaves();
         giocaClick();
     }
+
     /*TODO: Change it later
     @FXML
     @Override
     public void formaDeckClick() {
-        final Scene scene = SceneManager.of("layout/DeckMenu").getScene();
-        this.setTitle("DeckFormation");
-        this.setScene(scene);
-        this.show();
-
+        changeStage(e, "deck_view.fxml");
     }
     */
     @FXML
@@ -71,11 +59,7 @@ public final class AccountControllerImp implements AccountController {
 
     }
 
-    @Override
-    public void indietroClick(final MouseEvent  e) {
-        changeStage(e, "MainMenu");
-    }
-
+    @FXML
     @Override
     public void giocaClick() {
         // TODO: Temp function
@@ -87,10 +71,24 @@ public final class AccountControllerImp implements AccountController {
         //account.lose();
     }
 
+    @FXML
     @Override
     public void formaDeckClick() {
         // TODO: Temp funcion
 
+    }
+
+    private void changeStage(final MouseEvent  e, final String fxmlFileName) {
+        try {
+            Parent secondarySceneTree = FXMLLoader.load(ClassLoader.getSystemResource("layouts/" + fxmlFileName + ".fxml"));
+            Scene secondaryScene = new Scene(secondarySceneTree);
+            Stage stage = (Stage) ((Parent) e.getSource()).getScene().getWindow();
+            stage.setScene(secondaryScene);
+            stage.show();
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
     }
 
 }
