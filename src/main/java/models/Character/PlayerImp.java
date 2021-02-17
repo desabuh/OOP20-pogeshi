@@ -1,4 +1,10 @@
-package models;
+package models.Character;
+
+import models.Deck;
+import models.Hand;
+import models.HandImpl;
+import models.GameMap.Point2D;
+import models.GameMap.Point2DImp;
 
 public final class PlayerImp extends CharacterImp implements Player {
 
@@ -8,61 +14,73 @@ public final class PlayerImp extends CharacterImp implements Player {
 
     /**
      * Constructor with default parameters and custom deck.
-     * health = 100
-     * shield = 0
-     * mana = 1
-     * position = (0, 0)
-     * @param deck
+     * <p>
+     * <ul>
+     * <li>{@code health} = 100</li>
+     * <li>{@code shield} = 0</li>
+     * <li>{@code mana} = 1</li>
+     * <li>{@code position} = (0, 0)</li>
+     * </ul>
+     * <p>
+     * @param deck  The {@code deck} of the {@code player}.
      */
     public PlayerImp(final Deck deck) {
-        setHealth(100);
-        setShield(0);
+        super(100, new Point2DImp(0, 0), deck, 0);
         setMana(1);
-        setPosition(new Point2DImp(0, 0));
-        this.deck = deck;
         this.hand = new HandImpl();  //TODO: modify in case the implemantation name isn't HandImp
     }
 
     /**
      * Constructor with custom parameters.
-     * @param deck
-     * @param health
-     * @param shield
-     * @param mana
-     * @param position
+     * @param deck      The {@code deck} of the {@code player}.
+     * @param health    The {@code health} of the {@code player}.
+     * @param shield    The {@code shield} of the {@code player}. 
+     * @param mana      The {@code mana} of the {@code player}.
+     * @param position  The {@code position} of the {@code player}.
      */
     public PlayerImp(final Deck deck, final int health, final int shield, final int mana, final Point2D position) {
-        setHealth(health);
-        setShield(shield);
+        super(health, position, deck, shield);
         setMana(mana);
-        setPosition(position);
         this.hand = new HandImpl();  //TODO: modify in case the implemantation name isn't HandImp
     }
 
     /**
      * Constructor with default mana and shield but custom deck, health and position.
-     * @param deck
-     * @param health
-     * @param position
+     * <p>
+     * <ul>
+     * <li>{@code shield} = 0</li>
+     * <li>{@code mana} = 1</li>
+     * </ul>
+     * <p>
+     * @param deck      The {@code deck} of the {@code player}.
+     * @param health    The {@code health} of the {@code player}.
+     * @param position  The {@code position} of the {@code player}.
      */
     public PlayerImp(final Deck deck, final int health, final Point2D position) {
-        setHealth(health);
-        setShield(0);
+        super(health, position, deck, 0);
         setMana(1);
-        setPosition(position);
         this.hand = new HandImpl();  //TODO: modify in case the implemantation name isn't HandImp
     }
 
+    /**
+     * Set the {@code position} equal to the passed position.
+     */
     @Override
     public void setPosition(final Point2D destination) {
         this.position = destination;
     }
 
+    /**
+     * Return the value of the {@code mana}.
+     */
     @Override
     public int getMana() {
         return this.mana;
     }
 
+    /**
+     * Set the {@code mana} equals to the passed value.
+     */
     @Override
     public void setMana(final int value) {
         if (!(value < 0 || value > this.maxMana)) {
@@ -70,6 +88,9 @@ public final class PlayerImp extends CharacterImp implements Player {
         }
     }
 
+    /**
+     * Return the value of the {@code hand}.
+     */
     @Override
     public Hand getHand() {
         return this.hand;
