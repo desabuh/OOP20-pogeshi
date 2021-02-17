@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 
 public class TestBattle {
     private Player p = new PlayerImp(new DeckImpl());
-    private Enemy e = new EnemyImp(new DeckImpl(), new Point2DImp(0, 0));
+    private EnemyImp e = new EnemyImp(new DeckImpl(), new Point2DImp(0, 0));
     private Battle b;
 
     @Test
