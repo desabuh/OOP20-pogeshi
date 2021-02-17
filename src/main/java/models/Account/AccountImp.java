@@ -1,11 +1,18 @@
-package models;
+package models.Account;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-
+import java.util.Random;
 import java.lang.reflect.Type;
 import com.google.gson.reflect.TypeToken;
+
+import models.Card;
+import models.CardImpl;
+import models.Deck;
+import models.DeckImpl;
+import models.Account.FileManager.FileManager;
+import models.Account.FileManager.FileManagerImp;
 
 public final class AccountImp implements Account {
 
@@ -20,6 +27,9 @@ public final class AccountImp implements Account {
     private final FileManagerImp<Statistics> fileStatistics;
     private final FileManagerImp<LinkedList<Card>> fileDefaultDeck;
 
+    /**
+     * Load default saves if existing or create default ones.
+     */
     public AccountImp() {
 
         this.fileDeck = new FileManagerImp<LinkedList<Card>>(SAVES_PATH + "Deck.json");
@@ -49,41 +59,73 @@ public final class AccountImp implements Account {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Return the value of {@code deck}.
+     */
     //TODO: to test
     @Override
     public Deck getDeck() {
         return this.deck;
     }
+
+    /**
+     * Return a {@code List<Card>} of the {@code remaining cards}.
+     */
     //TODO: to test
     @Override
     public List<Card> getRemainingCards() {
         return this.remainingCards;
     }
-    //TODO: to test
+
+    /**
+     * Return a {@code obj statistics} of the statistics of the {@code Account}.
+     */
     @Override
     public Statistics getStatistics() {
         return this.statistics;
     }
-    //TODO: not sure how to do? How do i generate a random Card?
+
+    /**
+     * Load all the {@code cards} from file and then select one at random.
+     * After checking if the {@code deck} or the {@code remaining cards} already have
+     * the selected card, the card get added to the {@code remaining cards} and the
+     * {@code statistics} get updated.
+     */
+    //TODO: to test
     @Override
-    public void win() {
-        Card card = new Card(); //TODO: generate random card
-        if (this.deck.getCards().contains(card) || remainingCards.contains(card)) {
-            this.statistics.updateOnWin(true);
-        } else {
-            this.statistics.updateOnWin(false);
+    public void win() throws IOException {
+        try {
+            final FileManager<LinkedList<Card>> fileAllCards = new FileManagerImp<LinkedList<Card>>(JSONS_PATH + "ListOfCards.json");
+            final LinkedList<Card> allCards = fileAllCards.load(LINKED_LIST_TYPE);
+            final Random random = new Random();
+            final Card card = allCards.get(random.nextInt(allCards.size()));
+            if (this.deck.getCards().contains(card) || remainingCards.contains(card)) {
+                this.statistics.updateOnWin(true);
+            } else {
+                this.statistics.updateOnWin(false);
+            }
+            this.remainingCards.add(card);
+            this.fileStatistics.save(this.statistics);
+            this.fileRemainingCards.save((LinkedList<Card>) this.remainingCards);
+        } catch (IOException e) {
+            throw new IOException("ListOfCards.json is missing");
         }
-        this.remainingCards.add(card);
-        this.fileStatistics.save(this.statistics);
-        this.fileRemainingCards.save((LinkedList<Card>) this.remainingCards);
     }
 
+    /**
+     * Update the loses of the {@code statistics}.
+     */
     @Override
     public void lose() {
         this.statistics.updateOnLose();
         this.fileStatistics.save(this.statistics);
     }
 
+    /**
+     * Add {@code card} to the {@code deck},
+     * and remove it from the {@code remaining cards}.
+     */
     @Override
     public void addCardToDeck(final Card card) {
         if (this.remainingCards.contains(card) && !this.deck.isDeckFull()) {
@@ -92,6 +134,10 @@ public final class AccountImp implements Account {
         }
     }
 
+    /**
+     * Remove {@code card} from the {@code deck},
+     * and add it in the {@code deck}.
+     */
     @Override
     public void removeCardFromDeck(final Card card) {
         if (this.deck.isCardInDeck(card)) {
@@ -100,12 +146,18 @@ public final class AccountImp implements Account {
         }
     }
 
+    /**
+     * Save the {@code deck} and the {@code remaing cards} on file.
+     */
     @Override
     public void save() {
         this.fileDeck.save((LinkedList<Card>) this.deck.getCards());
         this.fileRemainingCards.save((LinkedList<Card>) this.remainingCards);
     }
 
+    /**
+     * Overwrite all saves with the default ones.
+     */
     @Override
     public void deleteSaves() {
         try {
