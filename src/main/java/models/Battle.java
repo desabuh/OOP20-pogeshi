@@ -22,15 +22,15 @@ public interface Battle {
     Character currentTurn();
 
     /**
-     * Checks if the card is playable with a certain amount of mana.
-     * @param index The index of the card in the character's hand
-     * @return TRUE if the card can be played, FALSE otherwise
+     * Tries to play a card specified by the index
+     * @param index The index of the card in the current turn's character's hand
+     * @return TRUE if the card could be played, FALSE otherwise
      * */
     boolean playCard(int index);
 
     Player getPlayer();
 
-    Enemy getEnemy();
+    EnemyImp getEnemy();
 
     void initializeCharacters();
 
