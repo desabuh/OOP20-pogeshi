@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.collect.Iterables;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,6 +17,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import models.Battle;
 import models.BattleImpl;
 import models.Card;
@@ -65,6 +70,8 @@ public final class BattleControllerImpl implements BattleController {
     private ImageView IMGPlayer;
     @FXML
     private ImageView IMGEnemy;
+    @FXML
+    private TextFlow txtCardInfo;
 
     @FXML
     public void initialize() {
@@ -79,9 +86,10 @@ public final class BattleControllerImpl implements BattleController {
             card.setImage(new Image(new File(hand.get(i).getResourcePath()).toURI().toString()));
             card.setFitWidth(CARD_WIDTH);
             card.setPreserveRatio(true);
-            attachSelectEvent(card, i);
+            attachSelectEvent(hand.get(i), card, i);
             HBPlayerHand.getChildren().add(card);
         }
+        //regenerateHand();
         BTNEndTurn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -92,7 +100,9 @@ public final class BattleControllerImpl implements BattleController {
                     BTNEndTurn.fire();
                 } else {
                     updateManaLabel(b.getPlayerUnusedCombatMana(), b.getPlayer().getMana());
-                    addLatestCardToHand();
+                    if (HBPlayerHand.getChildren().size() != b.getPlayer().getHand().getCards().size()) {
+                        addLatestCardToHand();
+                    }
                 }
             }
         });
@@ -132,7 +142,9 @@ public final class BattleControllerImpl implements BattleController {
             /**
              * The enemy has no mana and a card can always be played
              * */
+            selected = Iterables.getFirst(b.getEnemy().getDeck().getCards(), null);
             b.playCard(index);
+            updateLabels(selected);
         }
         if (b.checkBattleEnd()) {
             Alert battleFinish = new Alert(AlertType.INFORMATION);
@@ -156,32 +168,33 @@ public final class BattleControllerImpl implements BattleController {
         List<Card> hand = new ArrayList<>(b.getPlayer().getHand().getCards());
         for (int i = startingIndex; i < hand.size(); i++) {
             System.out.println(startingIndex);
-            attachSelectEvent((ImageView) HBPlayerHand.getChildren().get(i), i);
+            attachSelectEvent(hand.get(i), (ImageView) HBPlayerHand.getChildren().get(i), i);
         }
     }
 
     private void updateLabels(final Card c) {
         if (b.currentTurn() instanceof Player) {
             LBLEnemyDamage.setText("-" + String.valueOf(c.getAttack()));
-            //LBLEnemyHealth.setText(String.valueOf(e.getHealth()));
-            updateManaLabel(b.getPlayerUnusedCombatMana(), b.getPlayer().getMana());
+            LBLEnemyHealth.setText(String.valueOf(b.getEnemy().getHealth()));
             LBLEnemyDamage.setVisible(true);
             LBLPlayerDamage.setVisible(false);
+            updateManaLabel(b.getPlayerUnusedCombatMana(), b.getPlayer().getMana());
         } else {
             LBLPlayerDamage.setText("-" + String.valueOf(c.getAttack()));
             LBLPlayerHealth.setText(String.valueOf(b.getPlayer().getHealth()));
-            LBLPlayerShield.setText(String.valueOf(b.getPlayer().getShield()));
-            //LBLEnemyShield.setText(String.valueOf(b.getEnemy().getShield()));
             LBLEnemyDamage.setVisible(false);
             LBLPlayerDamage.setVisible(true);
         }
+        LBLEnemyShield.setText(String.valueOf(b.getEnemy().getShield()));
+        LBLPlayerShield.setText(String.valueOf(b.getPlayer().getShield()));
+
     }
 
     private void updateManaLabel(final int unspent, final int max) {
         LBLMana.setText("Mana: " + String.valueOf(unspent) + " / " + String.valueOf(max));
     }
 
-    private void attachSelectEvent(final ImageView img,  final int i) {
+    private void attachSelectEvent(final Card c, final ImageView img,  final int i) {
         img.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(final MouseEvent event) {
@@ -189,19 +202,66 @@ public final class BattleControllerImpl implements BattleController {
             }
 
         });
+        /**
+         * Shows the card's properties on the right side of the hand.
+         * */
+        img.setOnMouseEntered(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(final MouseEvent event) {
+                Text cardDescription = new Text(
+                        "Card name: " + c.getName() + "\n"
+                        + "Mana cost: " + c.getCost() + "\n"
+                        + "Damage: " + String.valueOf(c.getAttack()) + "\n"
+                        + "Shield added: " + String.valueOf(c.getShield()) + "\n\n"
+                        + "Description: " + c.getDescription()
+                        );
+                cardDescription.setStyle("-fx-font: 18 arial;");
+                txtCardInfo.getChildren().add(cardDescription);
+            }
+        });
+
+        /**
+         * Hides the card's properties.
+         * */
+        img.setOnMouseExited(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(final MouseEvent event) {
+                final int totalTexts = txtCardInfo.getChildren().size();
+                for (int i = 0; i < totalTexts; i++) {
+                    txtCardInfo.getChildren().remove(0);
+                }
+            }
+        });
 
     }
     /**
      * Used to add the latest drawn card to the view.
      * */
     private void addLatestCardToHand() {
-        Card latest = b.getPlayer().getHand().getCards().get(b.getPlayer().getHand().getCards().size() - 1);
+        Card latest = Iterables.getLast(b.getPlayer().getHand().getCards()); // Found on StackOverflow, a more elegant way to get the latest card instead of size() - 1
         ImageView card = new ImageView();
         card.setImage(new Image(new File(latest.getResourcePath()).toURI().toString()));
         card.setFitWidth(CARD_WIDTH);
         card.setPreserveRatio(true);
-        attachSelectEvent(card, HBPlayerHand.getChildren().size());
+        attachSelectEvent(latest, card, HBPlayerHand.getChildren().size());
         HBPlayerHand.getChildren().add(card);
     }
+
+    /*private void regenerateHand() {
+        for (int i = 0; i < HBPlayerHand.getChildren().size(); i++) {
+            HBPlayerHand.getChildren().remove(0);
+        }
+        List<Card> hand = new ArrayList<>(b.getPlayer().getHand().getCards());
+        for (int i = 0; i < hand.size(); i++) {
+            ImageView card = new ImageView();
+            card.setImage(new Image(new File(hand.get(i).getResourcePath()).toURI().toString()));
+            card.setFitWidth(CARD_WIDTH);
+            card.setPreserveRatio(true);
+            attachSelectEvent(card, i);
+            HBPlayerHand.getChildren().add(card);
+        }
+    }*/
 
 }
