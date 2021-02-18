@@ -6,10 +6,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
 
 <Pane fx:id="MainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.BattleControllerImpl">
    <children>
-      <Label fx:id="LBLPlayerHealth" alignment="CENTER" layoutX="201.0" layoutY="389.0" prefHeight="45.0" prefWidth="39.0" text="30" textFill="LIME">
+      <Label fx:id="LBLPlayerHealth" alignment="CENTER" layoutX="201.0" layoutY="389.0" prefHeight="45.0" prefWidth="63.0" text="30" textFill="LIME">
          <font>
             <Font size="30.0" />
          </font>
@@ -19,12 +20,12 @@
             <Font size="30.0" />
          </font>
       </Label>
-      <Label fx:id="LBLPlayerDamage" alignment="CENTER" layoutX="296.0" layoutY="317.0" prefHeight="45.0" prefWidth="39.0" text="-2" textFill="RED" visible="false">
+      <Label fx:id="LBLPlayerDamage" alignment="CENTER" layoutX="296.0" layoutY="317.0" prefHeight="45.0" prefWidth="54.0" text="-2" textFill="RED" visible="false">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
-      <Label fx:id="LBLEnemyDamage" alignment="CENTER" layoutX="1532.0" layoutY="117.0" prefHeight="45.0" prefWidth="39.0" text="-2" textFill="RED" visible="false">
+      <Label fx:id="LBLEnemyDamage" alignment="CENTER" layoutX="1532.0" layoutY="117.0" prefHeight="45.0" prefWidth="54.0" text="-2" textFill="RED" visible="false">
          <font>
             <Font size="30.0" />
          </font>
@@ -34,7 +35,7 @@
             <Font size="30.0" />
          </font>
       </Label>
-      <Label fx:id="LBLEnemyHealth" alignment="CENTER" layoutX="1451.0" layoutY="183.0" prefHeight="45.0" prefWidth="39.0" text="10" textFill="LIME">
+      <Label fx:id="LBLEnemyHealth" alignment="CENTER" layoutX="1451.0" layoutY="183.0" prefHeight="45.0" prefWidth="63.0" text="10" textFill="LIME">
          <font>
             <Font size="30.0" />
          </font>
@@ -42,7 +43,7 @@
       <ImageView fx:id="IMGPlayer" fitHeight="293.0" fitWidth="313.0" layoutX="159.0" layoutY="463.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="IMGEnemy" fitHeight="293.0" fitWidth="313.0" layoutX="1395.0" layoutY="243.0" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="BTNEndTurn" layoutX="1680.0" layoutY="700.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="107.0" text="Passa turno" />
-      <HBox fx:id="HBPlayerHand" layoutX="21.0" layoutY="767.0" prefHeight="284.0" prefWidth="1870.0" />
+      <HBox fx:id="HBPlayerHand" layoutX="21.0" layoutY="767.0" prefHeight="284.0" prefWidth="1554.0" />
       <Label fx:id="LBLMana" alignment="CENTER" layoutX="633.0" layoutY="700.0" prefHeight="45.0" prefWidth="259.0" text="Mana:" textFill="#00fcff">
          <font>
             <Font size="25.0" />
@@ -53,5 +54,6 @@
             <Font size="25.0" />
          </font>
       </Label>
+      <TextFlow fx:id="txtCardInfo" layoutX="1611.0" layoutY="767.0" prefHeight="284.0" prefWidth="246.0" />
    </children>
 </Pane>
