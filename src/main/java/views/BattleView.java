@@ -1,9 +1,17 @@
 package views;
 
+import javafx.scene.image.ImageView;
+
 public interface BattleView {
-    public void removeCard(int index);
+    void removeCard(int index);
 
-    public void showEnemyDamage(int amount);
+    void addCard(ImageView img);
 
-    public void updateManaLabel(int unspent, int max);
+    void showEnemyDamage(int amount);
+
+    void updateManaLabel(int unspent, int max);
+
+    void updateEnemyStats(int health, int shield);
+
+    void updatePlayerStats(int health, int shield);
 }
