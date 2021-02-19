@@ -3,6 +3,8 @@ package models;
 import java.util.Iterator;
 import java.util.Optional;
 
+import models.GameMap.Point2DImp;
+
 public final class BattleImpl implements Battle {
 
     /**
@@ -19,7 +21,7 @@ public final class BattleImpl implements Battle {
     private boolean hasBattleFinished = false;
     private Player p;
     private EnemyImp e;
-    private Iterator<Card> deckIterator;
+    private CardIterator deckIterator;
     // TODO: IteratorPattern
     // TODO: StatePattern?
 
@@ -30,7 +32,7 @@ public final class BattleImpl implements Battle {
 
     public BattleImpl() {
         p = new PlayerImp(new DeckImpl());
-        e = new EnemyImp(new DeckImpl(), new Point2DImp(0, 0));
+        e = new EnemyImp(new DeckImpl(), Point2DImp.setPoint(0, 0));
     }
 
     public BattleImpl(final Player p) {
@@ -57,7 +59,7 @@ public final class BattleImpl implements Battle {
 
     public void initializeCharacters() {
         checkBattleStatus();
-        deckIterator = p.getDeck().getCards().iterator();
+        deckIterator = new CardIterator(p.getDeck().getCards());
         if (hasBeenInitialized) {
             throw new IllegalStateException("Both opponents of the battle have already been initialized.");
         }
@@ -176,15 +178,11 @@ public final class BattleImpl implements Battle {
         Optional<Card> next = Optional.empty();
 
         while (next.isEmpty()) {
-            if (!deckIterator.hasNext()) {
-                deckIterator = p.getDeck().getCards().iterator(); 
-            }
             next = Optional.of(deckIterator.next());
             if (p.getHand().getCards().contains(next.get())) {
                 next = Optional.empty();
             }
         }
-        
 
         if (turn == Turn.PLAYER && p.getHand().getCards().size() < MAX_CARDS_IN_HAND) {
             p.getHand().addCard(next.get());
