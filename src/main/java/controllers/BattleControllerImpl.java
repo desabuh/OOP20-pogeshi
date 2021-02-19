@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.collect.Iterables;
+import com.google.inject.Inject;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -29,6 +31,10 @@ import models.Enemy;
 import models.EnemyImp;
 import models.Player;
 import models.PlayerImp;
+import views.BattleView;
+import views.View;
+import views.scene.SceneManager;
+import views.scene.layout.LAYOUT;
 
 public final class BattleControllerImpl implements BattleController {
     /**
@@ -41,6 +47,7 @@ public final class BattleControllerImpl implements BattleController {
     public static final int CARD_WIDTH = 150;
 
     private Battle b = new BattleImpl();
+    private BattleView battleView;
 
     @FXML
     private Label LBLPlayerHealth;
@@ -68,10 +75,19 @@ public final class BattleControllerImpl implements BattleController {
     private ImageView IMGEnemy;
     @FXML
     private TextFlow txtCardInfo;
-    
-    
+
+    @Inject
+    public BattleControllerImpl(Battle battle, BattleView battleView) {
+        this.b = battle;
+        this.battleView = battleView;
+    }
+
     @FXML
     public void initialize() {
+        Platform.runLater(() -> {
+                this.battleView.setScene(SceneManager.of(LAYOUT.BATTLE).getScene());
+                battleView.initializeParams();
+            });
         b.initializeCharacters();
         IMGPlayer.setImage(new Image(new File("res" + File.separator + "images" + File.separator + "PlayerImage.png").toURI().toString()));
         IMGEnemy.setImage(new Image(new File("res" + File.separator + "images" + File.separator + "EnemyImage.png").toURI().toString()));
@@ -86,11 +102,14 @@ public final class BattleControllerImpl implements BattleController {
             attachSelectEvent(hand.get(i), card, i);
             HBPlayerHand.getChildren().add(card);
         }
+        
+        
         //regenerateHand();
         BTNEndTurn.setOnAction(new EventHandler<ActionEvent>() {
-
+            
             @Override
             public void handle(final ActionEvent event) {
+                battleView.updatePlayerStats(3, 0);
                 b.endTurn();
                 if (b.currentTurn() instanceof Enemy) {
                     selectedCard(0);
@@ -103,6 +122,13 @@ public final class BattleControllerImpl implements BattleController {
                 }
             }
         });
+    }
+    
+    private void initializeScene() {
+        /*IMGPlayer.setImage(new Image(new File("res" + File.separator + "images" + File.separator + "PlayerImage.png").toURI().toString()));
+        IMGEnemy.setImage(new Image(new File("res" + File.separator + "images" + File.separator + "EnemyImage.png").toURI().toString()));
+        LBLPlayerHealth.setText(String.valueOf(b.getPlayer().getHealth()));
+        updateManaLabel(b.getPlayerUnusedCombatMana(), b.getPlayer().getMana());*/
     }
 
     private void selectedCard(final int index) {
@@ -244,6 +270,23 @@ public final class BattleControllerImpl implements BattleController {
         card.setPreserveRatio(true);
         attachSelectEvent(latest, card, HBPlayerHand.getChildren().size());
         HBPlayerHand.getChildren().add(card);
+    }
+
+    @Override
+    public View getView() {
+        return this.battleView;
+    }
+
+    @Override
+    public void callBackAction(final Object data) {
+        if (data instanceof Player) {
+            //b.setPlayer(data);
+        }
+        // TODO Auto-generated method stub
+    }
+
+    private boolean battleFinish() {
+        return true;
     }
 
     /*private void regenerateHand() {
