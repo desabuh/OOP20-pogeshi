@@ -1,4 +1,4 @@
-package models;
+package models.GameMap;
 
 public interface Point2D {
 
@@ -6,13 +6,9 @@ public interface Point2D {
 
     int getY();
 
-    void setX(int x);
+    Point2D setX(int x);
 
-    void setY(int y);
+    Point2D setY(int y);
 
-    void setBoth(int x, int y);
-
-    void sum(Point2D value);
-
-    void sum(int x, int y);
+    Point2D sum(int x, int y);
 }
