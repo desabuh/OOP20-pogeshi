@@ -1,9 +1,8 @@
 package views.drawer;
 
 
-import java.sql.Time;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
+
+import java.util.Map.Entry;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -19,6 +18,8 @@ public final class CanvasDrawer implements Drawer<Canvas> {
     private Canvas canvas;
     private final BiMap<Point2D, Shape> shapeDisplayed = HashBiMap.create();
     private GraphicsContext gc;
+    
+    public static Point2D test;
 
     public CanvasDrawer(final Canvas canvas) {
         this.canvas = canvas;
@@ -28,23 +29,42 @@ public final class CanvasDrawer implements Drawer<Canvas> {
 
 
     @Override
-    public void draw(final Render render, final int x, final int y) {
+    public void draw(final Render render, final Point2D source, final Point2D destination) {
 
-        MovableShape shape = new MovableShapeImpl(
-                new Rectangle(this.gc, render.getWidth(), render.getHeigth(), x, y));
+        System.out.println(this.shapeDisplayed);
 
-        this.shapeDisplayed.put(new Point2D(x, y), shape);
+        if (this.shapeDisplayed.containsKey(source)) {
 
-    }
 
-    @Override
-    public void reDraw(final Point2D source, final Point2D destination) {
+            MovableShape shape = this.shapeDisplayed.entrySet().stream()
+                    .filter(x -> x.getKey().equals(source))
+                    .map(Entry::getValue)
+                    .map(MovableShapeImpl::new)
+                    .findAny()
+                    .get();
+            
 
-        if (this.shapeDisplayed.containsKey(source) && (this.shapeDisplayed.get(source) instanceof MovableShape)) {
 
-            ((MovableShape) this.shapeDisplayed.get(source))
-            .moveTo((int) destination.getX(), (int) destination.getY());
+            this.shapeDisplayed.remove(source);
+
+            shape.moveTo((int) destination.getX(), (int) destination.getY());
+
+            this.shapeDisplayed.put(destination, shape);
+            
+            this.shapeDisplayed.remove(source);
+            
+            
+            
+            
+
+
+        }
+        else {
+            this.shapeDisplayed
+            .put(destination, new Rectangle(gc, render.getWidth(), render.getHeigth(), (int) destination.getY(), (int) destination.getX()));
         }
 
     }
+
 }
+
