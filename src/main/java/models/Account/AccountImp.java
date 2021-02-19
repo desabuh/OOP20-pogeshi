@@ -1,5 +1,6 @@
 package models.Account;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,19 +20,21 @@ public final class AccountImp implements Account {
     private Deck deck;
     private List<Card> remainingCards;
     private Statistics statistics;
-    private static final String SAVES_PATH = "res\\saves\\";
-    private static final String JSONS_PATH = "res\\jsons\\";
+    private static final String SAVES_PATH = "res" + File.separator + "saves" + File.separator;
+    private static final String JSONS_PATH = "res" + File.separator + "jsons" + File.separator;
     private static final Type LINKED_LIST_TYPE = new TypeToken<LinkedList<CardImpl>>() { }.getType();
     private final FileManagerImp<LinkedList<Card>> fileDeck;
     private final FileManagerImp<LinkedList<Card>> fileRemainingCards;
     private final FileManagerImp<Statistics> fileStatistics;
     private final FileManagerImp<LinkedList<Card>> fileDefaultDeck;
+    private final Random random;
 
     /**
      * Load default saves if existing or create default ones.
      */
     public AccountImp() {
 
+        random = new Random();
         this.fileDeck = new FileManagerImp<LinkedList<Card>>(SAVES_PATH + "Deck.json");
         this.fileRemainingCards = new FileManagerImp<LinkedList<Card>>(SAVES_PATH + "RemainingCards.json");
         this.fileStatistics = new FileManagerImp<Statistics>(SAVES_PATH + "Statistics.json");
@@ -92,13 +95,11 @@ public final class AccountImp implements Account {
      * the selected card, the card get added to the {@code remaining cards} and the
      * {@code statistics} get updated.
      */
-    //TODO: to test
     @Override
     public void win() throws IOException {
         try {
             final FileManager<LinkedList<Card>> fileAllCards = new FileManagerImp<LinkedList<Card>>(JSONS_PATH + "ListOfCards.json");
             final LinkedList<Card> allCards = fileAllCards.load(LINKED_LIST_TYPE);
-            final Random random = new Random();
             final Card card = allCards.get(random.nextInt(allCards.size()));
             if (this.deck.getCards().contains(card) || remainingCards.contains(card)) {
                 this.statistics.updateOnWin(true);
@@ -147,7 +148,7 @@ public final class AccountImp implements Account {
     }
 
     /**
-     * Save the {@code deck} and the {@code remaing cards} on file.
+     * Save the {@code deck} and the {@code remaining cards} on file.
      */
     @Override
     public void save() {
