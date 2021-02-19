@@ -36,10 +36,6 @@ public final class BattleControllerImpl implements BattleController {
      * */
     public static final int TIME_BEFORE_HIDING_MESSAGE = 3000;
     /**
-     * The number of cards the player starts a new battle with.
-     * */
-    public static final int BASE_STARTING_CARDS = 3;
-    /**
      * How wide the cards currently in the hand is displayed.
      * */
     public static final int CARD_WIDTH = 150;
@@ -72,7 +68,8 @@ public final class BattleControllerImpl implements BattleController {
     private ImageView IMGEnemy;
     @FXML
     private TextFlow txtCardInfo;
-
+    
+    
     @FXML
     public void initialize() {
         b.initializeCharacters();
