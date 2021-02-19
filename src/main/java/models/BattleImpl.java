@@ -14,12 +14,14 @@ public final class BattleImpl implements Battle {
      * */
     public static final int MAX_CARDS_IN_HAND = 5;
     private int playerUnusedCombatMana;
-    private Turn turn = Turn.PLAYER;
+    private Turn turn = Turn.PLAYER; 
     private boolean hasBeenInitialized = false;
     private boolean hasBattleFinished = false;
     private Player p;
     private EnemyImp e;
     private Iterator<Card> deckIterator;
+    // TODO: IteratorPattern
+    // TODO: StatePattern?
 
     public BattleImpl(final Player p, final EnemyImp e) {
         this.p = p;
@@ -36,14 +38,16 @@ public final class BattleImpl implements Battle {
         e = new EnemyImp(new DeckImpl(), new Point2DImp(0, 0));
     }
 
+    //TODO: setPlayer, setEnemy
+
 
     @Override
     public void endTurn() {
-        checkBattleStatus();
+        this.checkBattleStatus();
         if (!hasBeenInitialized) {
             throw new IllegalStateException("The opponents have not been initialized.");
         }
-        turn = (turn == Turn.PLAYER) ? Turn.ENEMY : Turn.PLAYER;
+        this.turn = (turn == Turn.PLAYER) ? Turn.ENEMY : Turn.PLAYER;
         if (turn == Turn.PLAYER) {
             drawCard();
             p.setMana(p.getMana() + 1);
@@ -169,18 +173,21 @@ public final class BattleImpl implements Battle {
     }
 
     private void drawCard() {
-        Card next;
-        while (true) {
+        Optional<Card> next = Optional.empty();
+
+        while (next.isEmpty()) {
             if (!deckIterator.hasNext()) {
                 deckIterator = p.getDeck().getCards().iterator(); 
             }
-            next = deckIterator.next();
-            if (!p.getHand().getCards().contains(next)) {
-                break;
+            next = Optional.of(deckIterator.next());
+            if (p.getHand().getCards().contains(next.get())) {
+                next = Optional.empty();
             }
         }
+        
+
         if (turn == Turn.PLAYER && p.getHand().getCards().size() < MAX_CARDS_IN_HAND) {
-            p.getHand().addCard(next);
+            p.getHand().addCard(next.get());
         }
     }
 
