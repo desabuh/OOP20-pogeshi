@@ -45,7 +45,7 @@ public final class GuavaEventBusAdapter<T> implements notifier.EventBus<T> {
      */
     @Override
     public void notifyListener(final T event) {
-        this.eventBus.post(eventBus);
+        this.eventBus.post(event);
     }
 
 }

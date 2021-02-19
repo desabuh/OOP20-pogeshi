@@ -1,5 +1,8 @@
 package views.render;
 
+import models.Enemy;
+import models.Player;
+
 /**
  * 
  * interface to provide a separate render mechanism from the object they rappresent.
