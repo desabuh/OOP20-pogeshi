@@ -22,8 +22,8 @@ public final class BattleModule extends AbstractModule {
     }
 
     @Provides
-    Controller provideBattleController(final Battle model, final View view) {
-        return new BattleControllerImpl();
+    Controller provideBattleController(final Battle model, final BattleView view) {
+        return new BattleControllerImpl(model, view);
     }
 
     @Provides
@@ -32,7 +32,7 @@ public final class BattleModule extends AbstractModule {
     }
 
     @Provides
-    View provideBattleView() {
+    BattleView provideBattleView() {
         return new BattleViewImpl(this.stage);
     }
 }
