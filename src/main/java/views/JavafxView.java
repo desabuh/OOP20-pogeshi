@@ -26,7 +26,7 @@ public abstract class JavafxView implements View {
     /**
      * title to be displayed on the view.
      */
-    public static final String TITLE = "Pogeshi";
+    public static final String TITLE = "Pogeshish";
 
     private Scene actualScene;
     private final Stage stage;
