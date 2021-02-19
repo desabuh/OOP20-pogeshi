@@ -27,7 +27,7 @@ public final class PlayerImp extends CharacterImp implements Player {
     public PlayerImp(final Deck deck) {
         super(100, new Point2DImp(0, 0), deck, 0);
         setMana(1);
-        this.hand = new HandImpl();  //TODO: modify in case the implemantation name isn't HandImp
+        this.hand = new HandImpl();
     }
 
     /**
@@ -41,7 +41,7 @@ public final class PlayerImp extends CharacterImp implements Player {
     public PlayerImp(final Deck deck, final int health, final int shield, final int mana, final Point2D position) {
         super(health, position, deck, shield);
         setMana(mana);
-        this.hand = new HandImpl();  //TODO: modify in case the implemantation name isn't HandImp
+        this.hand = new HandImpl();
     }
 
     /**
@@ -59,7 +59,7 @@ public final class PlayerImp extends CharacterImp implements Player {
     public PlayerImp(final Deck deck, final int health, final Point2D position) {
         super(health, position, deck, 0);
         setMana(1);
-        this.hand = new HandImpl();  //TODO: modify in case the implemantation name isn't HandImp
+        this.hand = new HandImpl();
     }
 
     /**

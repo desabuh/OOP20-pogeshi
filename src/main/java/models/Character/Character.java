@@ -1,6 +1,5 @@
 package models.Character;
 
-import models.Battle;
 import models.Deck;
 import models.GameMap.Point2D;
 
