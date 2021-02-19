@@ -3,19 +3,26 @@ package views;
 import java.io.File;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import views.render.Render;
+import views.scene.layout.LAYOUT;
 
-public final class BattleViewImpl extends Application implements BattleView {
+public final class BattleViewImpl extends JavafxView implements BattleView {
 
     private static final int SCENE_WIDTH = 1920;
     private static final int SCENE_HEIGHT = 1080;
+    
+    public static final LAYOUT ACTUAL_LAYOUT = LAYOUT.BATTLE;
+    
 
     @FXML
     private HBox HBPlayerHand;
@@ -33,14 +40,32 @@ public final class BattleViewImpl extends Application implements BattleView {
     private Label LBLPlayerHealth;
     @FXML
     private Label LBLPlayerShield;
-    
 
+
+    public BattleViewImpl(Stage stage) {
+        super(stage, LAYOUT.BATTLE);
+        //LBLPlayerDamage.setVisible(true);
+        // TODO Auto-generated constructor stub
+    }
+
+    public void initializeParams() {
+        Scene scene = this.getScene();
+        System.out.println(scene);
+        LBLMana = (Label) scene.lookup("#LBLMana");
+        LBLEnemyDamage = (Label) scene.lookup("#LBLEnemyDamage");
+        LBLPlayerDamage = (Label) scene.lookup("#LBLPlayerDamage");
+        LBLEnemyHealth = (Label) scene.lookup("#LBLEnemyHealth");
+        LBLPlayerHealth = (Label) scene.lookup("#LBLPlayerHealth");
+        LBLPlayerShield = (Label) scene.lookup("#LBLPlayerShield");
+
+    }
 
 
     /*public BattleViewImpl(final Stage s) {
 
     }*/
 
+    /*
     @Override
     public void start(final Stage stage) throws Exception {
         final Parent root = FXMLLoader.load(ClassLoader.getSystemResource("layouts" + File.separator + "battle.fxml"));
@@ -50,10 +75,7 @@ public final class BattleViewImpl extends Application implements BattleView {
         stage.setResizable(false);
         stage.show();
     }
-
-    public static void main(String[] args) throws java.io.IOException {
-        launch(args);
-    }
+    */
 
     @Override
     public void removeCard(final int index) {
@@ -87,6 +109,15 @@ public final class BattleViewImpl extends Application implements BattleView {
     public void updatePlayerStats(final int health, final int shield) {
         LBLPlayerHealth.setText(String.valueOf(health));
         LBLPlayerShield.setText(String.valueOf(shield));
+    }
+    
+    
+
+
+    @Override
+    public void updateEntity(Render render, Point2D x, Point2D y) {
+        // TODO Auto-generated method stub
+        
     }
 
 
