@@ -16,21 +16,21 @@ public final class WorldMapView extends JavafxView {
     /**
      * standard layout to provide scene for this view.
      */
-    //public static final LAYOUT WORLD_LAYOUT = LAYOUT.WORLDMAP;
+    public static final LAYOUT WORLD_LAYOUT = LAYOUT.WORLDMAP;
+
 
     private Drawer<Canvas> drawer;
 
     @Inject
     public WorldMapView(final Stage stage) {
-        super(stage, LAYOUT.WORLDMAP);
+        super(stage, WORLD_LAYOUT);
     }
 
     public void updateEntity(final Render render, final Point2D src, final Point2D dest) {
         if (this.drawer == null) {
             this.drawer = new CanvasDrawer((Canvas) this.getScene().lookup("#canvasMap"));
-            Platform.runLater(() -> this.drawer.draw(render, (int) src.getX(), (int) dest.getY()));
         }
-        Platform.runLater(() -> this.drawer.reDraw(src, dest));
+        Platform.runLater(() -> this.drawer.draw(render, src, dest));
     }
 
 }
