@@ -2,7 +2,7 @@ package views;
 
 import javafx.scene.image.ImageView;
 
-public interface BattleView {
+public interface BattleView extends View{
     void removeCard(int index);
 
     void addCard(ImageView img);
@@ -14,4 +14,6 @@ public interface BattleView {
     void updateEnemyStats(int health, int shield);
 
     void updatePlayerStats(int health, int shield);
+
+    void initializeParams();
 }
