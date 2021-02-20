@@ -2,27 +2,41 @@ package views;
 
 import java.io.File;
 
-import javafx.application.Application;
-import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import views.render.Render;
 import views.scene.layout.LAYOUT;
 
 public final class BattleViewImpl extends JavafxView implements BattleView {
 
-    private static final int SCENE_WIDTH = 1920;
-    private static final int SCENE_HEIGHT = 1080;
-    
+    /**
+     * How wide the cards currently in the hand are displayed.
+     * */
+    public static final int CARD_WIDTH = 150;
+
+    /**
+     * Time before hiding the "Not enough mana" label after displaying it.
+     * */
+    public static final int TIME_BEFORE_HIDING_MESSAGE = 3000;
+
+
+    /**
+     * The scene layout of the battle.
+     * */
     public static final LAYOUT ACTUAL_LAYOUT = LAYOUT.BATTLE;
-    
+
 
     @FXML
     private HBox HBPlayerHand;
@@ -40,12 +54,23 @@ public final class BattleViewImpl extends JavafxView implements BattleView {
     private Label LBLPlayerHealth;
     @FXML
     private Label LBLPlayerShield;
+    @FXML
+    private ImageView IMGPlayer;
+    @FXML
+    private ImageView IMGEnemy;
+    @FXML
+    private Label LBLNoMana;
+    @FXML
+    private Button BTNEndTurn;
+    @FXML
+    private TextFlow txtCardInfo;
 
-
-    public BattleViewImpl(Stage stage) {
+    /**
+     * Sets the current BattleView's stage and layout.
+     * @param stage The stage to load the battle into.
+     * */
+    public BattleViewImpl(final Stage stage) {
         super(stage, LAYOUT.BATTLE);
-        //LBLPlayerDamage.setVisible(true);
-        // TODO Auto-generated constructor stub
     }
 
     public void initializeParams() {
@@ -57,41 +82,16 @@ public final class BattleViewImpl extends JavafxView implements BattleView {
         LBLEnemyHealth = (Label) scene.lookup("#LBLEnemyHealth");
         LBLPlayerHealth = (Label) scene.lookup("#LBLPlayerHealth");
         LBLPlayerShield = (Label) scene.lookup("#LBLPlayerShield");
+        LBLEnemyShield = (Label) scene.lookup("#LBLEnemyShield");
+        txtCardInfo = (TextFlow) scene.lookup("#txtCardInfo");
+        HBPlayerHand = (HBox) scene.lookup("#HBPlayerHand");
+        LBLNoMana = (Label) scene.lookup("#LBLNoMana");
+        BTNEndTurn = (Button) scene.lookup("#BTNEndTurn");
+        IMGPlayer = (ImageView) scene.lookup("#IMGPlayer");
+        IMGEnemy = (ImageView) scene.lookup("#IMGEnemy");
+        IMGPlayer.setImage(new Image(new File("res" + File.separator + "images" + File.separator + "PlayerImage.png").toURI().toString()));
+        IMGEnemy.setImage(new Image(new File("res" + File.separator + "images" + File.separator + "EnemyImage.png").toURI().toString()));
 
-    }
-
-
-    /*public BattleViewImpl(final Stage s) {
-
-    }*/
-
-    /*
-    @Override
-    public void start(final Stage stage) throws Exception {
-        final Parent root = FXMLLoader.load(ClassLoader.getSystemResource("layouts" + File.separator + "battle.fxml"));
-        final Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
-        stage.setTitle("Pogeshi - Battle stage");
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
-    }
-    */
-
-    @Override
-    public void removeCard(final int index) {
-        HBPlayerHand.getChildren().remove(index);
-    }
-
-    @Override
-    public void addCard(final ImageView img) {
-        HBPlayerHand.getChildren().add(img);
-    }
-
-    @Override
-    public void showEnemyDamage(final int amount) {
-        LBLPlayerDamage.setVisible(false);
-        LBLEnemyDamage.setText("-" + String.valueOf(amount));
-        LBLEnemyDamage.setVisible(true);
     }
 
     @Override
@@ -110,16 +110,97 @@ public final class BattleViewImpl extends JavafxView implements BattleView {
         LBLPlayerHealth.setText(String.valueOf(health));
         LBLPlayerShield.setText(String.valueOf(shield));
     }
-    
-    
+
+    public void addCardToHand(final String imagePath, final Text description, final EventHandler<MouseEvent> onClick) {
+        ImageView card = new ImageView();
+        card.setImage(new Image(new File(imagePath).toURI().toString()));
+        card.setFitWidth(CARD_WIDTH);
+        card.setPreserveRatio(true);
+
+        /**
+         * Sets a generic event to execute when the card is clicked.
+         * */
+        card.setOnMouseClicked(onClick);
+
+        /**
+         * Shows the card's properties on the right side of the hand.
+         * */
+        card.setOnMouseEntered(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(final MouseEvent event) {
+                Text cardDescription = description;
+                cardDescription.setStyle("-fx-font: 18 arial;");
+                txtCardInfo.getChildren().add(cardDescription);
+            }
+        });
+
+        /**
+         * Hides the card's properties.
+         * */
+        card.setOnMouseExited(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(final MouseEvent event) {
+                final int totalTexts = txtCardInfo.getChildren().size();
+                for (int i = 0; i < totalTexts; i++) {
+                    txtCardInfo.getChildren().remove(0);
+                }
+            }
+        });
+
+
+        HBPlayerHand.getChildren().add(card);
+    }
+
+    public void resetHand() {
+        int nCards = HBPlayerHand.getChildren().size();
+        for (int i = 0; i < nCards; i++) {
+            HBPlayerHand.getChildren().remove(0);
+        }
+    }
 
 
     @Override
-    public void updateEntity(Render render, Point2D x, Point2D y) {
+    public void updateEntity(final Render render, final Point2D x, final Point2D y) {
         // TODO Auto-generated method stub
-        
     }
 
+    public void showDamageToEnemy(final int amount) {
+        LBLEnemyDamage.setText("-" + String.valueOf(amount));
+        LBLEnemyDamage.setVisible(true);
+        LBLPlayerDamage.setVisible(false);
+    }
+
+    public void showDamageToPlayer(final int amount) {
+        LBLPlayerDamage.setText("-" + String.valueOf(amount));
+        LBLPlayerDamage.setVisible(true);
+        LBLEnemyDamage.setVisible(false);
+    }
+
+    public void displayNotEnoughMana() {
+        /**
+         * This is used to display the "Not enough mana!" message on the GUI for TIME_BEFORE_HIDING_MESSAGE milliseconds
+         *  before automatically hiding it
+         * */
+        new Thread() {
+            public void run() {
+                try {
+                    LBLNoMana.setVisible(true);
+                    Thread.sleep(TIME_BEFORE_HIDING_MESSAGE);
+                    LBLNoMana.setVisible(false);
+                } catch (InterruptedException e) {
+                    System.out.println("The thread died while sleeping");
+                } finally {
+                    this.interrupt();
+                }
+            }
+        }.start();
+    }
+
+    public void setEndTurnEvent(final EventHandler<ActionEvent> buttonClicked) {
+        BTNEndTurn.setOnAction(buttonClicked);
+    }
 
 
 }
