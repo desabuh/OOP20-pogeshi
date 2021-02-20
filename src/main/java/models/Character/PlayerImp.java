@@ -10,7 +10,7 @@ public final class PlayerImp extends CharacterImp implements Player {
 
     private int mana;
     private Hand hand;
-    private final int maxMana = 3;  //TODO: not sure if i should do it like this or keep it a number
+    private final int maxMana = 10;  //TODO: not sure if i should do it like this or keep it a number
 
     /**
      * Constructor with default parameters and custom deck.
@@ -67,7 +67,7 @@ public final class PlayerImp extends CharacterImp implements Player {
      */
     @Override
     public void setPosition(final Point2D destination) {
-        this.position = destination;
+        super.setPosition(destination);
     }
 
     /**
