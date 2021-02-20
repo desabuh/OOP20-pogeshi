@@ -22,7 +22,7 @@ public final class DeckCreationViewImpl extends Application implements DeckCreat
         final Parent root = FXMLLoader.load(ClassLoader.getSystemResource("layouts" + File.separator + "deck_view.fxml"));
         final Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
         // Stage configuration
-        stage.setTitle("JavaFX - Complete Example");
+        stage.setTitle("Pogeshi - Deck Creation");
         stage.setScene(scene);
         stage.show();
     }

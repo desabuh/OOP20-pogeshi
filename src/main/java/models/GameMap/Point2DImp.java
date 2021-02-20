@@ -47,24 +47,6 @@ public final class Point2DImp implements Point2D {
     }
 
     /**
-     * Set {@code this.X} and {@code this.y} equals to x and y.
-     */
-    @Override
-    public void setBoth(final int x, final int y) {
-        this.x = x;
-        this.y = y;
-
-    }
-
-    /**
-     * Add the x and y values of {@code value} to {@code this.X} and {@code this.Y}.
-     */
-    @Override
-    public void sum(final Point2D value) {
-        sum(value.getX(), value.getY());
-    }
-
-    /**
      * Add the x and y values to {@code this.X} and {@code this.Y}.
      */
     @Override

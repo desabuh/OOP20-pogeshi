@@ -6,29 +6,17 @@ package views.render;
  *
  */
 public final class RenderBuilder {
-    private Sprite sprite;
-    private int weigth;
+    private int width;
     private int height;
     private int layer;
 
-
     /**
      * 
-     * @param sprite to be displayed
+     * @param width of the rendered object.
      * @return a RenderBuilder
      */
-    public RenderBuilder setSprite(final Sprite sprite) {
-        this.sprite = sprite;
-        return this;
-    }
-
-    /**
-     * 
-     * @param weigth of the rendered object.
-     * @return a RenderBuilder
-     */
-    public RenderBuilder setWeigth(final int weigth) {
-        this.weigth = weigth;
+    public RenderBuilder setWidth(final int width) {
+        this.width = width;
         return this;
     }
 
@@ -57,7 +45,7 @@ public final class RenderBuilder {
      * @return a new Render object
      */
     public Render build() {
-        return new Render(sprite, weigth, height, layer);
+        return new Render(width, height, layer);
     }
 
 

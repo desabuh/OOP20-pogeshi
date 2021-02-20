@@ -1,36 +1,38 @@
 package guicemodule;
 
 import com.google.inject.AbstractModule;
+
 import com.google.inject.Provides;
-import com.google.inject.Scopes;
-import com.google.inject.Singleton;
 
 import controllers.BattleControllerImpl;
 import controllers.Controller;
-import guicemodule.annotation.BattleController;
+import javafx.stage.Stage;
 import models.Battle;
 import models.BattleImpl;
 import views.BattleView;
 import views.BattleViewImpl;
+import views.View;
 
 public final class BattleModule extends AbstractModule {
 
-        @Provides
-        @Singleton
-        @BattleController
-        controllers.BattleController provideBattleController(final Battle model) {
-            return new BattleControllerImpl();
-        }
-    
-        @Provides
-        @Singleton
-        Battle provideBattleController() {
-            return new BattleImpl();
-        }
-    
-        @Provides
-        @Singleton
-        BattleView provideBattleView() {
-            return new BattleViewImpl();
-        }
+    private Stage stage;
+
+    public BattleModule(final Stage stage) {
+        this.stage = stage;
+    }
+
+    @Provides
+    Controller provideBattleController(final Battle model, final View view) {
+        return new BattleControllerImpl();
+    }
+
+    @Provides
+    Battle provideBattleController() {
+        return new BattleImpl();
+    }
+
+    @Provides
+    View provideBattleView() {
+        return new BattleViewImpl(this.stage);
+    }
 }
