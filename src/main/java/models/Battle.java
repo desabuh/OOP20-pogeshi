@@ -22,19 +22,41 @@ public interface Battle {
     Character currentTurn();
 
     /**
-     * Tries to play a card specified by the index
+     * Tries to play a card specified by the index.
      * @param index The index of the card in the current turn's character's hand
      * @return TRUE if the card could be played, FALSE otherwise
      * */
     boolean playCard(int index);
 
+    /**
+     * @return The player that is currently playing
+     * */
     Player getPlayer();
 
+    /**
+     * @return The enemy that is currently playing
+     * */
     EnemyImp getEnemy();
 
+    /**
+     * Initializes the player and the enemy, allowing the battle to start.
+     * @throws IllegalStateException if the characters are already initialized.
+     * @implNote Useful since when the model is instantiated, the main controller does not know the player's status, and needs
+     * to be passed to the model in another moment. The characters, therefore, can't be initialized when the model is created.
+     * */
     void initializeCharacters();
 
+    /**
+     * @return The amount of available mana left for the current turn
+     * */
     int getPlayerUnusedCombatMana();
+
+    /**
+     * Sets the player that will play the battle.
+     * @param player The player to use in the battle
+     * @implNote This is used since the player is not known at call-time and needs to be set in another moment.
+     * */
+    void setPlayer(Player player);
 
     /**
      * Enum indicating the current turn.
