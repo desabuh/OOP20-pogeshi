@@ -22,8 +22,7 @@ public final class BattleImpl implements Battle {
     private Player p;
     private EnemyImp e;
     private CardIterator deckIterator;
-    // TODO: IteratorPattern
-    // TODO: StatePattern?
+    private CardIterator enemyDeckIterator;
 
     public BattleImpl(final Player p, final EnemyImp e) {
         this.p = p;
@@ -40,15 +39,13 @@ public final class BattleImpl implements Battle {
         e = new EnemyImp(new DeckImpl(), new Point2DImp(0, 0));
     }
 
-    //TODO: setPlayer, setEnemy
-
+    public void setPlayer(final Player player) {
+        this.p = player;
+    }
 
     @Override
     public void endTurn() {
         this.checkBattleStatus();
-        if (!hasBeenInitialized) {
-            throw new IllegalStateException("The opponents have not been initialized.");
-        }
         this.turn = (turn == Turn.PLAYER) ? Turn.ENEMY : Turn.PLAYER;
         if (turn == Turn.PLAYER) {
             drawCard();
@@ -58,11 +55,12 @@ public final class BattleImpl implements Battle {
     }
 
     public void initializeCharacters() {
-        checkBattleStatus();
-        deckIterator = new CardIterator(p.getDeck().getCards());
+        //checkBattleStatus();
         if (hasBeenInitialized) {
             throw new IllegalStateException("Both opponents of the battle have already been initialized.");
         }
+        deckIterator = new CardIterator(p.getDeck().getCards());
+        enemyDeckIterator = new CardIterator(e.getDeck().getCards());
         loadEnemysDeck();
         for (int i = 0; i < BASE_STARTING_CARDS; i++) {
             drawCard();
@@ -73,18 +71,15 @@ public final class BattleImpl implements Battle {
 
     public boolean playCard(final int index) {
         checkBattleStatus();
-        if (!hasBeenInitialized) {
-            throw new IllegalStateException("The opponents have not been initialized.");
-        }
         Card played;
         if (turn == Turn.PLAYER) {
+            if (index >= p.getHand().getCards().size()) {
+                throw new IndexOutOfBoundsException("Tried to play a card that's not in the player's hand");
+            }
             if (isPlayable(p.getHand().getCards().get(index))) {
                 played = p.getHand().getCards().get(index);
                 System.out.println("Player!");
                 setPlayerUnusedCombatMana((getPlayerUnusedCombatMana() - played.getCost()));
-                if (played.getShield() > 0) {
-                    p.setShield(p.getShield() + played.getShield());
-                }
                 inflictDamage(played);
                 p.getHand().removeCard(index);
             } else {
@@ -92,15 +87,7 @@ public final class BattleImpl implements Battle {
             }
         } else {
             System.out.println("Enemy!");
-            Optional<Card> next = e.getDeck().popCard();
-            if (next.isPresent()) {
-                played = next.get();
-            } else {
-                throw new IllegalStateException("Tried to draw a card from empty deck");
-            }
-            if (e.getDeck().getCards().isEmpty()) {
-                loadEnemysDeck();
-            }
+            played = enemyDeckIterator.next();
             inflictDamage(played);
         }
         return true;
@@ -119,7 +106,6 @@ public final class BattleImpl implements Battle {
     public boolean checkBattleEnd() {
         if (p.getHealth() <= 0) {
             //TODO: Transfer loss status to the AccountController
-            //account.lose();
             hasBattleFinished = true;
         } else if (e.getHealth() <= 0) {
             //TODO: Transfer win status to the MainController
@@ -148,7 +134,7 @@ public final class BattleImpl implements Battle {
         int damage = c.getAttack();
         if (turn == Turn.PLAYER) {
             if (e.getShield() > damage) {
-                p.setShield(e.getShield() - damage);
+                p.setShield(p.getShield() - damage);
                 damage = 0;
             } else if (e.getShield() > 0) {
                 damage -= e.getShield();
@@ -189,16 +175,6 @@ public final class BattleImpl implements Battle {
         }
     }
 
-
-    /**
-     * Gets the player's current saved deck and add to the active deck every card that is not already in the player's hand.
-     * */
-    /*private void loadPlayersDeck() {
-        account.getDeck().getCards().stream()
-                                       .filter((card) -> !p.getHand().getCards().contains(card))
-                                       .forEach((card) -> p.getDeck().addCard(card));
-    }*/
-
     /**
      * Fills the enemy's deck with the default deck's cards.
      * */
@@ -211,6 +187,10 @@ public final class BattleImpl implements Battle {
         if (hasBattleFinished) {
             throw new IllegalStateException("You cannot perform any more actions because the battle already ended.");
         }
+        if (!hasBeenInitialized) {
+            throw new IllegalStateException("The opponents have not been initialized.");
+        }
+
     }
 
 }
