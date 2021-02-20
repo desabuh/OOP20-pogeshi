@@ -1,5 +1,7 @@
 package models;
 
+import models.GameMap.Point2D;
+
 public abstract class CharacterImp implements Character {
 
     protected int health;

@@ -1,5 +1,7 @@
 package models;
 
+import models.GameMap.Point2D;
+
 /** description.
  * @param
  * {@link Battle}
