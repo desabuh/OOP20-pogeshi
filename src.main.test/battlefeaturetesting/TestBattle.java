@@ -1,17 +1,24 @@
 package battlefeaturetesting;
 import org.junit.Test;
 
+import controllers.Controller;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
 import models.*;
+import views.BattleView;
+import views.scene.layout.LAYOUT;
+import views.scene.SceneManager;
 
 import static org.junit.Assert.*;
 
 public class TestBattle {
-    /*private Player p = new PlayerImp(new DeckImpl());
-    private EnemyImp e = new EnemyImp(new DeckImpl(), new Point2DImp(0, 0));*/
     private Battle b;
 
+
     /**
-     * Testing the player's default deck's number of cards
+     * Testing the player's default deck's number of cards.
      * */
     @Test
     public void testBasicDeck() {
@@ -49,6 +56,74 @@ public class TestBattle {
     public void testNotInitializedBattle() {
         b = new BattleImpl();
         b.playCard(0);
+    }
+
+    /**
+     * Testing the size of the player's hand.
+     * */
+    @Test
+    public void testPlayerHand() {
+        b = new BattleImpl();
+        b.initializeCharacters();
+        /**
+         * The starting hand should have 3 cards
+         * */
+        assertEquals(3, b.getPlayer().getHand().getCards().size());
+        /**
+         * Ending the turn 10 times, therefore the player should draw 5 cards
+         * */
+        for (int i = 0; i < 10; i++) {
+           b.endTurn();
+        }
+        /**
+         * Even if the player drew 5 cards, for a total of 8, the hand's size should be capped at 5 cards
+         * */
+        assertEquals(5, b.getPlayer().getHand().getCards().size());
+    }
+
+    /**
+     * Test if the player can add shield to himself on card use.
+     * */
+    @Test
+    public void testPlayerShield() {
+        b = new BattleImpl();
+        b.initializeCharacters();
+        int cardShield = b.getPlayer().getHand().getCards().get(0).getShield(); // Getting the card's shield added
+        b.playCard(0);
+        assertEquals(cardShield, b.getPlayer().getShield());
+    }
+
+    /**
+     * Test if the player can win.
+     * */
+    @Test
+    public void testVictory() {
+        b = new BattleImpl();
+        b.initializeCharacters();
+        while (!b.checkBattleEnd()) {
+            b.playCard(0);
+            b.endTurn();
+            b.endTurn();
+        }
+        assertTrue(b.getEnemy().getHealth() <= 0);
+    }
+
+    @Test
+    public void testView() {
+        Scene scene = SceneManager.of(LAYOUT.BATTLE).getScene();
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        FXMLLoader loader = SceneManager.of(LAYOUT.BATTLE).getLoader();
+        Controller controller = loader.getController();
+        BattleView view = (BattleView) controller.getView();
+        b = new BattleImpl();
+        b.initializeCharacters();
+        view.updatePlayerStats(b.getPlayer().getHealth(), b.getPlayer().getShield());
+        Label LBLPlayerHealth = (Label) scene.lookup("#LBLPlayerHealth");
+        Label LBLPlayerShield = (Label) scene.lookup("#LBLPlayerShield");
+        assertEquals(LBLPlayerHealth.getText(), String.valueOf(b.getPlayer().getHealth()));
+        assertEquals(LBLPlayerShield.getText(), String.valueOf(b.getPlayer().getShield()));
+
     }
 
 }
