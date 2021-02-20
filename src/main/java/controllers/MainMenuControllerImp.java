@@ -12,6 +12,7 @@ import models.Account.Account;
 import models.Account.AccountImp;
 import notifier.EventBus;
 import notifier.GuavaEventBusAdapter;
+import views.View;
 
 public final class MainMenuControllerImp implements MainMenuController {
 
@@ -89,6 +90,18 @@ public final class MainMenuControllerImp implements MainMenuController {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
+    }
+
+    @Override
+    public View getView() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void callBackAction(final Object data) {
+        // TODO Auto-generated method stub
+
     }
 
 }
