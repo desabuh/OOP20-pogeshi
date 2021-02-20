@@ -5,10 +5,10 @@ import models.GameMap.Point2D;
 
 public class CharacterImp implements Character {
 
-    protected int health;
-    protected Point2D position;
-    protected Deck deck;
-    protected int shield;
+    private int health;
+    private Point2D position;
+    private Deck deck;
+    private int shield;
 
     public CharacterImp(final int health, final Point2D position, final Deck deck, final int shield) {
         setHealth(health);
@@ -39,6 +39,14 @@ public class CharacterImp implements Character {
     @Override
     public final Point2D getPosition() {
         return this.position;
+    }
+
+    /**
+     * Set the {@code position} equals to the passed {@code Point2D}.
+     * @param position
+     */
+    protected void setPosition(final Point2D position) {
+        this.position = position;
     }
 
     /**
