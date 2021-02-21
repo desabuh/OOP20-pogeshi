@@ -1,5 +1,7 @@
 package models;
 
+import models.GameMap.Point2D;
+
 public final class EnemyImp extends CharacterImp implements Enemy {
 
     /**
@@ -23,7 +25,7 @@ public final class EnemyImp extends CharacterImp implements Enemy {
      * @param position
      */
     public EnemyImp(final Deck deck, final int health, final Point2D position) {
-        setHealth(healt);
+        setHealth(health);
         setShield(0);
         this.deck = deck;
         this.position = position;
