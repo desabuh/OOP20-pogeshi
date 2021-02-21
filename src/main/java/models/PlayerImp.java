@@ -1,5 +1,8 @@
 package models;
 
+import models.GameMap.Point2D;
+import models.GameMap.Point2DImp;
+
 public final class PlayerImp extends CharacterImp implements Player {
 
     private int mana;

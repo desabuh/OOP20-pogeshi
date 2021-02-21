@@ -1,5 +1,7 @@
 package models;
 
+import models.GameMap.Point2D;
+
 public interface Player extends Character {
 
     void setPosition(Point2D destination);
