@@ -5,10 +5,12 @@ import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import com.google.common.base.Suppliers;
 import com.google.inject.Inject;
 
 import controllers.maincontroller.MainController;
 import controllers.maincontroller.Request;
+import controllers.maincontroller.SwitchControllerRequest;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
@@ -17,6 +19,8 @@ import javafx.scene.paint.Color;
 import listener.Listener;
 import models.Character;
 import models.EnemyImp;
+import models.Player;
+import models.PlayerImp;
 import models.GameMap.Point2D;
 import models.GameMap.Point2DImp;
 import models.GameMap.WorldMap;
@@ -45,7 +49,10 @@ public final class WorldMapController implements Controller {
 
     private View worldView;
     private WorldMap worldMap;
-    private final GuavaEventBusAdapter<Integer> notifier = new GuavaEventBusAdapter<Integer>(new com.google.common.eventbus.EventBus());
+    
+    private final GuavaEventBusAdapter<Request<LAYOUT, ? extends Object>> notifier 
+    = new GuavaEventBusAdapter<Request<LAYOUT, ? extends Object>>(new com.google.common.eventbus.EventBus());
+
     private MainController mc = new MainController();
     private RenderFactory renderFactory = new WorldMapRenderFactory();
 
@@ -73,10 +80,10 @@ public final class WorldMapController implements Controller {
         this.worldView.updateEntity(this.renderFactory.renderPlayer(), pos, pos);
 
         this.worldMap.getEnemies().stream()
-            .map(EnemyImp::getPosition)
-            .map(DISPLAY_FUN::applyTransform)
-            .collect(Collectors.toList())
-            .forEach(p -> this.worldView.updateEntity(this.renderFactory.renderEnemy(), p, p));
+        .map(EnemyImp::getPosition)
+        .map(DISPLAY_FUN::applyTransform)
+        .collect(Collectors.toList())
+        .forEach(p -> this.worldView.updateEntity(this.renderFactory.renderEnemy(), p, p));
     }
 
 
@@ -91,10 +98,14 @@ public final class WorldMapController implements Controller {
 
         if (boss.isPresent()) {
             boss.map(EnemyImp::getPosition)
-                .map(DISPLAY_FUN::applyTransform)
-                .ifPresentOrElse(p -> this.worldView.updateEntity(this.renderFactory.renderEnemyBoss(), p, p), () -> { });
+            .map(DISPLAY_FUN::applyTransform)
+            .ifPresentOrElse(p -> this.worldView.updateEntity(this.renderFactory.renderEnemyBoss(), p, p), () -> { });
+
             
-            this.notifier.notifyListener(1);
+            System.out.println(this.worldMap.getPlayer());
+            
+            this.notifier
+            .notifyListener(new SwitchControllerRequest<LAYOUT, Player>(LAYOUT.WORLDMAP, Suppliers.ofInstance(this.worldMap.getPlayer())));
         }
     }
 
@@ -142,7 +153,7 @@ public final class WorldMapController implements Controller {
 
     @Override
     public void callBackAction(Object data) {
-        System.out.println(this);
+        System.out.println(data);
 
     }
 }
