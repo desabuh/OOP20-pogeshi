@@ -15,8 +15,6 @@ import static org.junit.Assert.*;
 
 public class TestBattle {
     private Battle b;
-
-    public static final int MAX_CARDS_IN_HAND = 5;
     /**
      * Testing if the player can damage the enemy.
      * */
@@ -60,7 +58,7 @@ public class TestBattle {
         /**
          * Even if the player drew 5 cards, for a total of 8, the hand's size should be capped at 5 cards
          * */
-        assertEquals(MAX_CARDS_IN_HAND, b.getPlayer().getHand().getCards().size());
+        assertEquals(models.BattleImpl.MAX_CARDS_IN_HAND, b.getPlayer().getHand().getCards().size());
     }
 
     /**
