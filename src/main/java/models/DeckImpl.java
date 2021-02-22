@@ -21,16 +21,18 @@ import com.google.gson.JsonSyntaxException;
 public final class DeckImpl implements Deck {
 
     private static final int NUMBER_OF_DECK_CARDS = 10;
-    private LinkedList<Card> cards = new LinkedList<>();
+    private LinkedList<Card> cards;
 
     /**
      * Instantiates a standard deck.
      */
+    @SuppressWarnings("serial")
     public DeckImpl() {
+        this.cards  = new LinkedList<>();
         Gson gson = new Gson();
         try (FileReader fReader = new FileReader("res" + File.separator + "jsons" + File.separator + "ListOfCards.json")) {
-            Type t = new TypeToken<LinkedList<CardImpl>>() { }.getType();
-            this.cards = gson.fromJson(fReader, t);
+            Type t = new TypeToken<List<CardImpl>>() { }.getType();
+            this.cards.addAll(gson.fromJson(fReader, t));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -46,15 +48,18 @@ public final class DeckImpl implements Deck {
      *
      * @param cards the cards of the deck
      */
-    public DeckImpl(final LinkedList<Card> cards) {
-        this.cards = (LinkedList<Card>) cards;
+    public DeckImpl(final List<Card> cards) {
+        this.cards = new LinkedList<>();
+        this.cards.addAll(cards);
     }
 
+    @SuppressWarnings("serial")
     public DeckImpl(final FileReader file) {
+        this.cards = new LinkedList<>();
         Gson gson = new Gson();
         try (file){
-            Type t = new TypeToken<LinkedList<CardImpl>>() { }.getType();
-            this.cards = gson.fromJson(file, t);
+            Type t = new TypeToken<List<CardImpl>>() { }.getType();
+            this.cards.addAll(gson.fromJson(file, t));
         } catch (IOException e) {
             e.printStackTrace();
         }

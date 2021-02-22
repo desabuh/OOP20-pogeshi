@@ -9,6 +9,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public final class DeckCreationViewImpl extends Application implements DeckCreationView {
+    
+    public DeckCreationViewImpl(final Stage stage) {
+    }
 
     private static final int SCENE_WIDTH = 1920;
     private static final int SCENE_HEIGHT = 1080;

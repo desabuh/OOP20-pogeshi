@@ -13,9 +13,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import models.Account;
-import models.AccountImp;
 import models.Card;
+import models.Account.Account;
+import models.Account.AccountImp;
+import views.View;
 
 /**
  *  A {@link controllers.DeckCreationController} implementation.
@@ -23,6 +24,7 @@ import models.Card;
 public final class DeckCreationControllerImpl implements DeckCreationController {
 
     private Account playerAccount = new AccountImp();
+    private List<Card> cards;
 
     @FXML
     private ListView<String> listDeck;
@@ -42,7 +44,6 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
     private Label lblCardCost;
     @FXML
     private Label lblNumCards;
-    private List<Card> cards;
 
     /**
      * Start blocking the outside cards list and loading cards from json.
@@ -138,5 +139,17 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
 
     @Override
     public void exitWhitoutSaving() {
+    }
+
+    @Override
+    public View getView() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void callBackAction(Object data) {
+        // TODO Auto-generated method stub
+        
     }
 }
