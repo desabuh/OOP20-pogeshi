@@ -15,6 +15,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
+import models.battle.CardImpl;
+
 /**
  * A {@link models.Deck} implementation.
  */

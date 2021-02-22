@@ -1,6 +1,7 @@
 package models.Account;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,11 +10,11 @@ import java.lang.reflect.Type;
 import com.google.gson.reflect.TypeToken;
 
 import models.Card;
-import models.CardImpl;
 import models.Deck;
 import models.DeckImpl;
 import models.Account.FileManager.FileManager;
 import models.Account.FileManager.FileManagerImp;
+import models.battle.CardImpl;
 
 public final class AccountImp implements Account {
 

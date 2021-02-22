@@ -8,8 +8,6 @@ import com.google.inject.Guice;
 
 import com.google.inject.Injector;
 
-import controllers.BattleController;
-import controllers.BattleControllerImpl;
 import controllers.Controller;
 import guicemodule.BattleModule;
 import guicemodule.ControllerModule;

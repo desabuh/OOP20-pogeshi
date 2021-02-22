@@ -1,7 +1,9 @@
 package models.Character;
 
-import models.Hand;
+
+
 import models.GameMap.Point2D;
+import models.battle.Hand;
 
 public interface Player extends Character {
 
