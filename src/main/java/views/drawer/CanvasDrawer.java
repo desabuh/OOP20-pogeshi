@@ -60,7 +60,7 @@ public final class CanvasDrawer implements Drawer<Canvas> {
         }
         else {
             this.shapeDisplayed
-            .put(destination, new Rectangle(gc, render.getWidth(), render.getHeigth(), (int) destination.getY(), (int) destination.getX(), render.getColor()));
+            .put(destination, new Circle(gc, render.getWidth(), (int) destination.getY(), (int) destination.getX(), render.getColor()));
         }
 
     }
