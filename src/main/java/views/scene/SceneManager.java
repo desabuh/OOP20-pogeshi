@@ -6,11 +6,9 @@ package views.scene;
 
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-import controllers.Controller;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -25,7 +23,7 @@ public final class SceneManager {
     /**
      * static mapper to return a SceneManager to work on the specific layout.
      */
-    public static final Map<LAYOUT, SceneManager> MANAGERS = new HashMap<>();
+    public static final Map<LAYOUT, SceneManager> MANAGERS = new ConcurrentHashMap<>();
 
     /**
      * static factory rule to provide a controller for the current Loader.
