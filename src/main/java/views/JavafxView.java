@@ -1,8 +1,8 @@
 package views;
 
-import com.google.inject.Inject;
 
-import javafx.geometry.Point2D;
+
+import models.GameMap.Point2D;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import views.render.Render;
