@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import models.Account.Account;
 import models.Account.AccountImp;
+import views.View;
 
 public final class StatisticsControllerImp implements StatisticsController {
 
@@ -32,11 +33,9 @@ public final class StatisticsControllerImp implements StatisticsController {
     @Override
     @FXML
     public void initialize() {
-
-        labelWins.setText(String.valueOf(account.getStatistics().getWins()));
-        labelLoses.setText(String.valueOf(account.getStatistics().getLoses()));
-        labelUnlockedCards.setText(String.valueOf(account.getStatistics().getUnlockedCards()));
-
+        labelWins.setText("Vittorie: " + String.valueOf(account.getStatistics().getWins()));
+        labelLoses.setText("Sconfitte:" + String.valueOf(account.getStatistics().getLoses()));
+        labelUnlockedCards.setText("Unlocked cards: " + String.valueOf(account.getStatistics().getUnlockedCards()));
     }
 
     @Override
@@ -56,6 +55,17 @@ public final class StatisticsControllerImp implements StatisticsController {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
+    }
+
+    @Override
+    public View getView() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void callBackAction(final Object data) {
+        // TODO Auto-generated method stub
     }
 
 }

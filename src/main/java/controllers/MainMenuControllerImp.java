@@ -87,7 +87,6 @@ public final class MainMenuControllerImp implements MainMenuController {
             stage.setScene(secondaryScene);
             stage.show();
         } catch (IOException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
     }

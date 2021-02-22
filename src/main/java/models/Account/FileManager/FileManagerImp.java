@@ -49,7 +49,6 @@ public final class FileManagerImp<T> implements FileManager<T> {
             gson.toJson(obj, writer);
             writer.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
