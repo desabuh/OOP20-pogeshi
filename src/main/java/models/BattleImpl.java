@@ -1,6 +1,5 @@
 package models;
 
-import java.util.Iterator;
 import java.util.Optional;
 
 import models.GameMap.Point2DImp;
@@ -40,6 +39,7 @@ public final class BattleImpl implements Battle {
     }
 
     public void setPlayer(final Player player) {
+        this.checkBattleStatus();
         this.p = player;
     }
 
