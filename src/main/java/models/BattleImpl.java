@@ -2,6 +2,11 @@ package models;
 
 import java.util.Optional;
 
+import models.Character.Character;
+import models.Account.AccountImp;
+import models.Character.EnemyImp;
+import models.Character.Player;
+import models.Character.PlayerImp;
 import models.GameMap.Point2DImp;
 
 public final class BattleImpl implements Battle {

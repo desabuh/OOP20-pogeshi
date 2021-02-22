@@ -160,12 +160,6 @@ public final class BattleViewImpl extends JavafxView implements BattleView {
         }
     }
 
-
-    @Override
-    public void updateEntity(final Render render, final Point2D x, final Point2D y) {
-        // TODO Auto-generated method stub
-    }
-
     public void showDamageToEnemy(final int amount) {
         LBLEnemyDamage.setText("-" + String.valueOf(amount));
         LBLEnemyDamage.setVisible(true);
@@ -200,6 +194,12 @@ public final class BattleViewImpl extends JavafxView implements BattleView {
 
     public void setEndTurnEvent(final EventHandler<ActionEvent> buttonClicked) {
         BTNEndTurn.setOnAction(buttonClicked);
+    }
+
+    @Override
+    public void updateEntity(Render render, models.GameMap.Point2D x, models.GameMap.Point2D y) {
+        // TODO Auto-generated method stub
+
     }
 
 

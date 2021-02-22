@@ -3,6 +3,10 @@
  */
 package models;
 
+import models.Character.Character;
+import models.Character.EnemyImp;
+import models.Character.Player;
+
 public interface Battle {
     /**
      * Switches the turn from player to enemy or viceversa.
