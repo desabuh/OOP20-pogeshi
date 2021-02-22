@@ -1,7 +1,5 @@
 package views.render;
 
-import models.Enemy;
-import models.Player;
 
 /**
  * 
@@ -12,23 +10,20 @@ public interface RenderFactory {
 
     /**
      * performs Player render action.
-     * @param player to render
      * @return a render for this player
      */
-    Render render(Player player);
+    Render renderPlayer();
 
     /**
      * performs Enemy render action.
-     * @param enemy to render
      * @return a render for this enemy
      */
-    Render render(Enemy enemy);
+    Render renderEnemy();
 
     /**
-     * performs a Background render action.
-     * (the background is loaded based on a spcific view)
-     * @return a render for this 
+     * performs Enemy boss render action.
+     * @return a render for the enemy boss
      */
-    Render renderBackGround();
+    Render renderEnemyBoss();
 
 }

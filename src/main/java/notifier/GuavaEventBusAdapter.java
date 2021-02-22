@@ -1,8 +1,6 @@
 package notifier;
 
 import com.google.common.eventbus.EventBus;
-
-import listener.Command;
 import listener.Listener;
 
 /**

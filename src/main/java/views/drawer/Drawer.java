@@ -1,6 +1,6 @@
 package views.drawer;
 
-import javafx.geometry.Point2D;
+import models.GameMap.Point2D;
 import javafx.scene.Node;
 import views.render.Render;
 

@@ -2,7 +2,7 @@ package controllers;
 
 import javafx.scene.input.MouseEvent;
 
-public interface AccountController extends Controller {
+public interface MainMenuController extends Controller {
 
     void giocaClick();
 
@@ -13,7 +13,5 @@ public interface AccountController extends Controller {
     void formaDeckClick();
 
     void esciClick();
-
-    void indietroClick(MouseEvent  e);
 
 }

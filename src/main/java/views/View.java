@@ -1,7 +1,7 @@
 package views;
 
-import javafx.geometry.Point2D;
 import javafx.scene.Scene;
+import models.GameMap.Point2D;
 import views.render.Render;
 import views.scene.layout.LAYOUT;
 

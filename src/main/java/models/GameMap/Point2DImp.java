@@ -18,10 +18,10 @@ public final class Point2DImp implements Point2D {
     private int y;
 
     /**
-     * static factory to get a new Point2D based on its coordinate.
+     * static factory to get a new {@code Point2D} based on its coordinate.
      * @param x
      * @param y
-     * @return Point2D new Point2D instance 
+     * @return {@code Point2D} new {@code Point2D} instance 
      */
     public static Point2D setPoint(final int x, final int y) {
         return new Point2DImp(x, y);
@@ -37,36 +37,50 @@ public final class Point2DImp implements Point2D {
         return setPoint(point1.getX() + point2.getX(), point1.getY() + point2.getY());
     }
 
+    /**
+     * Set {@code this.X} and {@code this.Y} equals to x and y.
+     * @param x
+     * @param y
+     */
     public Point2DImp(final int x, final int y) {
         this.x = x;
         this.y = y;
     }
 
+    /**
+     * Return {@code X}.
+     */
     @Override
     public int getX() {
         return x;
     }
 
+    /**
+     * Return {@code Y}.
+     */
     @Override
     public int getY() {
         return y;
     }
 
+    /**
+     * Set {@code this.X} equal to x.
+     */
     @Override
     public Point2D setX(final int x) {
         return new Point2DImp(x, this.y);
     }
 
+    /**
+     * Set {@code this.Y} equal to y.
+     */
     @Override
     public Point2D setY(final int y) {
         return new Point2DImp(this.x, y);
     }
 
     /**
-     * combinate in a sum two Point2D for the applied changes in respective coordinates.
-     * @param x
-     * @param y
-     * @return Point2D
+     * Combine in a sum two Point2D for the applied changes in respective coordinates.
      */
     @Override
     public Point2D sum(final int x, final int y) {
@@ -83,18 +97,23 @@ public final class Point2DImp implements Point2D {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(final Object obj) {
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         Point2DImp other = (Point2DImp) obj;
-        if (x != other.x)
+        if (x != other.x) {
             return false;
-        if (y != other.y)
+        }
+        if (y != other.y) {
             return false;
+        }
         return true;
     }
 
@@ -105,3 +124,4 @@ public final class Point2DImp implements Point2D {
     }
 
 }
+
