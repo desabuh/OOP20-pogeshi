@@ -68,7 +68,7 @@ public interface BattleView extends View {
      * Initialize all the fields to access the view's elements.
      * @implNote This is useful since when the controller instantiates the view, the stage and scene are not yet set, and would
      * crash if the params were used before so.
-     * This function should be called by the controller when the stage and view have been set.
+     * This function should be called by the controller when the stage and scene have been set.
      * */
     void initializeParams();
 }
