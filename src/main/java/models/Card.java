@@ -7,13 +7,6 @@ package models;
 public interface Card {
 
     /**
-     * Gets the id.
-     *
-     * @return The id of this card
-     */
-    int getId();
-
-    /**
      * Gets the cost.
      *
      * @return The cost of this card
