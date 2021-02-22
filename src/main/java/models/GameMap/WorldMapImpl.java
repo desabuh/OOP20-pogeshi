@@ -14,13 +14,12 @@ import com.google.common.collect.ImmutableList;
 
 import controllers.MOVEMENT;
 import javafx.util.Pair;
-import models.Character;
 import models.Deck;
 import models.DeckImpl;
-import models.Enemy;
-import models.EnemyImp;
-import models.Player;
-import models.PlayerImp;
+import models.Character.EnemyImp;
+import models.Character.Player;
+import models.Character.PlayerImp;
+
 
 public final class WorldMapImpl implements WorldMap {
 

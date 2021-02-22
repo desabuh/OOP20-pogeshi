@@ -3,6 +3,7 @@ package models;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -27,10 +28,11 @@ public final class DeckImpl implements Deck {
      */
     public DeckImpl() {
         Gson gson = new Gson();
-        try {
+        try (FileReader fReader = new FileReader("res" + File.separator + "jsons" + File.separator + "ListOfCards.json")) {
             Type t = new TypeToken<LinkedList<CardImpl>>() { }.getType();
-            this.cards = gson.fromJson(new FileReader("res" + File.separator + "jsons" + File.separator + "ListOfCards.json"), t);
-        } catch (JsonSyntaxException | JsonIOException | FileNotFoundException e) {
+            this.cards = gson.fromJson(fReader, t);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -46,6 +48,20 @@ public final class DeckImpl implements Deck {
      */
     public DeckImpl(final LinkedList<Card> cards) {
         this.cards = (LinkedList<Card>) cards;
+    }
+
+    public DeckImpl(final FileReader file) {
+        Gson gson = new Gson();
+        try (file){
+            Type t = new TypeToken<LinkedList<CardImpl>>() { }.getType();
+            this.cards = gson.fromJson(file, t);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for (int i = this.cards.size(); i > NUMBER_OF_DECK_CARDS; i--) {
+            this.cards.remove(i - 1);
+        }
     }
 
     @Override
@@ -97,5 +113,10 @@ public final class DeckImpl implements Deck {
     @Override
     public boolean isCardInDeck(final Card card) {
         return this.cards.contains(card);
+    }
+
+    @Override
+    public String toString() {
+        return "cards = " + cards;
     }
 }

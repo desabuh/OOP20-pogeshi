@@ -1,13 +1,13 @@
 package models.GameMap;
 
 import java.util.List;
+
 import java.util.Optional;
 
 import controllers.MOVEMENT;
-import models.Character;
-import models.Enemy;
-import models.EnemyImp;
-import models.Player;
+import models.Character.EnemyImp;
+import models.Character.Player;
+
 
 public interface WorldMap {
     

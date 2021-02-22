@@ -3,103 +3,10 @@ package models;
 /**
  * A {@link models.Card} implementation.
  */
-public final class CardImpl implements Card, Comparable<Card> {
-
-    /**
-     * A Builder for CardImpl.
-     */
-    public static final class Builder {
-
-        private int id;
-        private int cost;
-        private int attack;
-        private int shield;
-        private String name;
-        private String resourcePath;
-        private String description;
-
-        /**
-         * Constructs a CardImpl Builder.
-         */
-        public Builder() { }
-
-        /**
-         * Set the name of the card.
-         *
-         * @param name the name to assign to the card
-         * @return this builder
-         */
-        public Builder name(final String name) {
-            this.name = name;
-            return this;
-        }
-
-        /**
-         * Set the cost of the card.
-         *
-         * @param cost the cost to assign to the card
-         * @return this builder
-         */
-        public Builder cost(final int cost) {
-            this.cost = cost;
-            return this;
-        }
-
-        /**
-         * Set the resource path of the card image.
-         *
-         * @param path the path of the card image to assign to the card
-         * @return this builder
-         */
-        public Builder resourcePath(final String path) {
-            this.resourcePath = path;
-            return this;
-        }
-
-        /**
-         * Set the description of the card.
-         *
-         * @param description the description to assign to the card
-         * @return this builder
-         */
-        public Builder description(final String description) {
-            this.description = description;
-            return this;
-        }
-
-        /**
-         * Set the attack of the card.
-         *
-         * @param attack the attack to assign to the card
-         * @return this builder
-         */
-        public Builder attack(final int attack) {
-            this.attack = attack;
-            return this;
-        }
-
-        /**
-         * Set the shield of the card.
-         *
-         * @param shield the shield to assign to the card
-         * @return the builder
-         */
-        public Builder shield(final int shield) {
-            this.shield = shield;
-            return this;
-        }
-
-        /**
-         * Set the id of the card.
-         *
-         * @param id the id to assign to the card
-         * @return this builder
-         */
-        public Builder id(final int id) {
-            this.id = id;
-            return this;
-        }
-
+public final class CardImpl extends AbstractCard implements Comparable<Card> {
+    
+    public static final class Builder extends AbstractCard.Builder<Builder> {
+        
         /**
          * Returns a newly-created Card.
          *
@@ -110,51 +17,22 @@ public final class CardImpl implements Card, Comparable<Card> {
             if (this.name == null || this.description == null || this.resourcePath == null) {
                 throw new IllegalStateException();
             }
-            return new CardImpl(this.attack, this.shield, this.cost, this.name, this.resourcePath, this.description, this.id);
+            return new CardImpl(this);
+        }
+
+        @Override
+        protected Builder self() {
+            return this;
         }
     }
 
-    private int id;
-    private int cost;
-    private int attack;
-    private int shield;
-    private String name;
-    private String resourcePath;
-    private String description;
-
-    private CardImpl(final int attack, final int shield, final int cost, final String name, final String resourcePath, final String description, final int id) {
-        this.cost = cost;
-        this.attack = attack;
-        this.shield = shield;
-        this.name = name;
-        this.resourcePath = resourcePath;
-        this.description = description;
-        this.id = id;
+    private CardImpl(Builder builder) {
+        super(builder);
     }
 
     @Override
-    public int getCost() {
-        return this.cost;
-    }
-
-    @Override
-    public int getAttack() {
-        return this.attack;
-    }
-
-    @Override
-    public int getShield() {
-        return this.shield;
-    }
-
-    @Override
-    public String getName() {
-        return this.name;
-    }
-
-    @Override
-    public String getResourcePath() {
-        return this.resourcePath;
+    public int compareTo(final Card card) {
+        return this.name.compareTo(card.getName());
     }
 
     @Override
@@ -164,7 +42,6 @@ public final class CardImpl implements Card, Comparable<Card> {
         result = prime * result + attack;
         result = prime * result + cost;
         result = prime * result + ((description == null) ? 0 : description.hashCode());
-        result = prime * result + id;
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((resourcePath == null) ? 0 : resourcePath.hashCode());
         result = prime * result + shield;
@@ -172,7 +49,7 @@ public final class CardImpl implements Card, Comparable<Card> {
     }
 
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
@@ -191,9 +68,6 @@ public final class CardImpl implements Card, Comparable<Card> {
                 return false;
             }
         } else if (!description.equals(other.description)) {
-            return false;
-        }
-        if (id != other.id) {
             return false;
         }
         if (name == null) {
@@ -217,17 +91,8 @@ public final class CardImpl implements Card, Comparable<Card> {
     }
 
     @Override
-    public int compareTo(final Card card) {
-        return this.name.compareTo(card.getName());
-    }
-
-    @Override
-    public String getDescription() {
-        return this.description;
-    }
-
-    @Override
-    public int getId() {
-        return this.id;
+    public String toString() {
+        return "[cost = " + cost + ", attack = " + attack + ", shield = " + shield + ", name = " + name
+                + ", resourcePath = " + resourcePath + ", description = " + description + "]";
     }
 }

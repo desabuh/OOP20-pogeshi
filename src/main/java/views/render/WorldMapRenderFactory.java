@@ -1,8 +1,7 @@
 package views.render;
 
 import javafx.scene.paint.Color;
-import models.EnemyImp;
-import models.Player;
+
 
 public final class WorldMapRenderFactory implements RenderFactory {
 
