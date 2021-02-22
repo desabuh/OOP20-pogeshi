@@ -50,7 +50,7 @@ public final class WorldMapController implements Controller {
     private View worldView;
     private WorldMap worldMap;
     
-    private final GuavaEventBusAdapter<Request<LAYOUT, ? extends Object>> notifier 
+    private final EventBus<Request<LAYOUT, ? extends Object>> notifier 
     = new GuavaEventBusAdapter<Request<LAYOUT, ? extends Object>>(new com.google.common.eventbus.EventBus());
 
     private MainController mc = new MainController();
