@@ -1,8 +1,10 @@
-package models;
+package models.battle;
 
 import java.util.Optional;
 
 import models.Character.Character;
+import models.Card;
+import models.DeckImpl;
 import models.Account.AccountImp;
 import models.Character.EnemyImp;
 import models.Character.Player;

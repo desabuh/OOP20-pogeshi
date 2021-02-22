@@ -1,9 +1,10 @@
-package views;
+package views.battle;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import views.View;
 
 public interface BattleView extends View {
 
@@ -71,4 +72,11 @@ public interface BattleView extends View {
      * This function should be called by the controller when the stage and scene have been set.
      * */
     void initializeParams();
+
+    /**
+     * Displays a message box and waits for the user to close it.
+     * @param title The title of the message
+     * @param description The body of the message
+     * */
+    void showMessage(String title, String description);
 }

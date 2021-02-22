@@ -1,4 +1,8 @@
-package models;
+package models.battle;
+
+import models.AbstractCard;
+import models.Card;
+import models.AbstractCard.Builder;
 
 /**
  * A {@link models.Card} implementation.

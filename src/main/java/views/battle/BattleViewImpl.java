@@ -1,14 +1,15 @@
-package views;
+package views.battle;
 
 import java.io.File;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Point2D;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -16,8 +17,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import views.JavafxView;
 import views.render.Render;
 import views.scene.layout.LAYOUT;
+import models.GameMap.Point2D;
 
 public final class BattleViewImpl extends JavafxView implements BattleView {
 
@@ -39,29 +42,29 @@ public final class BattleViewImpl extends JavafxView implements BattleView {
 
 
     @FXML
-    private HBox HBPlayerHand;
+    private HBox hbPlayerHand;
     @FXML
-    private Label LBLEnemyDamage;
+    private Label lblEnemyDamage;
     @FXML
-    private Label LBLPlayerDamage;
+    private Label lblPlayerDamage;
     @FXML
-    private Label LBLMana;
+    private Label lblMana;
     @FXML
-    private Label LBLEnemyHealth;
+    private Label lblEnemyHealth;
     @FXML
-    private Label LBLEnemyShield;
+    private Label lblEnemyShield;
     @FXML
-    private Label LBLPlayerHealth;
+    private Label lblPlayerHealth;
     @FXML
-    private Label LBLPlayerShield;
+    private Label lblPlayerShield;
     @FXML
-    private ImageView IMGPlayer;
+    private ImageView imgPlayer;
     @FXML
-    private ImageView IMGEnemy;
+    private ImageView imgEnemy;
     @FXML
-    private Label LBLNoMana;
+    private Label lblNoMana;
     @FXML
-    private Button BTNEndTurn;
+    private Button btnEndTurn;
     @FXML
     private TextFlow txtCardInfo;
 
@@ -76,39 +79,39 @@ public final class BattleViewImpl extends JavafxView implements BattleView {
     public void initializeParams() {
         Scene scene = this.getScene();
         System.out.println(scene);
-        LBLMana = (Label) scene.lookup("#LBLMana");
-        LBLEnemyDamage = (Label) scene.lookup("#LBLEnemyDamage");
-        LBLPlayerDamage = (Label) scene.lookup("#LBLPlayerDamage");
-        LBLEnemyHealth = (Label) scene.lookup("#LBLEnemyHealth");
-        LBLPlayerHealth = (Label) scene.lookup("#LBLPlayerHealth");
-        LBLPlayerShield = (Label) scene.lookup("#LBLPlayerShield");
-        LBLEnemyShield = (Label) scene.lookup("#LBLEnemyShield");
+        lblMana = (Label) scene.lookup("#lblMana");
+        lblEnemyDamage = (Label) scene.lookup("#lblEnemyDamage");
+        lblPlayerDamage = (Label) scene.lookup("#lblPlayerDamage");
+        lblEnemyHealth = (Label) scene.lookup("#lblEnemyHealth");
+        lblPlayerHealth = (Label) scene.lookup("#lblPlayerHealth");
+        lblPlayerShield = (Label) scene.lookup("#lblPlayerShield");
+        lblEnemyShield = (Label) scene.lookup("#lblEnemyShield");
         txtCardInfo = (TextFlow) scene.lookup("#txtCardInfo");
-        HBPlayerHand = (HBox) scene.lookup("#HBPlayerHand");
-        LBLNoMana = (Label) scene.lookup("#LBLNoMana");
-        BTNEndTurn = (Button) scene.lookup("#BTNEndTurn");
-        IMGPlayer = (ImageView) scene.lookup("#IMGPlayer");
-        IMGEnemy = (ImageView) scene.lookup("#IMGEnemy");
-        IMGPlayer.setImage(new Image(new File("res" + File.separator + "images" + File.separator + "PlayerImage.png").toURI().toString()));
-        IMGEnemy.setImage(new Image(new File("res" + File.separator + "images" + File.separator + "EnemyImage.png").toURI().toString()));
+        hbPlayerHand = (HBox) scene.lookup("#hbPlayerHand");
+        lblNoMana = (Label) scene.lookup("#lblNoMana");
+        btnEndTurn = (Button) scene.lookup("#btnEndTurn");
+        imgPlayer = (ImageView) scene.lookup("#imgPlayer");
+        imgEnemy = (ImageView) scene.lookup("#imgEnemy");
+        imgPlayer.setImage(new Image(new File("res" + File.separator + "images" + File.separator + "PlayerImage.png").toURI().toString()));
+        imgEnemy.setImage(new Image(new File("res" + File.separator + "images" + File.separator + "EnemyImage.png").toURI().toString()));
 
     }
 
     @Override
     public void updateManaLabel(final int unspent, final int max) {
-        LBLMana.setText("Mana: " + String.valueOf(unspent) + " / " + String.valueOf(max));
+        lblMana.setText("Mana: " + String.valueOf(unspent) + " / " + String.valueOf(max));
     }
 
     @Override
     public void updateEnemyStats(final int health, final int shield) {
-        LBLEnemyHealth.setText(String.valueOf(health));
-        LBLEnemyShield.setText(String.valueOf(shield));
+        lblEnemyHealth.setText(String.valueOf(health));
+        lblEnemyShield.setText(String.valueOf(shield));
     }
 
     @Override
     public void updatePlayerStats(final int health, final int shield) {
-        LBLPlayerHealth.setText(String.valueOf(health));
-        LBLPlayerShield.setText(String.valueOf(shield));
+        lblPlayerHealth.setText(String.valueOf(health));
+        lblPlayerShield.setText(String.valueOf(shield));
     }
 
     public void addCardToHand(final String imagePath, final Text description, final EventHandler<MouseEvent> onClick) {
@@ -150,26 +153,26 @@ public final class BattleViewImpl extends JavafxView implements BattleView {
         });
 
 
-        HBPlayerHand.getChildren().add(card);
+        hbPlayerHand.getChildren().add(card);
     }
 
     public void resetHand() {
-        int nCards = HBPlayerHand.getChildren().size();
+        int nCards = hbPlayerHand.getChildren().size();
         for (int i = 0; i < nCards; i++) {
-            HBPlayerHand.getChildren().remove(0);
+            hbPlayerHand.getChildren().remove(0);
         }
     }
 
     public void showDamageToEnemy(final int amount) {
-        LBLEnemyDamage.setText("-" + String.valueOf(amount));
-        LBLEnemyDamage.setVisible(true);
-        LBLPlayerDamage.setVisible(false);
+        lblEnemyDamage.setText("-" + String.valueOf(amount));
+        lblEnemyDamage.setVisible(true);
+        lblPlayerDamage.setVisible(false);
     }
 
     public void showDamageToPlayer(final int amount) {
-        LBLPlayerDamage.setText("-" + String.valueOf(amount));
-        LBLPlayerDamage.setVisible(true);
-        LBLEnemyDamage.setVisible(false);
+        lblPlayerDamage.setText("-" + String.valueOf(amount));
+        lblPlayerDamage.setVisible(true);
+        lblEnemyDamage.setVisible(false);
     }
 
     public void displayNotEnoughMana() {
@@ -180,9 +183,9 @@ public final class BattleViewImpl extends JavafxView implements BattleView {
         new Thread() {
             public void run() {
                 try {
-                    LBLNoMana.setVisible(true);
+                    lblNoMana.setVisible(true);
                     Thread.sleep(TIME_BEFORE_HIDING_MESSAGE);
-                    LBLNoMana.setVisible(false);
+                    lblNoMana.setVisible(false);
                 } catch (InterruptedException e) {
                     System.out.println("The thread died while sleeping");
                 } finally {
@@ -193,13 +196,19 @@ public final class BattleViewImpl extends JavafxView implements BattleView {
     }
 
     public void setEndTurnEvent(final EventHandler<ActionEvent> buttonClicked) {
-        BTNEndTurn.setOnAction(buttonClicked);
+        btnEndTurn.setOnAction(buttonClicked);
     }
 
     @Override
-    public void updateEntity(Render render, models.GameMap.Point2D x, models.GameMap.Point2D y) {
+    public void updateEntity(final Render render, final Point2D x, final Point2D y) {
         // TODO Auto-generated method stub
+    }
 
+    public void showMessage(final String title, final String description) {
+        Alert message = new Alert(AlertType.INFORMATION);
+        message.setTitle(title);
+        message.setContentText(description);
+        message.showAndWait();
     }
 
 

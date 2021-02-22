@@ -1,7 +1,7 @@
 /**
  * 
  */
-package models;
+package models.battle;
 
 import models.Character.Character;
 import models.Character.EnemyImp;

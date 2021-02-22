@@ -1,4 +1,4 @@
-package controllers;
+package controllers.battle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +14,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import models.Battle;
-import models.BattleImpl;
 import models.Card;
 import models.Character.Enemy;
 import models.Character.Player;
-import views.BattleView;
+import models.battle.Battle;
+import models.battle.BattleImpl;
 import views.View;
+import views.battle.BattleView;
 import views.scene.SceneManager;
 import views.scene.layout.LAYOUT;
 
@@ -98,22 +98,17 @@ public final class BattleControllerImpl implements BattleController {
         } else {
             /**
              * The enemy has no mana and a card can always be played.
-             * A card will always be returned.
              * */
             selected = Iterables.getFirst(battle.getEnemy().getDeck().getCards(), null);
             battle.playCard(index);
             updateViewLabels(selected);
         }
         if (battle.checkBattleEnd()) {
-            Alert battleFinish = new Alert(AlertType.INFORMATION);
             if (battle.currentTurn() instanceof Player) {
-                battleFinish.setTitle("Victory!");
-                battleFinish.setContentText("You won the fight!");
+                battleView.showMessage("Victory!", "You won the fight!");
             } else {
-                battleFinish.setTitle("Defeat!");
-                battleFinish.setContentText("You died!");
+                battleView.showMessage("Defeat!", "You died!");
             }
-            battleFinish.showAndWait();
             System.exit(0);
         }
     }
