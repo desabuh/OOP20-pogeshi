@@ -16,25 +16,7 @@ import static org.junit.Assert.*;
 public class TestBattle {
     private Battle b;
 
-
-    /**
-     * Testing the player's default deck's number of cards.
-     * */
-    @Test
-    public void testBasicDeck() {
-        b = new BattleImpl();
-        b.initializeCharacters();
-        /**
-         * The basic deck should have 10 cards
-         * */
-        assertEquals(10, b.getPlayer().getDeck().getCards().size());
-        /**
-         * Adding a card from deck to hand, should decrease the deck's size by 1
-         * */
-        b.getPlayer().getHand().addCard(b.getPlayer().getDeck().popCard().get());
-        assertEquals(9, b.getPlayer().getDeck().getCards().size());
-    }
-
+    public static final int MAX_CARDS_IN_HAND = 5;
     /**
      * Testing if the player can damage the enemy.
      * */
@@ -78,7 +60,7 @@ public class TestBattle {
         /**
          * Even if the player drew 5 cards, for a total of 8, the hand's size should be capped at 5 cards
          * */
-        assertEquals(5, b.getPlayer().getHand().getCards().size());
+        assertEquals(MAX_CARDS_IN_HAND, b.getPlayer().getHand().getCards().size());
     }
 
     /**
