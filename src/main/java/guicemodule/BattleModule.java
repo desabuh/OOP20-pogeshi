@@ -4,14 +4,14 @@ import com.google.inject.AbstractModule;
 
 import com.google.inject.Provides;
 
-import controllers.BattleControllerImpl;
 import controllers.Controller;
+import controllers.battle.BattleControllerImpl;
 import javafx.stage.Stage;
-import models.Battle;
-import models.BattleImpl;
-import views.BattleView;
-import views.BattleViewImpl;
+import models.battle.Battle;
+import models.battle.BattleImpl;
 import views.View;
+import views.battle.BattleView;
+import views.battle.BattleViewImpl;
 
 public final class BattleModule extends AbstractModule {
 
