@@ -26,43 +26,49 @@ import views.scene.layout.LAYOUT;
 
 public final class BattleControllerImpl implements BattleController {
 
-    private Battle b = new BattleImpl();
+    private Battle battle = new BattleImpl();
     private BattleView battleView;
 
     @Inject
     public BattleControllerImpl(final Battle battle, final BattleView battleView) {
-        this.b = battle;
+        this.battle = battle;
         this.battleView = battleView;
     }
 
     @FXML
     public void initialize() {
+        /**
+         * Everything inside this function is to be performed when the view's stage is set.
+         * If it were to execute without runLater, the view would try to access a stage that has not been loaded yet,
+         * and it would inevitably crash.
+         * */
         Platform.runLater(() -> {
                 this.battleView.setScene(SceneManager.of(LAYOUT.BATTLE).getScene());
                 battleView.initializeParams();
-                List<Card> hand = new ArrayList<>(b.getPlayer().getHand().getCards());
+                List<Card> hand = new ArrayList<>(battle.getPlayer().getHand().getCards());
                 for (int i = 0; i < hand.size(); i++) {
                     attachSelectEvent(hand.get(i), i);
                 }
-                battleView.updatePlayerStats(b.getPlayer().getHealth(), b.getPlayer().getShield());
-                battleView.updateManaLabel(b.getPlayerUnusedCombatMana(), b.getPlayer().getMana());
+                battleView.updatePlayerStats(battle.getPlayer().getHealth(), battle.getPlayer().getShield());
+                battleView.updateManaLabel(battle.getPlayerUnusedCombatMana(), battle.getPlayer().getMana());
                 /**
                  * This is implemented to give the view the function to execute when the player wants to end the turn.
                  * This allows to change the event's behaviour without having to change anything into the view, as long
                  * as the element that ends the turn is clickable.
+                 * This is the most generic solution I've thought of.
                  * */
                 battleView.setEndTurnEvent(new EventHandler<>() {
 
                     @Override
                     public void handle(final ActionEvent event) {
-                        final int nPlayerCards = b.getPlayer().getHand().getCards().size();
-                        b.endTurn();
-                        if (b.currentTurn() instanceof Enemy) {
+                        final int nPlayerCards = battle.getPlayer().getHand().getCards().size();
+                        battle.endTurn();
+                        if (battle.currentTurn() instanceof Enemy) {
                             selectedCard(0);
                             this.handle(event);
                         } else {
-                            battleView.updateManaLabel(b.getPlayerUnusedCombatMana(), b.getPlayer().getMana());
-                            if (b.getPlayer().getHand().getCards().size() != nPlayerCards) {
+                            battleView.updateManaLabel(battle.getPlayerUnusedCombatMana(), battle.getPlayer().getMana());
+                            if (battle.getPlayer().getHand().getCards().size() != nPlayerCards) {
                                 addLatestCardToHand();
                             }
                         }
@@ -70,19 +76,19 @@ public final class BattleControllerImpl implements BattleController {
                 });
             });
 
-        b.initializeCharacters();
+        battle.initializeCharacters();
 
     }
 
     private void selectedCard(final int index) {
         Card selected;
-        if (b.currentTurn() instanceof Player) {
-            selected = b.getPlayer().getHand().getCards().get(index);
+        if (battle.currentTurn() instanceof Player) {
+            selected = battle.getPlayer().getHand().getCards().get(index);
             /**
              * If the player has enough mana, the required mana for playing the card is spent, the various effects of the card
              * are applied (damage/add shield) and the card is removed
              * */
-            if (b.playCard(index)) {
+            if (battle.playCard(index)) {
                 battleView.resetHand();
                 updateHand(0);
                 updateViewLabels(selected);
@@ -94,13 +100,13 @@ public final class BattleControllerImpl implements BattleController {
              * The enemy has no mana and a card can always be played.
              * A card will always be returned.
              * */
-            selected = Iterables.getFirst(b.getEnemy().getDeck().getCards(), null);
-            b.playCard(index);
+            selected = Iterables.getFirst(battle.getEnemy().getDeck().getCards(), null);
+            battle.playCard(index);
             updateViewLabels(selected);
         }
-        if (b.checkBattleEnd()) {
+        if (battle.checkBattleEnd()) {
             Alert battleFinish = new Alert(AlertType.INFORMATION);
-            if (b.currentTurn() instanceof Player) {
+            if (battle.currentTurn() instanceof Player) {
                 battleFinish.setTitle("Victory!");
                 battleFinish.setContentText("You won the fight!");
             } else {
@@ -113,27 +119,34 @@ public final class BattleControllerImpl implements BattleController {
     }
 
     /**
-     * This is used instead of removing all the images and regenerating them.
+     * Regenerates all the cards from the starting index.
      * */
     private void updateHand(final int startingIndex) {
-        List<Card> hand = new ArrayList<>(b.getPlayer().getHand().getCards());
+        List<Card> hand = new ArrayList<>(battle.getPlayer().getHand().getCards());
         for (int i = startingIndex; i < hand.size(); i++) {
             System.out.println(startingIndex);
             attachSelectEvent(hand.get(i), i);
         }
     }
 
+    /**
+     * Tells the view to update the corresponding labels when a card is played, based on the turn the card is played.
+     * */
     private void updateViewLabels(final Card c) {
-        if (b.currentTurn() instanceof Player) {
+        if (battle.currentTurn() instanceof Player) {
             battleView.showDamageToEnemy(c.getAttack());
-            battleView.updateManaLabel(b.getPlayerUnusedCombatMana(), b.getPlayer().getMana());
+            battleView.updateManaLabel(battle.getPlayerUnusedCombatMana(), battle.getPlayer().getMana());
         } else {
             battleView.showDamageToPlayer(c.getAttack());
         }
-        battleView.updateEnemyStats(b.getEnemy().getHealth(), b.getEnemy().getShield());
-        battleView.updatePlayerStats(b.getPlayer().getHealth(), b.getPlayer().getShield());
+        battleView.updateEnemyStats(battle.getEnemy().getHealth(), battle.getEnemy().getShield());
+        battleView.updatePlayerStats(battle.getPlayer().getHealth(), battle.getPlayer().getShield());
     }
 
+    /**
+     * This is the main functions that defines what a card should do when a specific event happens (in this case, when its
+     * image on the view is clicked, but this is a generic event that can be bound to anything).
+     * */
     private void attachSelectEvent(final Card c, final int i) {
 
         Text description = new Text(
@@ -143,7 +156,9 @@ public final class BattleControllerImpl implements BattleController {
                 + "Shield added: " + String.valueOf(c.getShield()) + "\n\n"
                 + "Description: " + c.getDescription()
                 );
-
+        /**
+         * Here a generic eventHandler is passed, and the battleView can handle it however it pleases.
+         * */
         battleView.addCardToHand(c.getResourcePath(), description, new EventHandler<>() {
 
             @Override
@@ -153,24 +168,31 @@ public final class BattleControllerImpl implements BattleController {
         });
 
     }
+
     /**
      * Used to add the latest drawn card to the view.
      * */
     private void addLatestCardToHand() {
-        int handSize = b.getPlayer().getHand().getCards().size();
-        Card latest = Iterables.getLast(b.getPlayer().getHand().getCards()); // Found on StackOverflow, a more elegant way to get the latest card instead of size() - 1
+        int handSize = battle.getPlayer().getHand().getCards().size();
+        Card latest = Iterables.getLast(battle.getPlayer().getHand().getCards()); // Found on StackOverflow, a more elegant way to get the latest card instead of size() - 1
         attachSelectEvent(latest, handSize - 1);
     }
 
+    /**
+     * @return The battle's view currently instantiated
+     * */
     @Override
     public View getView() {
         return this.battleView;
     }
 
+    /**
+     * This is used to let the main controller set the battle's player in another moment that's not the instantiation of the battle.
+     * */
     @Override
     public void callBackAction(final Object data) {
         if (data instanceof Player) {
-            b.setPlayer((Player) data);
+            battle.setPlayer((Player) data);
         }
         // TODO Auto-generated method stub
     }
