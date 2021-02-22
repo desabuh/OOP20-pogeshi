@@ -6,9 +6,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import models.*;
-import views.BattleView;
+import models.battle.Battle;
+import models.battle.BattleImpl;
 import views.scene.layout.LAYOUT;
+import views.battle.BattleView;
 import views.scene.SceneManager;
 
 import static org.junit.Assert.*;
@@ -58,7 +59,7 @@ public class TestBattle {
         /**
          * Even if the player drew 5 cards, for a total of 8, the hand's size should be capped at 5 cards
          * */
-        assertEquals(models.BattleImpl.MAX_CARDS_IN_HAND, b.getPlayer().getHand().getCards().size());
+        assertEquals(models.battle.BattleImpl.MAX_CARDS_IN_HAND, b.getPlayer().getHand().getCards().size());
     }
 
     /**
