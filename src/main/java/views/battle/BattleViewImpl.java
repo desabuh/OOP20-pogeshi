@@ -17,11 +17,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import javafx.scene.canvas.Canvas;
 import views.JavafxView;
+import views.drawer.CanvasDrawer;
+import views.drawer.Drawer;
 import views.render.Render;
 import views.scene.layout.LAYOUT;
 import models.GameMap.Point2D;
-
+import models.GameMap.Point2DImp;
+import views.render.RenderFactory;
+import views.render.BattleRenderFactoryImpl;
 public final class BattleViewImpl extends JavafxView implements BattleView {
 
     /**
@@ -34,12 +39,14 @@ public final class BattleViewImpl extends JavafxView implements BattleView {
      * */
     public static final int TIME_BEFORE_HIDING_MESSAGE = 3000;
 
-
     /**
      * The scene layout of the battle.
      * */
     public static final LAYOUT ACTUAL_LAYOUT = LAYOUT.BATTLE;
 
+    private RenderFactory renderFactory = new BattleRenderFactoryImpl();
+    private Drawer<Canvas> playerDrawer;
+    private Drawer<Canvas> enemyDrawer;
 
     @FXML
     private HBox hbPlayerHand;
@@ -57,10 +64,6 @@ public final class BattleViewImpl extends JavafxView implements BattleView {
     private Label lblPlayerHealth;
     @FXML
     private Label lblPlayerShield;
-    @FXML
-    private ImageView imgPlayer;
-    @FXML
-    private ImageView imgEnemy;
     @FXML
     private Label lblNoMana;
     @FXML
@@ -90,11 +93,10 @@ public final class BattleViewImpl extends JavafxView implements BattleView {
         hbPlayerHand = (HBox) scene.lookup("#hbPlayerHand");
         lblNoMana = (Label) scene.lookup("#lblNoMana");
         btnEndTurn = (Button) scene.lookup("#btnEndTurn");
-        imgPlayer = (ImageView) scene.lookup("#imgPlayer");
-        imgEnemy = (ImageView) scene.lookup("#imgEnemy");
-        imgPlayer.setImage(new Image(new File("res" + File.separator + "images" + File.separator + "PlayerImage.png").toURI().toString()));
-        imgEnemy.setImage(new Image(new File("res" + File.separator + "images" + File.separator + "EnemyImage.png").toURI().toString()));
-
+        playerDrawer = new CanvasDrawer((Canvas) scene.lookup("#cvPlayer"));
+        playerDrawer.draw(renderFactory.renderPlayer(), new Point2DImp(0, 0), new Point2DImp(0, 0));
+        enemyDrawer = new CanvasDrawer((Canvas) scene.lookup("#cvEnemy"));
+        enemyDrawer.draw(renderFactory.renderEnemy(), new Point2DImp(0, 0), new Point2DImp(0, 0));
     }
 
     @Override
@@ -210,6 +212,5 @@ public final class BattleViewImpl extends JavafxView implements BattleView {
         message.setContentText(description);
         message.showAndWait();
     }
-
 
 }
