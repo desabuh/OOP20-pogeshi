@@ -2,6 +2,8 @@ package models;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import models.deck.DeckImpl;
+import models.deck.card.Card;
 
 public final class BattleImpl implements Battle {
 

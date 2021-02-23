@@ -3,8 +3,8 @@ package models.Account;
 import java.io.IOException;
 import java.util.List;
 
-import models.Card;
-import models.Deck;
+import models.deck.Deck;
+import models.deck.card.Card;
 
 public interface Account {
 

@@ -11,13 +11,13 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import models.Battle;
 import models.BattleImpl;
-import models.Card;
-import models.CardImpl;
-import models.DeckImpl;
-import models.Enemy;
-import models.EnemyImp;
-import models.Player;
-import models.PlayerImp;
+import models.Character.Enemy;
+import models.Character.EnemyImp;
+import models.Character.Player;
+import models.Character.PlayerImp;
+import models.deck.DeckImpl;
+import models.deck.card.Card;
+import models.deck.card.CardImpl;
 
 public final class BattleControllerImpl implements BattleController {
     /**

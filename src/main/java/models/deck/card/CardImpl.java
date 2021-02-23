@@ -1,7 +1,9 @@
-package models;
+package models.deck.card;
+
+import models.deck.card.AbstractCard.Builder;
 
 /**
- * A {@link models.Card} implementation.
+ * A {@link models.deck.card.Card} implementation.
  */
 public final class CardImpl extends AbstractCard implements Comparable<Card> {
 

@@ -10,8 +10,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import models.Card;
 import models.GameMap.Point2D;
+import models.deck.card.Card;
 import views.render.Render;
 import views.scene.layout.LAYOUT;
 

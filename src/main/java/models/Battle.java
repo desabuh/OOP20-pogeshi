@@ -3,6 +3,8 @@
  */
 package models;
 
+import models.deck.card.Card;
+
 public interface Battle {
     /**
      * Switches the turn from player to enemy or viceversa.

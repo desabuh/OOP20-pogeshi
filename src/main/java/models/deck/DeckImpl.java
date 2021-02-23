@@ -1,4 +1,4 @@
-package models;
+package models.deck;
 
 import java.io.File;
 import java.io.FileReader;
@@ -12,8 +12,11 @@ import java.util.Optional;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
+import models.deck.card.Card;
+import models.deck.card.CardImpl;
+
 /**
- * A {@link models.Deck} implementation.
+ * A {@link models.deck.Deck} implementation.
  */
 public final class DeckImpl implements Deck {
 

@@ -2,7 +2,7 @@ package views;
 
 import java.util.List;
 
-import models.Card;
+import models.deck.card.Card;
 
 public interface DeckCreationView extends View {
 

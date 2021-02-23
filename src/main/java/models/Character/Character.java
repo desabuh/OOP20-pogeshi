@@ -1,7 +1,7 @@
 package models.Character;
 
-import models.Deck;
 import models.GameMap.Point2D;
+import models.deck.Deck;
 
 /** description.
  * @param

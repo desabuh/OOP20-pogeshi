@@ -3,6 +3,8 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.deck.card.Card;
+
 public final class HandImpl implements Hand {
 
     private final List<Card> cards;

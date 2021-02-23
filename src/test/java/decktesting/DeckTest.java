@@ -10,10 +10,10 @@ import java.io.FileReader;
 
 import org.junit.jupiter.api.Test;
 
-import models.Card;
-import models.CardImpl;
-import models.Deck;
-import models.DeckImpl;
+import models.deck.Deck;
+import models.deck.DeckImpl;
+import models.deck.card.Card;
+import models.deck.card.CardImpl;
 
 class DeckTest {
     private Deck deck;
