@@ -9,11 +9,15 @@ import controllers.MainMenuController;
 import controllers.MainMenuControllerImp;
 import controllers.StatisticsController;
 import controllers.StatisticsControllerImp;
+import controllers.maincontroller.MainController;
+import controllers.maincontroller.Request;
 import javafx.stage.Stage;
 import models.Account.Account;
 import models.Account.AccountImp;
+import notifier.EventBus;
 import views.DeckCreationView;
 import views.DeckCreationViewImpl;
+import views.scene.layout.LAYOUT;
 
 public final class MenuModule extends AbstractModule {
 
@@ -24,8 +28,8 @@ public final class MenuModule extends AbstractModule {
     }
 
     @Provides
-    DeckCreationController provideDeckController(final Account account, final DeckCreationView deckView) {
-        return new DeckCreationControllerImpl(account, deckView);
+    DeckCreationController provideDeckController(final Account account, final DeckCreationView deckView, final MainController mainController, final EventBus<Request<LAYOUT, ? extends Object>> notifier) {
+        return new DeckCreationControllerImpl(account, deckView, mainController, notifier);
     }
     
     @Provides

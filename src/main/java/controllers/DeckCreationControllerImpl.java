@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.google.inject.Inject;
 
+import controllers.maincontroller.MainController;
+import controllers.maincontroller.Request;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -13,6 +15,7 @@ import javafx.scene.control.ListView;
 import models.Account.Account;
 import models.Account.AccountImp;
 import models.deck.card.Card;
+import notifier.EventBus;
 import views.DeckCreationView;
 import views.View;
 import views.scene.SceneManager;
@@ -31,11 +34,16 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
     private ListView<String> listDeck;
     @FXML
     private ListView<String> listCards;
+    
+    private EventBus<Request<LAYOUT, ? extends Object>> notifier;
+    private MainController mainController;
 
     @Inject
-    public DeckCreationControllerImpl(final Account account, final DeckCreationView deckCreationView) {
+    public DeckCreationControllerImpl(final Account account, final DeckCreationView deckCreationView, final MainController mainController, final EventBus<Request<LAYOUT, ? extends Object>> notifier) {
         this.playerAccount = account;
         this.deckCreationView = deckCreationView;
+        this.notifier = notifier;
+        this.notifier.register(mainController);
     }
 
     /**

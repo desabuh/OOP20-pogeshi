@@ -6,12 +6,16 @@ import com.google.inject.Provides;
 
 import controllers.Controller;
 import controllers.battle.BattleControllerImpl;
+import controllers.maincontroller.MainController;
+import controllers.maincontroller.Request;
 import javafx.stage.Stage;
 import models.battle.Battle;
 import models.battle.BattleImpl;
+import notifier.EventBus;
 import views.View;
 import views.battle.BattleView;
 import views.battle.BattleViewImpl;
+import views.scene.layout.LAYOUT;
 
 public final class BattleModule extends AbstractModule {
 
@@ -22,8 +26,8 @@ public final class BattleModule extends AbstractModule {
     }
 
     @Provides
-    Controller provideBattleController(final Battle model, final BattleView view) {
-        return new BattleControllerImpl(model, view);
+    Controller provideBattleController(final Battle model, final BattleView view, final MainController mainController, final EventBus<Request<LAYOUT, ? extends Object>> notifier) {
+        return new BattleControllerImpl(model, view, mainController, notifier);
     }
 
     @Provides

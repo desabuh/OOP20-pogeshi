@@ -47,20 +47,22 @@ public final class WorldMapController implements Controller {
 
     private View worldView;
     private WorldMap worldMap;
-    
-    private final EventBus<Request<LAYOUT, ? extends Object>> notifier 
-    = new GuavaEventBusAdapter<Request<LAYOUT, ? extends Object>>(new com.google.common.eventbus.EventBus());
 
-    private MainController mc = new MainController();
+    private EventBus<Request<LAYOUT, ? extends Object>> notifier;
+
+
+    private MainController mainController;
     private RenderFactory renderFactory = new WorldMapRenderFactory();
 
     private Point2D pos = Point2DImp.setPoint(0, 0);
 
     @Inject
-    public WorldMapController(final WorldMap worldMap, final View worldView) {
+    public WorldMapController(final WorldMap worldMap, final View worldView, final MainController mainController, final EventBus<Request<LAYOUT, ? extends Object>> notifier) {
         this.worldMap = worldMap;
         this.worldView = worldView;
-        this.notifier.register(mc);
+        this.mainController = mainController;
+        this.notifier = notifier;
+        this.notifier.register(mainController);
     }
 
     @FXML 
@@ -99,9 +101,7 @@ public final class WorldMapController implements Controller {
             .map(DISPLAY_FUN::applyTransform)
             .ifPresentOrElse(p -> this.worldView.updateEntity(this.renderFactory.renderEnemyBoss(), p, p), () -> { });
 
-            
-            System.out.println(this.worldMap.getPlayer());
-            
+
             this.notifier
             .notifyListener(new SwitchControllerRequest<LAYOUT, Player>(LAYOUT.WORLDMAP, Suppliers.ofInstance(this.worldMap.getPlayer())));
         }
@@ -151,7 +151,6 @@ public final class WorldMapController implements Controller {
 
     @Override
     public void callBackAction(Object data) {
-        System.out.println(data);
 
     }
 }

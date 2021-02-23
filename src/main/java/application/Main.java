@@ -1,16 +1,20 @@
 package application;
 
+import java.util.concurrent.CompletableFuture;
+
+
 import com.google.inject.Guice;
 
 
 
 import com.google.inject.Injector;
 
-import controllers.BattleController;
-import controllers.BattleControllerImpl;
 import controllers.Controller;
+import controllers.maincontroller.MainController;
 import guicemodule.BattleModule;
+import guicemodule.ComunicationModule;
 import guicemodule.ControllerModule;
+import guicemodule.WorldMapModule;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -31,11 +35,20 @@ public final class Main extends Application {
 
     @Override
     public void start(final Stage stage) throws Exception {
-        Injector injector = Guice.createInjector(new BattleModule());
-        SceneManager.provideControllerFactory(injector::getInstance);
+        Injector injector = Guice.createInjector(new WorldMapModule(stage), new ComunicationModule());
 
-        View view = new JavafxView(stage);
-        view.loadScene(INITIAL_LAYOUT);
+
+        SceneManager.provideControllerFactory(injector::getInstance);
+        CompletableFuture<Scene> completableScene = 
+                CompletableFuture.supplyAsync(() -> SceneManager.of(LAYOUT.WORLDMAP).getScene());
+        Scene scene = completableScene.get();
+
+
+        stage.sizeToScene();
+        stage.setTitle("Pogeshi");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show(); 
     }
 
     /**
