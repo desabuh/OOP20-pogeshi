@@ -1,9 +1,7 @@
-package models.battle;
+package models;
 
 import java.util.Collection;
 import java.util.Iterator;
-
-import models.Card;
 
 public final class CardIterator implements Iterator<Card> {
 
