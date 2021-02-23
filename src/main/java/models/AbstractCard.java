@@ -1,18 +1,22 @@
 package models;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Objects;
+
 /**
  *  An abstract Card.
  */
 public abstract class AbstractCard implements Card {
-    
+
     public abstract static class Builder<T extends Builder<T>> {
 
-        protected int cost;
-        protected int attack;
-        protected int shield;
-        protected String name;
-        protected String resourcePath;
-        protected String description;
+        private int cost;
+        private int attack;
+        private int shield;
+        private String name;
+        private String resourcePath;
+        private String description;
 
         /**
          * Constructs a Card Builder.
@@ -46,9 +50,14 @@ public abstract class AbstractCard implements Card {
          *
          * @param path the path of the card image to assign to the card
          * @return this builder
+         * @throws FileNotFoundException when the file indicated by the path does not exist
          */
-        public T resourcePath(final String path) {
+        public T resourcePath(final String path) throws FileNotFoundException {
             this.resourcePath = path;
+            File file = new File(path);
+            if(!file.exists()) {
+                throw new FileNotFoundException();
+            }
             return self();
         }
 
@@ -84,58 +93,91 @@ public abstract class AbstractCard implements Card {
             this.shield = shield;
             return self();
         }
-        
+
         /**
          * Returns a newly-created Card.
          *
          * @return A card
          */
-        abstract public Card build();
-        
-        abstract protected T self();
+        abstract Card build();
+
+        abstract T self();
     }
-    
-    protected int cost;
-    protected int attack;
-    protected int shield;
-    protected String name;
-    protected String resourcePath;
-    protected String description;
-    
-    protected AbstractCard(Builder<?> builder) {
+
+    private int cost;
+    private int attack;
+    private int shield;
+    private String name;
+    private String resourcePath;
+    private String description;
+
+    protected AbstractCard(final Builder<?> builder) {
+        if(builder.cost < 0 || builder.attack < 0 || builder.shield < 0) {
+            throw new IllegalStateException("Cost, attack and shield must be >= 0");
+        }
         this.cost = builder.cost;
         this.attack = builder.attack;
         this.shield = builder.shield;
-        this.name = builder.name;
+        this.name = Objects.requireNonNull(builder.name);
+        this.description = Objects.requireNonNull(builder.description);
         this.resourcePath = builder.resourcePath;
-        this.description = builder.description;
     }
 
+    /**
+     * Gets the cost.
+     *
+     * @return The cost of this card
+     */
     @Override
     public int getCost() {
         return this.cost;
     }
 
+    /**
+     * Gets the attack.
+     *
+     * @return The attack of this card
+     */
     @Override
     public int getAttack() {
         return this.attack;
     }
 
+    /**
+     * Gets the shield.
+     *
+     * @return The shield of this card
+     */
     @Override
     public int getShield() {
         return this.shield;
     }
 
+    /**
+     * Gets the name.
+     *
+     * @return The name of this card
+     */
     @Override
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Gets the resource path.
+     *
+     * @return The name of this card
+     */
     @Override
     public String getResourcePath() {
         return this.resourcePath;
     }
 
+    /**
+     * Gets the description.
+     *
+     * @return The Description of this card
+     */
     @Override
     public String getDescription() {
         return this.description;

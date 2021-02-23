@@ -4,19 +4,15 @@ package models;
  * A {@link models.Card} implementation.
  */
 public final class CardImpl extends AbstractCard implements Comparable<Card> {
-    
+
     public static final class Builder extends AbstractCard.Builder<Builder> {
-        
+
         /**
          * Returns a newly-created Card.
          *
-         * @throws IllegalStateException when one or more parameters are not set
          * @return A card
          */
-        public Card build() throws IllegalStateException {
-            if (this.name == null || this.description == null || this.resourcePath == null) {
-                throw new IllegalStateException();
-            }
+        public Card build() {
             return new CardImpl(this);
         }
 
@@ -26,30 +22,30 @@ public final class CardImpl extends AbstractCard implements Comparable<Card> {
         }
     }
 
-    private CardImpl(Builder builder) {
+    private CardImpl(final Builder builder) {
         super(builder);
     }
 
     @Override
     public int compareTo(final Card card) {
-        return this.name.compareTo(card.getName());
+        return this.getName().compareTo(card.getName());
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + attack;
-        result = prime * result + cost;
-        result = prime * result + ((description == null) ? 0 : description.hashCode());
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((resourcePath == null) ? 0 : resourcePath.hashCode());
-        result = prime * result + shield;
+        result = prime * result + this.getAttack();
+        result = prime * result + this.getCost();
+        result = prime * result + ((this.getDescription() == null) ? 0 : this.getDescription().hashCode());
+        result = prime * result + ((this.getName() == null) ? 0 : this.getName().hashCode());
+        result = prime * result + ((this.getResourcePath() == null) ? 0 : this.getResourcePath().hashCode());
+        result = prime * result + this.getShield();
         return result;
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -57,34 +53,34 @@ public final class CardImpl extends AbstractCard implements Comparable<Card> {
             return false;
         }
         CardImpl other = (CardImpl) obj;
-        if (attack != other.attack) {
+        if (this.getAttack() != other.getAttack()) {
             return false;
         }
-        if (cost != other.cost) {
+        if (this.getCost() != other.getCost()) {
             return false;
         }
-        if (description == null) {
-            if (other.description != null) {
+        if (this.getDescription() == null) {
+            if (other.getDescription() != null) {
                 return false;
             }
-        } else if (!description.equals(other.description)) {
+        } else if (!this.getDescription().equals(other.getDescription())) {
             return false;
         }
-        if (name == null) {
-            if (other.name != null) {
+        if (this.getName() == null) {
+            if (other.getName() != null) {
                 return false;
             }
-        } else if (!name.equals(other.name)) {
+        } else if (!this.getName().equals(other.getName())) {
             return false;
         }
-        if (resourcePath == null) {
-            if (other.resourcePath != null) {
+        if (this.getResourcePath() == null) {
+            if (other.getResourcePath() != null) {
                 return false;
             }
-        } else if (!resourcePath.equals(other.resourcePath)) {
+        } else if (!this.getResourcePath().equals(other.getResourcePath())) {
             return false;
         }
-        if (shield != other.shield) {
+        if (this.getShield() != other.getShield()) {
             return false;
         }
         return true;
@@ -92,7 +88,7 @@ public final class CardImpl extends AbstractCard implements Comparable<Card> {
 
     @Override
     public String toString() {
-        return "[cost = " + cost + ", attack = " + attack + ", shield = " + shield + ", name = " + name
-                + ", resourcePath = " + resourcePath + ", description = " + description + "]";
+        return "[cost = " + this.getCost() + ", attack = " + this.getAttack() + ", shield = " + this.getShield() + ", name = " + this.getName()
+                + ", resourcePath = " + this.getResourcePath() + ", description = " + this.getDescription() + "]";
     }
 }
