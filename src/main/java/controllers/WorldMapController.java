@@ -54,11 +54,12 @@ public final class WorldMapController implements Controller {
     private MainController mainController;
     private RenderFactory renderFactory = new WorldMapRenderFactory();
 
-    private Point2D pos = Point2DImp.setPoint(0, 0);
+    private Point2D playerPosition;
 
     @Inject
     public WorldMapController(final WorldMap worldMap, final View worldView, final MainController mainController, final EventBus<Request<LAYOUT, ? extends Object>> notifier) {
         this.worldMap = worldMap;
+        this.playerPosition = DISPLAY_FUN.applyTransform(this.worldMap.getPlayer().getPosition());
         this.worldView = worldView;
         this.mainController = mainController;
         this.notifier = notifier;
@@ -77,13 +78,13 @@ public final class WorldMapController implements Controller {
 
         this.worldView.setScene(SceneManager.of(LAYOUT.WORLDMAP).getScene());
 
-        this.worldView.updateEntity(this.renderFactory.renderPlayer(), pos, pos);
+        this.worldView.updateEntity(this.renderFactory.renderPlayer(), playerPosition, playerPosition);
 
         this.worldMap.getEnemies().stream()
-        .map(EnemyImp::getPosition)
-        .map(DISPLAY_FUN::applyTransform)
-        .collect(Collectors.toList())
-        .forEach(p -> this.worldView.updateEntity(this.renderFactory.renderEnemy(), p, p));
+            .map(EnemyImp::getPosition)
+            .map(DISPLAY_FUN::applyTransform)
+            .collect(Collectors.toList())
+            .forEach(p -> this.worldView.updateEntity(this.renderFactory.renderEnemy(), p, p));
     }
 
 
@@ -91,7 +92,7 @@ public final class WorldMapController implements Controller {
     private void defeatEnemy(final EnemyImp enemy) {
         this.worldMap.removeEnemy(enemy);
         Point2D newPos = DISPLAY_FUN.applyTransform(enemy.getPosition());
-        this.worldView.updateEntity(new Render(0, 0, 1, Color.RED), newPos, newPos);
+        this.worldView.updateEntity(new Render(0, 0, 1, Color.WHITE), newPos, newPos);
 
 
         Optional<EnemyImp> boss = this.worldMap.getBoss();
@@ -103,7 +104,7 @@ public final class WorldMapController implements Controller {
 
 
             this.notifier
-            .notifyListener(new SwitchControllerRequest<LAYOUT, Player>(LAYOUT.WORLDMAP, Suppliers.ofInstance(this.worldMap.getPlayer())));
+            .notifyListener(new SwitchControllerRequest<LAYOUT, Player>(LAYOUT.BATTLE, Suppliers.ofInstance(this.worldMap.getPlayer())));
         }
     }
 
@@ -137,8 +138,8 @@ public final class WorldMapController implements Controller {
 
         if (newPos.isPresent()) {
             newPos = Optional.of(DISPLAY_FUN.applyTransform(newPos.get()));
-            this.worldView.updateEntity(renderFactory.renderPlayer(), this.pos, newPos.get());
-            this.pos = newPos.get();
+            this.worldView.updateEntity(renderFactory.renderPlayer(), this.playerPosition, newPos.get());
+            this.playerPosition = newPos.get();
         }
 
 
@@ -150,7 +151,10 @@ public final class WorldMapController implements Controller {
     }
 
     @Override
-    public void callBackAction(Object data) {
-
+    public void callBackAction(final Object data) {
+        if (this.worldMap.getEnemies().isEmpty()) {
+            this.notifier
+            .notifyListener(new SwitchControllerRequest<LAYOUT, Boolean>(LAYOUT.ACCOUNT, Suppliers.ofInstance(true)));
+        }
     }
 }
