@@ -2,10 +2,11 @@ package models.Account;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-import java.lang.reflect.Type;
+
 import com.google.gson.reflect.TypeToken;
 
 import models.Account.FileManager.FileManager;

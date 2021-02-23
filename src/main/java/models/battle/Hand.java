@@ -1,4 +1,4 @@
-package models;
+package models.battle;
 
 import java.util.List;
 
