@@ -34,7 +34,7 @@ public final class BattleRenderFactoryImpl implements RenderFactory {
                     .setHeigth(RENDER_HEIGHT)
                     .setWidth(RENDER_WIDTH)
                     .setLayer(ENTITY_LAYER)
-                    .setColor(Color.BLACK)
+                    .setColor(Color.RED)
                     .build();
     }
 
@@ -44,7 +44,7 @@ public final class BattleRenderFactoryImpl implements RenderFactory {
                     .setHeigth(RENDER_HEIGHT)
                     .setWidth(RENDER_WIDTH)
                     .setLayer(ENTITY_LAYER)
-                    .setColor(Color.RED)
+                    .setColor(Color.BLUE)
                     .build();
     }
 
