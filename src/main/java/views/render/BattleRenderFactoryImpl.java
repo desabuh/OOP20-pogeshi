@@ -18,13 +18,28 @@ public final class BattleRenderFactoryImpl implements RenderFactory {
      * */
     public static final int ENTITY_LAYER = 1;
 
+    /**
+     * The color of the render to display the player.
+     * */
+    public static final Color PLAYER_COLOR = Color.DARKGREEN;
+
+    /**
+     * The color of the render to display the enemy.
+     * */
+    public static final Color ENEMY_COLOR = Color.RED;
+
+    /**
+     * The color of the render to display the boss.
+     * */
+    public static final Color BOSS_COLOR = Color.BLUE;
+
     @Override
     public Render renderPlayer() {
         return new RenderBuilder()
                     .setHeigth(RENDER_HEIGHT)
                     .setWidth(RENDER_WIDTH)
                     .setLayer(ENTITY_LAYER)
-                    .setColor(Color.DARKGREEN)
+                    .setColor(PLAYER_COLOR)
                     .build();
     }
 
@@ -34,7 +49,7 @@ public final class BattleRenderFactoryImpl implements RenderFactory {
                     .setHeigth(RENDER_HEIGHT)
                     .setWidth(RENDER_WIDTH)
                     .setLayer(ENTITY_LAYER)
-                    .setColor(Color.RED)
+                    .setColor(ENEMY_COLOR)
                     .build();
     }
 
@@ -44,7 +59,7 @@ public final class BattleRenderFactoryImpl implements RenderFactory {
                     .setHeigth(RENDER_HEIGHT)
                     .setWidth(RENDER_WIDTH)
                     .setLayer(ENTITY_LAYER)
-                    .setColor(Color.BLUE)
+                    .setColor(BOSS_COLOR)
                     .build();
     }
 
