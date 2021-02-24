@@ -13,13 +13,10 @@ import controllers.Controller;
 import controllers.maincontroller.MainController;
 import guicemodule.BattleModule;
 import guicemodule.ComunicationModule;
-import guicemodule.ControllerModule;
 import guicemodule.WorldMapModule;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import views.JavafxView;
-import views.View;
 import views.scene.SceneManager;
 import views.scene.layout.LAYOUT;
 
@@ -35,7 +32,9 @@ public final class Main extends Application {
 
     @Override
     public void start(final Stage stage) throws Exception {
-        Injector injector = Guice.createInjector(new WorldMapModule(stage), new ComunicationModule());
+        Injector injector = Guice.createInjector(new WorldMapModule(stage),
+                                                 new ComunicationModule(),
+                                                 new BattleModule(stage));
 
 
         SceneManager.provideControllerFactory(injector::getInstance);

@@ -42,6 +42,7 @@ public final class MenuModule extends AbstractModule {
 
     }
 
+    
     @Provides
     Account provideAccount() {
         return new AccountImp();

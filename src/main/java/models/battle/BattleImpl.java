@@ -2,6 +2,7 @@ package models.battle;
 
 import java.util.Optional;
 
+import models.CardIterator;
 import models.Account.AccountImp;
 import models.Character.Character;
 import models.Character.EnemyImp;
@@ -111,11 +112,7 @@ public final class BattleImpl implements Battle {
 
     @Override
     public boolean checkBattleEnd() {
-        if (p.getHealth() <= 0) {
-            //TODO: Transfer loss status to the AccountController
-            hasBattleFinished = true;
-        } else if (e.getHealth() <= 0) {
-            //TODO: Transfer win status to the MainController
+        if (p.getHealth() <= 0 || e.getHealth() <= 0) {
             hasBattleFinished = true;
         }
         return hasBattleFinished;
@@ -141,7 +138,7 @@ public final class BattleImpl implements Battle {
         int damage = c.getAttack();
         if (turn == Turn.PLAYER) {
             if (e.getShield() > damage) {
-                p.setShield(p.getShield() - damage);
+                e.setShield(e.getShield() - damage);
                 damage = 0;
             } else if (e.getShield() > 0) {
                 damage -= e.getShield();
@@ -163,7 +160,6 @@ public final class BattleImpl implements Battle {
             if (c.getShield() > 0) {
                 e.setShield(e.getShield() + c.getShield());
             }
-
         }
     }
 
@@ -197,7 +193,13 @@ public final class BattleImpl implements Battle {
         if (!hasBeenInitialized) {
             throw new IllegalStateException("The opponents have not been initialized.");
         }
+    }
 
+    public boolean hasPlayerWon() {
+        if (!hasBattleFinished) {
+            throw new IllegalStateException("The battle has not ended yet.");
+        }
+        return p.getHealth() > 0;
     }
 
 }
