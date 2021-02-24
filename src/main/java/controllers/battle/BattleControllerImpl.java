@@ -3,11 +3,13 @@ package controllers.battle;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.base.Suppliers;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 
 import controllers.maincontroller.MainController;
 import controllers.maincontroller.Request;
+import controllers.maincontroller.SwitchControllerRequest;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -29,11 +31,16 @@ public final class BattleControllerImpl implements BattleController {
 
     private Battle battle = new BattleImpl();
     private BattleView battleView;
+    private EventBus<Request<LAYOUT, ? extends Object>> notifier;
+    private MainController mainController;
 
     @Inject
     public BattleControllerImpl(final Battle battle, final BattleView battleView, final MainController mainController, final EventBus<Request<LAYOUT, ? extends Object>> notifier) {
         this.battle = battle;
         this.battleView = battleView;
+        this.notifier = notifier;
+        this.mainController = mainController;
+        this.notifier.register(mainController);
     }
 
     @FXML
@@ -51,6 +58,7 @@ public final class BattleControllerImpl implements BattleController {
                     attachSelectEvent(hand.get(i), i);
                 }
                 battleView.updatePlayerStats(battle.getPlayer().getHealth(), battle.getPlayer().getShield());
+                battleView.updateEnemyStats(battle.getEnemy().getHealth(), battle.getEnemy().getShield());
                 battleView.updateManaLabel(battle.getPlayerUnusedCombatMana(), battle.getPlayer().getMana());
                 /**
                  * This is implemented to give the view the function to execute when the player wants to end the turn.
@@ -105,12 +113,13 @@ public final class BattleControllerImpl implements BattleController {
             updateViewLabels(selected);
         }
         if (battle.checkBattleEnd()) {
-            if (battle.currentTurn() instanceof Player) {
+            this.battleFinish();
+            /*if (battle.currentTurn() instanceof Player) {
                 battleView.showMessage("Victory!", "You won the fight!");
             } else {
                 battleView.showMessage("Defeat!", "You died!");
             }
-            System.exit(0);
+            System.exit(0);*/
         }
     }
 
@@ -170,7 +179,7 @@ public final class BattleControllerImpl implements BattleController {
      * */
     private void addLatestCardToHand() {
         int handSize = battle.getPlayer().getHand().getCards().size();
-        Card latest = Iterables.getLast(battle.getPlayer().getHand().getCards()); // Found on StackOverflow, a more elegant way to get the latest card instead of size() - 1
+        Card latest = Iterables.getLast(battle.getPlayer().getHand().getCards());
         attachSelectEvent(latest, handSize - 1);
     }
 
@@ -190,11 +199,19 @@ public final class BattleControllerImpl implements BattleController {
         if (data instanceof Player) {
             battle.setPlayer((Player) data);
         }
-        // TODO Auto-generated method stub
     }
 
-    private boolean battleFinish() {
-        return true;
+    /**
+     * Function to call when the battle is finished. Switches the program's flow to the appropriate controller, based on the battle's result.
+     * */
+    private void battleFinish() {
+        if (battle.hasPlayerWon()) {
+            this.notifier
+                .notifyListener(new SwitchControllerRequest<LAYOUT, Player>(LAYOUT.WORLDMAP, Suppliers.ofInstance(this.battle.getPlayer())));
+        } else {
+            this.notifier
+                .notifyListener(new SwitchControllerRequest<LAYOUT, Boolean>(LAYOUT.ACCOUNT, Suppliers.ofInstance(false)));
+        }
     }
 
 }
