@@ -31,18 +31,18 @@ public final class MenuModule extends AbstractModule {
     DeckCreationController provideDeckController(final Account account, final DeckCreationView deckView, final MainController mainController, final EventBus<Request<LAYOUT, ? extends Object>> notifier) {
         return new DeckCreationControllerImpl(account, deckView, mainController, notifier);
     }
-    
+
     @Provides
     MainMenuController provideMainMenuController(final Account account) {
         return new MainMenuControllerImp();
     }
-    
+
     @Provides
     StatisticsController provideStatisticsController(final Account account) {
         return new StatisticsControllerImp();
     }
-    
-    
+
+
 
     @Provides
     Account provideAccount() {
