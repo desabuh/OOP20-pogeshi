@@ -1,21 +1,40 @@
 package controllers;
 
-import javafx.scene.input.MouseEvent;
-
 public interface MainMenuController extends Controller {
 
-    void giocaClick();
+    /**
+     * Change {@code scene} to world map.
+     */
+    void playClick();
 
-    void statisticheClick(MouseEvent e);
+    /**
+     * Change {@code Pane} to statistics.
+     */
+    void statisticsClick();
 
-    void nuovaPartitaClick();
+    /**
+     * Change {@code scene} to world map but before that reset {@code Account} saves.
+     */
+    void newGameClick();
 
-    void formaDeckClick();
+    /**
+     * Change {@code scene} to deck creation.
+     */
+    void createDeckClick();
 
-    void esciClick();
+    /**
+     * Close the application.
+     */
+    void exitClick();
 
-    void indietroClick(MouseEvent e);
+    /**
+     * Change {@code Pane} to main menu.
+     */
+    void backClick();
 
-    void nextClick(MouseEvent e);
+    /**
+     * Change {@code Pane} to main menu.
+     */
+    void nextClick();
 
 }

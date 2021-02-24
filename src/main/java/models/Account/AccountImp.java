@@ -40,27 +40,7 @@ public final class AccountImp implements Account {
         this.fileRemainingCards = new FileManagerImp<LinkedList<Card>>(SAVES_PATH + "RemainingCards.json");
         this.fileStatistics = new FileManagerImp<Statistics>(SAVES_PATH + "Statistics.json");
         this.fileDefaultDeck = new FileManagerImp<LinkedList<Card>>(JSONS_PATH + "DefaultDeck.json");
-
-        try {
-            if (!this.fileDeck.fileExist()) {
-                if (this.fileDefaultDeck.fileExist()) {
-                    this.fileDeck.save(this.fileDefaultDeck.load(LINKED_LIST_TYPE));
-                } else {
-                    throw new IOException("DefaultDeck.json is missing");
-                }
-            }
-            this.deck = new DeckImpl(this.fileDeck.load(LINKED_LIST_TYPE));
-            if (!this.fileRemainingCards.fileExist()) {
-                this.fileRemainingCards.save(new LinkedList<Card>());
-            }
-            this.remainingCards = this.fileRemainingCards.load(LINKED_LIST_TYPE);
-            if (!fileStatistics.fileExist()) {
-                this.fileStatistics.save(new StatisticsImp(0, 0, 10));
-            }
-            this.statistics = fileStatistics.load(StatisticsImp.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        loadSaves();
     }
 
     /**
@@ -168,6 +148,32 @@ public final class AccountImp implements Account {
             this.remainingCards = this.fileRemainingCards.load(LINKED_LIST_TYPE);
             this.fileStatistics.save(new StatisticsImp(0, 0, this.deck.getCards().size()));
             this.statistics = this.fileStatistics.load(StatisticsImp.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Load all saves and overwrite the current data.
+     */
+    public void loadSaves() {
+        try {
+            if (!this.fileDeck.fileExist()) {
+                if (this.fileDefaultDeck.fileExist()) {
+                    this.fileDeck.save(this.fileDefaultDeck.load(LINKED_LIST_TYPE));
+                } else {
+                    throw new IOException("DefaultDeck.json is missing");
+                }
+            }
+            this.deck = new DeckImpl(this.fileDeck.load(LINKED_LIST_TYPE));
+            if (!this.fileRemainingCards.fileExist()) {
+                this.fileRemainingCards.save(new LinkedList<Card>());
+            }
+            this.remainingCards = this.fileRemainingCards.load(LINKED_LIST_TYPE);
+            if (!fileStatistics.fileExist()) {
+                this.fileStatistics.save(new StatisticsImp(0, 0, 10));
+            }
+            this.statistics = fileStatistics.load(StatisticsImp.class);
         } catch (IOException e) {
             e.printStackTrace();
         }

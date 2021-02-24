@@ -59,4 +59,9 @@ public interface Account {
      */
     void deleteSaves();
 
+    /**
+     * Load all saves.
+     */
+    void loadSaves();
+
 }
