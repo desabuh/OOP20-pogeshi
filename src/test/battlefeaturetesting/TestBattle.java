@@ -49,7 +49,7 @@ public class TestBattle {
         /**
          * The starting hand should have 3 cards
          * */
-        assertEquals(3, b.getPlayer().getHand().getCards().size());
+        assertEquals(models.battle.BattleImpl.BASE_STARTING_CARDS, b.getPlayer().getHand().getCards().size());
         /**
          * Ending the turn 10 times, therefore the player should draw 5 cards
          * */
@@ -60,6 +60,11 @@ public class TestBattle {
          * Even if the player drew 5 cards, for a total of 8, the hand's size should be capped at 5 cards
          * */
         assertEquals(models.battle.BattleImpl.MAX_CARDS_IN_HAND, b.getPlayer().getHand().getCards().size());
+        /**
+         * Playing a card should decrease the hand's size by 1
+         * */
+        b.playCard(0);
+        assertEquals(models.battle.BattleImpl.MAX_CARDS_IN_HAND - 1, b.getPlayer().getHand().getCards().size());
     }
 
     /**
@@ -89,7 +94,7 @@ public class TestBattle {
         assertTrue(b.getEnemy().getHealth() <= 0);
     }
 
-    @Test
+   /* @Test
     public void testView() {
         Scene scene = SceneManager.of(LAYOUT.BATTLE).getScene();
         Stage stage = new Stage();
@@ -105,6 +110,6 @@ public class TestBattle {
         assertEquals(LBLPlayerHealth.getText(), String.valueOf(b.getPlayer().getHealth()));
         assertEquals(LBLPlayerShield.getText(), String.valueOf(b.getPlayer().getShield()));
 
-    }
+    }*/
 
 }
