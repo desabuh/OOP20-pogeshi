@@ -112,11 +112,7 @@ public final class BattleImpl implements Battle {
 
     @Override
     public boolean checkBattleEnd() {
-        if (p.getHealth() <= 0) {
-            //TODO: Transfer loss status to the AccountController
-            hasBattleFinished = true;
-        } else if (e.getHealth() <= 0) {
-            //TODO: Transfer win status to the MainController
+        if (p.getHealth() <= 0 || e.getHealth() <= 0) {
             hasBattleFinished = true;
         }
         return hasBattleFinished;
