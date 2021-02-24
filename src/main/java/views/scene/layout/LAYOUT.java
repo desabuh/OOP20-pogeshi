@@ -25,6 +25,10 @@ public enum LAYOUT {
 
     private final String pathString;
 
+    /**
+     * retrieve path string.
+     * @return path string
+     */
     public String getPathString() {
         return this.pathString;
     }

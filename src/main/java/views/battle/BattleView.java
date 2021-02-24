@@ -79,4 +79,6 @@ public interface BattleView extends View {
      * @param description The body of the message
      * */
     void showMessage(String title, String description);
+    
+    public void reset();
 }
