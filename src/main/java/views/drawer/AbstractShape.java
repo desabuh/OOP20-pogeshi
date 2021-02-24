@@ -19,7 +19,7 @@ public abstract class AbstractShape implements  Shape, Renderable {
     protected GraphicsContext gc;
     protected Color color;
 
-    public AbstractShape(final GraphicsContext graphics, Render render, final int y, final int x) {
+    public AbstractShape(final GraphicsContext graphics, final Render render, final int y, final int x) {
         this.x = x;
         this.y = y;
         this.accept(render);

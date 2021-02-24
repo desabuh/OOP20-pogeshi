@@ -11,8 +11,10 @@ import com.google.inject.Injector;
 
 import controllers.Controller;
 import controllers.maincontroller.MainController;
+import controllers.maincontroller.SwitchControllerRequest;
 import guicemodule.BattleModule;
 import guicemodule.ComunicationModule;
+import guicemodule.MenuModule;
 import guicemodule.WorldMapModule;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -34,12 +36,15 @@ public final class Main extends Application {
     public void start(final Stage stage) throws Exception {
         Injector injector = Guice.createInjector(new WorldMapModule(stage),
                                                  new ComunicationModule(),
+                                                 new MenuModule(stage),
                                                  new BattleModule(stage));
 
-
+        
         SceneManager.provideControllerFactory(injector::getInstance);
+        
+        
         CompletableFuture<Scene> completableScene = 
-                CompletableFuture.supplyAsync(() -> SceneManager.of(LAYOUT.WORLDMAP).getScene());
+                CompletableFuture.supplyAsync(() -> SceneManager.of(LAYOUT.ACCOUNT).getScene());
         Scene scene = completableScene.get();
 
 
@@ -47,7 +52,8 @@ public final class Main extends Application {
         stage.setTitle("Pogeshi");
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.show(); 
+        stage.show();  
+        
     }
 
     /**

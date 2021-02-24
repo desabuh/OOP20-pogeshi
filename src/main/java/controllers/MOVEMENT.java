@@ -4,7 +4,11 @@ import java.util.function.UnaryOperator;
 
 import models.GameMap.Point2D;
 
-
+/**
+ * 
+ * this enum incapsulate the logic for movement in 2d coordinates.
+ *
+ */
 public enum MOVEMENT {
 
     /**
