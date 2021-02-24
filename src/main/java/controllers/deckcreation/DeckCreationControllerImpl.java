@@ -1,4 +1,4 @@
-package controllers;
+package controllers.deckcreation;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -13,20 +13,19 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListView;
 import models.Account.Account;
-import models.Account.AccountImp;
 import models.deck.card.Card;
 import notifier.EventBus;
-import views.DeckCreationView;
 import views.View;
+import views.deckcreation.DeckCreationView;
 import views.scene.SceneManager;
 import views.scene.layout.LAYOUT;
 
 /**
- *  A {@link controllers.DeckCreationController} implementation.
+ *  A {@link controllers.deckcreation.DeckCreationController} implementation.
  */
 public final class DeckCreationControllerImpl implements DeckCreationController {
 
-    private Account playerAccount = new AccountImp();
+    private Account playerAccount;
     private DeckCreationView deckCreationView;
     private List<Card> cards;
 
@@ -43,6 +42,7 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
         this.playerAccount = account;
         this.deckCreationView = deckCreationView;
         this.notifier = notifier;
+        this.mainController = mainController;
         this.notifier.register(mainController);
     }
 
@@ -111,7 +111,5 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
 
     @Override
     public void callBackAction(final Object data) {
-        // TODO Auto-generated method stub
-
     }
 }
