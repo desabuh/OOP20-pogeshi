@@ -75,5 +75,7 @@ public interface Battle {
      * @throws IllegalStateException if the battle has not ended yet
      * */
     boolean hasPlayerWon();
+ 
+    void reset();
 }
 
