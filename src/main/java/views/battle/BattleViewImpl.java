@@ -81,7 +81,6 @@ public final class BattleViewImpl extends JavafxView implements BattleView {
 
     public void initializeParams() {
         Scene scene = this.getScene();
-        System.out.println(scene);
         lblMana = (Label) scene.lookup("#lblMana");
         lblEnemyDamage = (Label) scene.lookup("#lblEnemyDamage");
         lblPlayerDamage = (Label) scene.lookup("#lblPlayerDamage");
@@ -219,6 +218,12 @@ public final class BattleViewImpl extends JavafxView implements BattleView {
         message.setTitle(title);
         message.setContentText(description);
         message.showAndWait();
+    }
+
+    public void reset() {
+        lblEnemyDamage.setVisible(false);
+        lblPlayerDamage.setVisible(false);
+        this.resetHand();
     }
 
 }

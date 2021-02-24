@@ -98,11 +98,10 @@ public final class WorldMapController implements Controller {
             .map(DISPLAY_FUN::applyTransform)
             .ifPresentOrElse(p -> this.worldView.updateEntity(this.renderFactory.renderEnemyBoss(), p, p), () -> { });
 
-            this.worldMap.removeEnemy(boss.get());
         }
 
         this.notifier
-         .notifyListener(new SwitchControllerRequest<LAYOUT, Player>(LAYOUT.BATTLE, Suppliers.ofInstance(this.worldMap.getPlayer())));
+        .notifyListener(new SwitchControllerRequest<LAYOUT, Player>(LAYOUT.BATTLE, Suppliers.ofInstance(this.worldMap.getPlayer())));
 
     }
 
@@ -158,7 +157,6 @@ public final class WorldMapController implements Controller {
 
     @Override
     public void callBackAction(final Object data) {
-
         if (data instanceof Player) {
             this.worldMap.setPlayer((Player) data);
         }

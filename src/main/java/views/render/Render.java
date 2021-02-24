@@ -2,6 +2,11 @@ package views.render;
 
 import javafx.scene.paint.Color;
 
+/**
+ * 
+ * provide a render to be displayed in graphical way.
+ *
+ */
 public final class Render {
 
     private int width;

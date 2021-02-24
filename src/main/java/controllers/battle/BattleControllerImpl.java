@@ -53,6 +53,8 @@ public final class BattleControllerImpl implements BattleController {
         Platform.runLater(() -> {
                 this.battleView.setScene(SceneManager.of(LAYOUT.BATTLE).getScene());
                 battleView.initializeParams();
+                battle.reset();
+                battleView.reset();
                 List<Card> hand = new ArrayList<>(battle.getPlayer().getHand().getCards());
                 for (int i = 0; i < hand.size(); i++) {
                     attachSelectEvent(hand.get(i), i);
@@ -62,8 +64,7 @@ public final class BattleControllerImpl implements BattleController {
                 battleView.updateManaLabel(battle.getPlayerUnusedCombatMana(), battle.getPlayer().getMana());
                 /**
                  * This is implemented to give the view the function to execute when the player wants to end the turn.
-                 * This allows to change the event's behaviour without having to change anything into the view, as long
-                 * as the element that ends the turn is clickable.
+                 * This allows to change the event's behaviour without having to change anything into the view.
                  * This is the most generic solution I've thought of.
                  * */
                 battleView.setEndTurnEvent(new EventHandler<>() {
@@ -129,7 +130,6 @@ public final class BattleControllerImpl implements BattleController {
     private void updateHand(final int startingIndex) {
         List<Card> hand = new ArrayList<>(battle.getPlayer().getHand().getCards());
         for (int i = startingIndex; i < hand.size(); i++) {
-            System.out.println(startingIndex);
             attachSelectEvent(hand.get(i), i);
         }
     }
@@ -205,7 +205,16 @@ public final class BattleControllerImpl implements BattleController {
      * Function to call when the battle is finished. Switches the program's flow to the appropriate controller, based on the battle's result.
      * */
     private void battleFinish() {
+        //battle.reset();
+        //battleView.reset();
         if (battle.hasPlayerWon()) {
+            battle.reset();
+            battleView.reset();
+            updateHand(0);
+            battleView.updatePlayerStats(battle.getPlayer().getHealth(), battle.getPlayer().getShield());
+            battleView.updateEnemyStats(battle.getEnemy().getHealth(), battle.getEnemy().getShield());
+            battleView.updateManaLabel(battle.getPlayerUnusedCombatMana(), battle.getPlayer().getMana());
+            
             this.notifier
                 .notifyListener(new SwitchControllerRequest<LAYOUT, Player>(LAYOUT.WORLDMAP, Suppliers.ofInstance(this.battle.getPlayer())));
         } else {

@@ -38,12 +38,12 @@ public final class BattleImpl implements Battle {
 
     public BattleImpl() {
         p = new PlayerImp(new DeckImpl());
-        e = new EnemyImp(new DeckImpl(), Point2DImp.setPoint(0, 0));
+        //e = new EnemyImp(new DeckImpl(), 1, Point2DImp.setPoint(0, 0));
     }
 
     public BattleImpl(final Player p) {
         this.p = p;
-        e = new EnemyImp(new DeckImpl(), new Point2DImp(0, 0));
+        //e = new EnemyImp(new DeckImpl(), new Point2DImp(0, 0));
     }
 
     public void setPlayer(final Player player) {
@@ -64,6 +64,7 @@ public final class BattleImpl implements Battle {
 
     public void initializeCharacters() {
         //checkBattleStatus();
+        e = new EnemyImp(new DeckImpl(), 1, Point2DImp.setPoint(0, 0));
         if (hasBeenInitialized) {
             throw new IllegalStateException("Both opponents of the battle have already been initialized.");
         }
@@ -86,7 +87,6 @@ public final class BattleImpl implements Battle {
             }
             if (isPlayable(p.getHand().getCards().get(index))) {
                 played = p.getHand().getCards().get(index);
-                System.out.println("Player!");
                 setPlayerUnusedCombatMana((getPlayerUnusedCombatMana() - played.getCost()));
                 inflictDamage(played);
                 p.getHand().removeCard(index);
@@ -94,7 +94,6 @@ public final class BattleImpl implements Battle {
                return false;
             }
         } else {
-            System.out.println("Enemy!");
             played = enemyDeckIterator.next();
             inflictDamage(played);
         }
@@ -199,7 +198,21 @@ public final class BattleImpl implements Battle {
         if (!hasBattleFinished) {
             throw new IllegalStateException("The battle has not ended yet.");
         }
+        this.reset();
         return p.getHealth() > 0;
+    }
+
+    public void reset() {
+        p.setShield(0);
+        hasBattleFinished = false;
+        hasBeenInitialized = false;
+        int cardsInHand = p.getHand().getCards().size();
+        for (int i = 0; i < cardsInHand; i++) {
+            p.getHand().removeCard(0);
+        }
+        p.setMana(1);
+        this.playerUnusedCombatMana = p.getMana();
+        this.initializeCharacters();
     }
 
 }

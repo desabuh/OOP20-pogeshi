@@ -15,14 +15,7 @@ import views.scene.layout.LAYOUT;
  *
  */
 public abstract class JavafxView implements View {
-    /**
-     * width of the view.
-     */
-    public static final int WIDTH = 100;
-    /**
-     * height of the view.
-     */
-    public static final int HEIGHT = 100;
+
     /**
      * title to be displayed on the view.
      */
