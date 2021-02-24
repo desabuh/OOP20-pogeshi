@@ -9,6 +9,12 @@ import views.View;
 import views.scene.SceneManager;
 import views.scene.layout.LAYOUT;
 
+/**
+ * 
+ * This Class is used as router to reidirect the execution to a specific triads of
+ * model,view and controller based on the requested layout.
+ *
+ */
 public final class MainController implements Listener<Request<LAYOUT, ? extends Object>> {
 
 
