@@ -2,18 +2,19 @@ package models.Account;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-import java.lang.reflect.Type;
+
 import com.google.gson.reflect.TypeToken;
 
-import models.Card;
-import models.CardImpl;
-import models.Deck;
-import models.DeckImpl;
 import models.Account.FileManager.FileManager;
 import models.Account.FileManager.FileManagerImp;
+import models.deck.Deck;
+import models.deck.DeckImpl;
+import models.deck.card.Card;
+import models.deck.card.CardImpl;
 
 public final class AccountImp implements Account {
 

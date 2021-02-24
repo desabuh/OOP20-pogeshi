@@ -1,5 +1,7 @@
 package views.render;
 
+import javafx.scene.paint.Color;
+
 /**
  * 
  * Builder to provide all data needed for render an entity.
@@ -9,6 +11,7 @@ public final class RenderBuilder {
     private int width;
     private int height;
     private int layer;
+    private Color color;
 
     /**
      * 
@@ -40,12 +43,18 @@ public final class RenderBuilder {
         return this;
     }
 
+
+    public RenderBuilder setColor(final Color color) {
+        this.color = color;
+        return this;
+    }
+
     /**
      * 
      * @return a new Render object
      */
     public Render build() {
-        return new Render(width, height, layer);
+        return new Render(width, height, layer, color);
     }
 
 

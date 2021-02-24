@@ -2,8 +2,9 @@ package views;
 
 import com.google.inject.Inject;
 
+
 import javafx.application.Platform;
-import javafx.geometry.Point2D;
+import models.GameMap.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
 import views.drawer.CanvasDrawer;

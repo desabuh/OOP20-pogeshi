@@ -1,7 +1,7 @@
 package views.render;
 
-import models.Enemy;
-import models.Player;
+import javafx.scene.paint.Color;
+
 
 public final class WorldMapRenderFactory implements RenderFactory {
 
@@ -20,37 +20,35 @@ public final class WorldMapRenderFactory implements RenderFactory {
     /**
      * size rendered the enemy.
      */
-    public static final int ENEMY_RENDER_SIZE = 50;
-
-    /**
-     * board size.
-     */
-    public static final int BOARD_SIZE = 600;
+    public static final int ENEMY_RENDER_SIZE = 100;
 
     @Override
-    public Render render(final Player player) {
+    public Render renderPlayer() {
         return new RenderBuilder()
                 .setHeigth(PLAYER_RENDER_SIZE)
                 .setWidth(PLAYER_RENDER_SIZE)
                 .setLayer(ENTITY_LAYER)
+                .setColor(Color.GREEN)
                 .build();
     }
 
     @Override
-    public Render render(final Enemy enemy) {
+    public Render renderEnemy() {
         return new RenderBuilder()
                 .setHeigth(ENEMY_RENDER_SIZE)
                 .setWidth(ENEMY_RENDER_SIZE)
                 .setLayer(ENTITY_LAYER)
+                .setColor(Color.RED)
                 .build();
     }
 
     @Override
-    public Render renderBackGround() {
+    public Render renderEnemyBoss() {
         return new RenderBuilder()
                 .setHeigth(ENEMY_RENDER_SIZE)
                 .setWidth(ENEMY_RENDER_SIZE)
                 .setLayer(ENTITY_LAYER)
+                .setColor(Color.BLUE)
                 .build();
     }
 

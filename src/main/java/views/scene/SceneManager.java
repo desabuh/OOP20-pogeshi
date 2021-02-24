@@ -90,16 +90,4 @@ public final class SceneManager {
         FACTORY = controllerFactory;
     }
 
-    /*1)PS provide a builder to create the scene, 2)wrap scene object*/
-    /**
-     * method used to switch to another scene(*working*).
-     * @throws IOException if an error occured when loading the layout
-     * @param layout layout enum provided
-     */
-    public void loadScene(final LAYOUT layout) throws IOException {
-        //final Parent sceneRoot = FXMLLoader.load(layout);
-        //return new Scene(sceneRoot, 100, 100);
-    }
-
-
 }
