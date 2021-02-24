@@ -94,9 +94,9 @@ public final class BattleViewImpl extends JavafxView implements BattleView {
         lblNoMana = (Label) scene.lookup("#lblNoMana");
         btnEndTurn = (Button) scene.lookup("#btnEndTurn");
         playerDrawer = new CanvasDrawer((Canvas) scene.lookup("#cvPlayer"));
-        playerDrawer.draw(renderFactory.renderPlayer(), new Point2DImp(0, 0), new Point2DImp(0, 0));
+        playerDrawer.draw(renderFactory.renderPlayer(), new Point2DImp((int) ((Canvas) scene.lookup("#cvPlayer")).getHeight() / 3, (int) ((Canvas) scene.lookup("#cvPlayer")).getWidth() / 3), new Point2DImp((int) ((Canvas) scene.lookup("#cvPlayer")).getHeight() / 3, (int) ((Canvas) scene.lookup("#cvPlayer")).getHeight() / 3));
         enemyDrawer = new CanvasDrawer((Canvas) scene.lookup("#cvEnemy"));
-        enemyDrawer.draw(renderFactory.renderEnemy(), new Point2DImp(0, 0), new Point2DImp(0, 0));
+        enemyDrawer.draw(renderFactory.renderEnemy(), new Point2DImp((int) ((Canvas) scene.lookup("#cvEnemy")).getHeight() / 3, (int) ((Canvas) scene.lookup("#cvEnemy")).getWidth() / 3), new Point2DImp((int) ((Canvas) scene.lookup("#cvEnemy")).getHeight() / 3, (int) ((Canvas) scene.lookup("#cvEnemy")).getHeight() / 3));
     }
 
     @Override
