@@ -2,17 +2,21 @@ package controllers.deckcreation;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
+import com.google.common.base.Suppliers;
 import com.google.inject.Inject;
 
 import controllers.maincontroller.MainController;
 import controllers.maincontroller.Request;
+import controllers.maincontroller.SwitchControllerRequest;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListView;
 import models.Account.Account;
+import models.Account.AccountImp;
 import models.deck.card.Card;
 import notifier.EventBus;
 import views.View;
@@ -91,6 +95,7 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
     public void saveDeck() {
         if (this.playerAccount.getDeck().isDeckFull()) {
             this.playerAccount.save();
+            this.notifier.notifyListener(new SwitchControllerRequest<LAYOUT, Optional<?>>(LAYOUT.ACCOUNT, Suppliers.ofInstance(Optional.empty())));
         } else {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Attenzione");
@@ -98,10 +103,6 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
             alert.setContentText("Non si può salvare il mazzo se non è completo!");
             alert.showAndWait();
         }
-    }
-
-    @Override
-    public void exitWhitoutSaving() {
     }
 
     @Override

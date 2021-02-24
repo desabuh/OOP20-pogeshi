@@ -1,5 +1,6 @@
 package decktesting;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -7,6 +8,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
@@ -82,5 +88,36 @@ class DeckTest {
                                     .resourcePath("res" + File.separator + "images" + File.separator + "card15.png")
                                     .build();
         });
+    }
+    
+    @Test
+    public void illegalDeckCreation() {
+        assertThrows(IOException.class, () -> this .deck = new DeckImpl(new FileReader("file inesistente")));
+        List<Card> list = new ArrayList<>();
+        try {
+            Card card1 = new CardImpl.Builder()
+                    .attack(0)
+                    .description("Desc")
+                    .shield(0)
+                    .name("prova")
+                    .cost(0)
+                    .resourcePath("res" + File.separator + "images" + File.separator + "card15.png")
+                    .build();
+            list.add(card1);
+            assertThrows(IllegalStateException.class, () -> this.deck = new DeckImpl(list));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @Test
+    public void testingEmptyDeck() {
+        this.deck = new DeckImpl();
+        while (!this.deck.getCards().isEmpty()) {
+            this.deck.popCard();
+        }
+        assertEquals(Collections.EMPTY_LIST, this.deck.getCards());
+        assertEquals(Optional.ofNullable(null), this.deck.getCard());
+        assertEquals(Optional.ofNullable(null), this.deck.popCard());
     }
 }
