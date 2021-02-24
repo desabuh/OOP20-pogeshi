@@ -94,9 +94,9 @@ public final class BattleViewImpl extends JavafxView implements BattleView {
         lblNoMana = (Label) scene.lookup("#lblNoMana");
         btnEndTurn = (Button) scene.lookup("#btnEndTurn");
         playerDrawer = new CanvasDrawer((Canvas) scene.lookup("#cvPlayer"));
-        playerDrawer.draw(renderFactory.renderPlayer(), new Point2DImp((int) ((Canvas) scene.lookup("#cvPlayer")).getHeight() / 3, (int) ((Canvas) scene.lookup("#cvPlayer")).getWidth() / 3), new Point2DImp((int) ((Canvas) scene.lookup("#cvPlayer")).getHeight() / 3, (int) ((Canvas) scene.lookup("#cvPlayer")).getHeight() / 3));
         enemyDrawer = new CanvasDrawer((Canvas) scene.lookup("#cvEnemy"));
-        enemyDrawer.draw(renderFactory.renderEnemy(), new Point2DImp((int) ((Canvas) scene.lookup("#cvEnemy")).getHeight() / 3, (int) ((Canvas) scene.lookup("#cvEnemy")).getWidth() / 3), new Point2DImp((int) ((Canvas) scene.lookup("#cvEnemy")).getHeight() / 3, (int) ((Canvas) scene.lookup("#cvEnemy")).getHeight() / 3));
+        this.updateEntity(renderFactory.renderPlayer(), new Point2DImp((int) ((Canvas) scene.lookup("#cvPlayer")).getHeight() / 3, (int) ((Canvas) scene.lookup("#cvPlayer")).getWidth() / 3), new Point2DImp((int) ((Canvas) scene.lookup("#cvPlayer")).getHeight() / 3, (int) ((Canvas) scene.lookup("#cvPlayer")).getHeight() / 3));
+        this.updateEntity(renderFactory.renderEnemy(), new Point2DImp((int) ((Canvas) scene.lookup("#cvEnemy")).getHeight() / 3, (int) ((Canvas) scene.lookup("#cvEnemy")).getWidth() / 3), new Point2DImp((int) ((Canvas) scene.lookup("#cvEnemy")).getHeight() / 3, (int) ((Canvas) scene.lookup("#cvEnemy")).getHeight() / 3));
     }
 
     @Override
@@ -201,9 +201,17 @@ public final class BattleViewImpl extends JavafxView implements BattleView {
         btnEndTurn.setOnAction(buttonClicked);
     }
 
+    /**
+     * A little workaround is used as this method was originally intended if the view had only 1 canvas. This view has 2,
+     * and the render's color is used to distinguish which canvas should be used.
+     * */
     @Override
     public void updateEntity(final Render render, final Point2D x, final Point2D y) {
-        // TODO Auto-generated method stub
+        if (render.getColor() == views.render.BattleRenderFactoryImpl.PLAYER_COLOR) {
+            playerDrawer.draw(render, x, y);
+        } else {
+            enemyDrawer.draw(render, x, y);
+        }
     }
 
     public void showMessage(final String title, final String description) {
