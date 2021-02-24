@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import models.Account.Account;
 import models.Account.AccountImp;
+import views.View;
 
 public final class StatisticsControllerImp implements StatisticsController {
 
@@ -56,6 +57,18 @@ public final class StatisticsControllerImp implements StatisticsController {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
+    }
+
+    @Override
+    public View getView() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void callBackAction(Object data) {
+        // TODO Auto-generated method stub
+        
     }
 
 }

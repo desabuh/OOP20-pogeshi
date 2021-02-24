@@ -1,4 +1,4 @@
-package models;
+package models.deck.card;
 
 /**
  * Interface representing a card of a deck.

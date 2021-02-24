@@ -1,18 +1,21 @@
 package guicemodule;
 
 import com.google.inject.AbstractModule;
+
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 
 import controllers.Controller;
 import controllers.WorldMapController;
-import guicemodule.annotation.WorldModel;
-import guicemodule.annotation.WorldView;
+import controllers.maincontroller.MainController;
+import controllers.maincontroller.Request;
 import javafx.stage.Stage;
 import models.GameMap.WorldMap;
 import models.GameMap.WorldMapImpl;
+import notifier.EventBus;
 import views.View;
 import views.WorldMapView;
+import views.scene.layout.LAYOUT;
 
 
 public final class WorldMapModule extends AbstractModule {
@@ -26,22 +29,18 @@ public final class WorldMapModule extends AbstractModule {
 
     @Provides
     @Singleton
-   // @guicemodule.annotation.WorldMapController
-    WorldMapController provideMapController(final WorldMap model, final View view) {
-        return new WorldMapController(model, view);
-        //return new WorldMapController();
+    WorldMapController provideMapController(final WorldMap model, final View view, final MainController mainController, final EventBus<Request<LAYOUT, ? extends Object>> notifier) {
+        return new WorldMapController(model, view, mainController, notifier);
     }
 
     @Provides
     @Singleton
-    //@WorldModel
     WorldMap provideWorldMapModel() {
         return new WorldMapImpl();
     }
 
     @Provides
     @Singleton
-    //@WorldView
     View provideWorldMapView() {
         return new WorldMapView(this.stage);
     }

@@ -1,7 +1,9 @@
-package models;
+package models.deck;
 
 import java.util.List;
 import java.util.Optional;
+
+import models.deck.card.Card;
 
 /**
  *  Interface representing a deck of cards.

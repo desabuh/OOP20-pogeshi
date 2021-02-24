@@ -1,10 +1,10 @@
 package models.Character;
 
-import models.Deck;
-import models.Hand;
-import models.HandImpl;
 import models.GameMap.Point2D;
 import models.GameMap.Point2DImp;
+import models.battle.Hand;
+import models.battle.HandImpl;
+import models.deck.Deck;
 
 public final class PlayerImp extends CharacterImp implements Player {
 

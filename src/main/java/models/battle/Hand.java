@@ -2,7 +2,7 @@ package models.battle;
 
 import java.util.List;
 
-import models.Card;
+import models.deck.card.Card;
 
 public interface Hand {
     List<Card> getCards();

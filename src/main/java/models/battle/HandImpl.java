@@ -3,7 +3,7 @@ package models.battle;
 import java.util.ArrayList;
 import java.util.List;
 
-import models.Card;
+import models.deck.card.Card;
 
 public final class HandImpl implements Hand {
 

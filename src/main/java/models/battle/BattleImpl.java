@@ -2,14 +2,14 @@ package models.battle;
 
 import java.util.Optional;
 
-import models.Character.Character;
-import models.Card;
-import models.DeckImpl;
 import models.Account.AccountImp;
+import models.Character.Character;
 import models.Character.EnemyImp;
 import models.Character.Player;
 import models.Character.PlayerImp;
 import models.GameMap.Point2DImp;
+import models.deck.DeckImpl;
+import models.deck.card.Card;
 
 public final class BattleImpl implements Battle {
 

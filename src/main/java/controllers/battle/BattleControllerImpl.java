@@ -6,19 +6,20 @@ import java.util.List;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 
+import controllers.maincontroller.MainController;
+import controllers.maincontroller.Request;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import models.Card;
 import models.Character.Enemy;
 import models.Character.Player;
 import models.battle.Battle;
 import models.battle.BattleImpl;
+import models.deck.card.Card;
+import notifier.EventBus;
 import views.View;
 import views.battle.BattleView;
 import views.scene.SceneManager;
@@ -30,7 +31,7 @@ public final class BattleControllerImpl implements BattleController {
     private BattleView battleView;
 
     @Inject
-    public BattleControllerImpl(final Battle battle, final BattleView battleView) {
+    public BattleControllerImpl(final Battle battle, final BattleView battleView, final MainController mainController, final EventBus<Request<LAYOUT, ? extends Object>> notifier) {
         this.battle = battle;
         this.battleView = battleView;
     }

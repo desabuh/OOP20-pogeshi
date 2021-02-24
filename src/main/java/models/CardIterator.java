@@ -3,6 +3,9 @@ package models;
 import java.util.Collection;
 import java.util.Iterator;
 
+import models.deck.card.Card;
+
+
 public final class CardIterator implements Iterator<Card> {
 
     private final Collection<Card> deck;

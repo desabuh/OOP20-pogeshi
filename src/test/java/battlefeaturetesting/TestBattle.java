@@ -1,5 +1,10 @@
 package battlefeaturetesting;
-import org.junit.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
 
 import controllers.Controller;
 import javafx.fxml.FXMLLoader;
@@ -8,11 +13,9 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import models.battle.Battle;
 import models.battle.BattleImpl;
-import views.scene.layout.LAYOUT;
 import views.battle.BattleView;
 import views.scene.SceneManager;
-
-import static org.junit.Assert.*;
+import views.scene.layout.LAYOUT;
 
 public class TestBattle {
     private Battle b;
@@ -33,10 +36,10 @@ public class TestBattle {
      * Tests if the battle can start without having initialized the characters who are going to battle.
      * It should throw an exception.
      * */
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testNotInitializedBattle() {
         b = new BattleImpl();
-        b.playCard(0);
+        assertThrows(IllegalStateException.class, () -> b.playCard(0));
     }
 
     /**

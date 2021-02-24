@@ -1,21 +1,25 @@
 package controllers;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.google.inject.Inject;
+
+import controllers.maincontroller.MainController;
+import controllers.maincontroller.Request;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import models.Account;
-import models.AccountImp;
-import models.Card;
+import models.Account.Account;
+import models.Account.AccountImp;
+import models.deck.card.Card;
+import notifier.EventBus;
+import views.DeckCreationView;
+import views.View;
+import views.scene.SceneManager;
+import views.scene.layout.LAYOUT;
 
 /**
  *  A {@link controllers.DeckCreationController} implementation.
@@ -23,26 +27,24 @@ import models.Card;
 public final class DeckCreationControllerImpl implements DeckCreationController {
 
     private Account playerAccount = new AccountImp();
+    private DeckCreationView deckCreationView;
+    private List<Card> cards;
 
     @FXML
     private ListView<String> listDeck;
     @FXML
     private ListView<String> listCards;
-    @FXML
-    private ImageView imgCard;
-    @FXML
-    private Label lblCardName;
-    @FXML
-    private Label lblCardDesc;
-    @FXML
-    private Label lblCardShield;
-    @FXML
-    private Label lblCardAtk;
-    @FXML
-    private Label lblCardCost;
-    @FXML
-    private Label lblNumCards;
-    private List<Card> cards;
+    
+    private EventBus<Request<LAYOUT, ? extends Object>> notifier;
+    private MainController mainController;
+
+    @Inject
+    public DeckCreationControllerImpl(final Account account, final DeckCreationView deckCreationView, final MainController mainController, final EventBus<Request<LAYOUT, ? extends Object>> notifier) {
+        this.playerAccount = account;
+        this.deckCreationView = deckCreationView;
+        this.notifier = notifier;
+        this.notifier.register(mainController);
+    }
 
     /**
      * Start blocking the outside cards list and loading cards from json.
@@ -50,59 +52,26 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
     public void initialize() {
         this.cards = new LinkedList<>(this.playerAccount.getDeck().getCards());
         this.cards.addAll(this.playerAccount.getRemainingCards());
-        this.playerAccount.getDeck().getCards().stream().forEach(card -> this.listDeck.getItems().add(card.getName()));
-        this.cards.stream().filter(card -> !this.playerAccount.getDeck().isCardInDeck(card)).forEach(card -> this.listCards.getItems().add(card.getName()));
-        this.listCards.setDisable(true);
-        this.listDeck.setDisable(false);
-        this.listDeck.getSelectionModel().select(0);
-        this.changeCardDescription();
+        Platform.runLater(() -> {
+            this.deckCreationView.setScene(SceneManager.of(LAYOUT.DECKCREATION).getScene());
+            this.deckCreationView.initialize(this.cards, this.playerAccount.getDeck().getCards());
+        });
     }
 
     @Override
     public void changeCardDescription() {
-        Card card;
-        Image img;
-
-        if (this.listCards.isDisable()) {
-            card = this.cards.stream()
-                             .filter(c -> c.getName().equals(this.listDeck.getSelectionModel().getSelectedItem()))
-                             .findAny()
-                             .get();
-        } else {
-            card = this.cards.stream()
-                             .filter(c -> c.getName().equals(this.listCards.getSelectionModel().getSelectedItem()))
-                             .findAny()
-                             .get(); 
-        }
-
-        try {
-            img = new Image(new FileInputStream(card.getResourcePath()));
-            this.imgCard.setImage(img);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        this.lblCardName.setText(card.getName());
-        this.lblCardDesc.setText(card.getDescription());
-        this.lblCardCost.setText(String.valueOf(card.getCost()));
-        this.lblCardAtk.setText(String.valueOf(card.getAttack()));
-        this.lblCardShield.setText(String.valueOf(card.getShield()));
+        this.deckCreationView.changeCardDescription();
     }
 
     @Override
     public void removeCardFromDeck() {
         if (this.playerAccount.getDeck().isDeckFull()) {
             Card cardToRemove = this.playerAccount.getDeck().getCards().stream()
-                                                                       .filter(c -> c.getName().equals(this.listDeck.getSelectionModel().getSelectedItem()))
-                                                                       .findAny()
-                                                                       .get();
+                    .filter(c -> c.getName().equals(this.listDeck.getSelectionModel().getSelectedItem()))
+                    .findAny()
+                    .get();
             this.playerAccount.removeCardFromDeck(cardToRemove);
-            this.listCards.getItems().add(this.listDeck.getSelectionModel().getSelectedItem());
-            this.listDeck.getItems().remove(this.listDeck.getSelectionModel().getSelectedIndex());
-            this.listCards.setDisable(false);
-            this.listDeck.setDisable(true);
-            this.lblNumCards.setText("9/10");
-            this.lblNumCards.setTextFill(Color.RED);
+            this.deckCreationView.removeCardFromDeck();
         }
     }
 
@@ -110,16 +79,11 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
     public void addCardToDeck() {
         if (!this.playerAccount.getDeck().isDeckFull()) {
             Card cardToAdd = this.cards.stream()
-                                       .filter(c -> c.getName().equals(this.listCards.getSelectionModel().getSelectedItem()))
-                                       .findAny()
-                                       .get();
+                    .filter(c -> c.getName().equals(this.listCards.getSelectionModel().getSelectedItem()))
+                    .findAny()
+                    .get();
             this.playerAccount.addCardToDeck(cardToAdd);
-            this.listDeck.getItems().add(this.listCards.getSelectionModel().getSelectedItem());
-            this.listCards.getItems().remove(this.listCards.getSelectionModel().getSelectedIndex());
-            this.listCards.setDisable(true);
-            this.listDeck.setDisable(false);
-            this.lblNumCards.setText("10/10");
-            this.lblNumCards.setTextFill(Color.LIME);
+            this.deckCreationView.addCardToDeck();
         }
     }
 
@@ -138,5 +102,16 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
 
     @Override
     public void exitWhitoutSaving() {
+    }
+
+    @Override
+    public View getView() {
+        return this.deckCreationView;
+    }
+
+    @Override
+    public void callBackAction(final Object data) {
+        // TODO Auto-generated method stub
+
     }
 }
