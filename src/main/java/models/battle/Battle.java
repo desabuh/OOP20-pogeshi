@@ -69,5 +69,11 @@ public interface Battle {
         PLAYER,
         ENEMY
     }
+
+    /**
+     * @return TRUE if the player won the battle, FALSE otherwise
+     * @throws IllegalStateException if the battle has not ended yet
+     * */
+    boolean hasPlayerWon();
 }
 

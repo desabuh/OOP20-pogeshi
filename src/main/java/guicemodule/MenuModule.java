@@ -41,9 +41,8 @@ public final class MenuModule extends AbstractModule {
     StatisticsController provideStatisticsController(final Account account) {
         return new StatisticsControllerImp();
     }
-    
-    
 
+    
     @Provides
     Account provideAccount() {
         return new AccountImp();

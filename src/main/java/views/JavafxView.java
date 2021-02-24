@@ -26,14 +26,13 @@ public abstract class JavafxView implements View {
     /**
      * title to be displayed on the view.
      */
-    public static final String TITLE = "Pogeshish";
+    public static final String TITLE = "Pogeshi";
 
     private Scene actualScene;
     private final Stage stage;
 
     public JavafxView(final Stage stage, final LAYOUT initialLayout) {
         this.stage = stage;
-        //this.loadScene(LAYOUT.WORLDMAP);
     }
 
     public final Scene getScene() {
