@@ -6,7 +6,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import models.Account.Account;
 import models.Account.AccountImp;
@@ -18,6 +20,15 @@ public final class MainMenuControllerImp implements MainMenuController {
 
     private final Account account;
     private final EventBus<Integer> event;
+
+    @FXML
+    private Label labelEnd;
+
+    @FXML
+    private Pane paneEnd;
+
+    @FXML
+    private Pane paneMenu;
 
     public MainMenuControllerImp() {
         account = new AccountImp();
@@ -91,6 +102,11 @@ public final class MainMenuControllerImp implements MainMenuController {
         }
     }
 
+    public void nextClick(final MouseEvent  e) {
+        paneEnd.setVisible(false);
+        paneMenu.setVisible(true);
+    }
+
     @Override
     public View getView() {
         // TODO Auto-generated method stub
@@ -99,8 +115,19 @@ public final class MainMenuControllerImp implements MainMenuController {
 
     @Override
     public void callBackAction(final Object data) {
-        // TODO Auto-generated method stub
-
+        paneMenu.setVisible(false);
+        paneEnd.setVisible(true);
+        if ((boolean) data) {
+            labelEnd.setText("VITTORIA");
+            try {
+                this.account.win();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            labelEnd.setText("SCONFITTA");
+            this.account.lose();
+        }
     }
 
 }
