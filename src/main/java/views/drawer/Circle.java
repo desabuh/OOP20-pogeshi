@@ -2,11 +2,12 @@ package views.drawer;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import views.render.Render;
 
 public final class Circle extends AbstractShape {
 
-    public Circle(final GraphicsContext graphics, final int radius, final int y, final int x, final Color color) {
-        super(graphics, radius, radius, y, x, color);
+    public Circle(final GraphicsContext graphics, final Render render, final int y, final int x) {
+        super(graphics, render, y, x);
     }
 
     @Override

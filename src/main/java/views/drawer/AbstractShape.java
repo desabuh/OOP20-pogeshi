@@ -1,27 +1,29 @@
 package views.drawer;
 
 import models.GameMap.Point2D;
+
 import models.GameMap.Point2DImp;
+import views.render.Render;
+import views.render.RenderFactory;
+import views.render.Renderable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 
-public abstract class AbstractShape implements  views.drawer.Shape {
+public abstract class AbstractShape implements  Shape, Renderable {
 
     protected int x;
     protected int y;
-    protected int weight;
+    protected int height;
     protected int width;
     protected GraphicsContext gc;
     protected Color color;
 
-    public AbstractShape(final GraphicsContext graphics, final int width, final int weight, final int y, final int x, final Color color ) {
+    public AbstractShape(final GraphicsContext graphics, Render render, final int y, final int x) {
         this.x = x;
         this.y = y;
-        this.weight = weight;
-        this.width = width;
+        this.accept(render);
         this.gc = graphics;
-        this.color = color;
         this.fillShape();
     }
 
@@ -35,6 +37,13 @@ public abstract class AbstractShape implements  views.drawer.Shape {
     public final void setPosition(final Point2D position) {
         this.x = (int) position.getX();
         this.y = (int) position.getY();
+    }
+
+    @Override
+    public final void accept(Render render) {
+        this.height = render.getHeigth();
+        this.width = render.getWidth();
+        this.color = render.getColor();
     }
 
     public abstract void fillShape();
