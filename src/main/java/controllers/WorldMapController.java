@@ -100,9 +100,6 @@ public final class WorldMapController implements Controller {
 
         }
 
-        this.checkRemaingEnitities();
-
-
         this.notifier
         .notifyListener(new SwitchControllerRequest<LAYOUT, Player>(LAYOUT.BATTLE, Suppliers.ofInstance(this.worldMap.getPlayer())));
 
