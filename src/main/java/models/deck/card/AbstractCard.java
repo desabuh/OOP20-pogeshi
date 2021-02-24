@@ -55,7 +55,7 @@ public abstract class AbstractCard implements Card {
         public T resourcePath(final String path) throws FileNotFoundException {
             this.resourcePath = path;
             File file = new File(path);
-            if(!file.exists()) {
+            if (!file.exists()) {
                 throw new FileNotFoundException();
             }
             return self();
@@ -112,7 +112,7 @@ public abstract class AbstractCard implements Card {
     private String description;
 
     protected AbstractCard(final Builder<?> builder) {
-        if(builder.cost < 0 || builder.attack < 0 || builder.shield < 0) {
+        if (builder.cost < 0 || builder.attack < 0 || builder.shield < 0) {
             throw new IllegalStateException("Cost, attack and shield must be >= 0");
         }
         this.cost = builder.cost;
