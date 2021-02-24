@@ -94,7 +94,7 @@ public class TestBattle {
             b.endTurn();
             b.endTurn();
         }
-        assertTrue(b.getEnemy().getHealth() <= 0);
+        assertTrue(b.hasPlayerWon());
     }
 
    /* @Test
