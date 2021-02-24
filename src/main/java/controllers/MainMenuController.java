@@ -14,4 +14,8 @@ public interface MainMenuController extends Controller {
 
     void esciClick();
 
+    void indietroClick(MouseEvent e);
+
+    void nextClick(MouseEvent e);
+
 }

@@ -1,53 +1,50 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.Optional;
 
+import com.google.common.base.Suppliers;
+import com.google.inject.Inject;
+
+import controllers.maincontroller.MainController;
+import controllers.maincontroller.Request;
+import controllers.maincontroller.SwitchControllerRequest;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import models.Account.Account;
-import models.Account.AccountImp;
+import models.deck.Deck;
 import notifier.EventBus;
-import notifier.GuavaEventBusAdapter;
+import views.AccountView;
 import views.View;
+import views.scene.SceneManager;
+import views.scene.layout.LAYOUT;
 
 public final class MainMenuControllerImp implements MainMenuController {
 
     private final Account account;
-    private final EventBus<Integer> event;
+    private final EventBus<Request<LAYOUT, ? extends Object>> notifier;
+    private final AccountView accountView;
 
-    @FXML
-    private Label labelEnd;
-
-    @FXML
-    private Pane paneEnd;
-
-    @FXML
-    private Pane paneMenu;
-
-    public MainMenuControllerImp() {
-        account = new AccountImp();
-        event = new GuavaEventBusAdapter<Integer>(new com.google.common.eventbus.EventBus());
+    @Inject
+    public MainMenuControllerImp(final Account account, final AccountView accountView, final MainController mainController, final EventBus<Request<LAYOUT, ? extends Object>> notifier) {
+        this.account = account;
+        this.accountView = accountView;
+        this.notifier = notifier;
+        this.notifier.register(mainController);
     }
 
-    /*TODO: Change it later
+    public void initialize() {
+        Platform.runLater(() -> {
+            this.accountView.setScene(SceneManager.of(LAYOUT.ACCOUNT).getScene());
+            this.accountView.initializeParams();
+        });
+    }
+
     @FXML
     @Override
     public void giocaClick() {
-        changeStage(e, "worldMap.fxml");
-        event.notifyListener(0);
-    }
-     */
-
-    @FXML
-    @Override
-    public void statisticheClick(final MouseEvent  e) {
-        changeStage(e, "StatisticsMenu");
+        this.notifier.notifyListener(new SwitchControllerRequest<LAYOUT, Deck>(LAYOUT.WORLDMAP, Suppliers.ofInstance(this.account.getDeck())));
     }
 
     @FXML
@@ -57,13 +54,24 @@ public final class MainMenuControllerImp implements MainMenuController {
         giocaClick();
     }
 
-    /*TODO: Change it later
     @FXML
     @Override
     public void formaDeckClick() {
-        changeStage(e, "deck_view.fxml");
+        this.notifier.notifyListener(new SwitchControllerRequest<LAYOUT, Optional<?>>(LAYOUT.DECKCREATION, Suppliers.ofInstance(Optional.empty())));
     }
-    */
+
+    @FXML
+    @Override
+    public void statisticheClick(final MouseEvent  e) {
+        this.accountView.changeToStatistics(account.getStatistics().getWins(), account.getStatistics().getLoses(), account.getStatistics().getUnlockedCards());
+    }
+
+    @FXML
+    @Override
+    public void indietroClick(final MouseEvent  e) {
+        this.accountView.changeBackFromStatistics();
+    }
+
     @FXML
     @Override
     public void esciClick() {
@@ -73,60 +81,30 @@ public final class MainMenuControllerImp implements MainMenuController {
 
     @FXML
     @Override
-    public void giocaClick() {
-        // TODO: Temp function
-        //test function
-        //account.removeCardFromDeck(new CardImpl(5, 2, 3, "Card2", "res/images/card2.png", "DESC"));
-        //account.addCardToDeck(new CardImpl(1, 1, 1, "Card1", "Path1", "description1"));
-        //account.save();
-        //account.deleteSaves();
-        //account.lose();
-    }
-
-    @FXML
-    @Override
-    public void formaDeckClick() {
-        // TODO: Temp funcion
-
-    }
-
-    private void changeStage(final MouseEvent  e, final String fxmlFileName) {
-        try {
-            Parent secondarySceneTree = FXMLLoader.load(ClassLoader.getSystemResource("layouts/" + fxmlFileName + ".fxml"));
-            Scene secondaryScene = new Scene(secondarySceneTree);
-            Stage stage = (Stage) ((Parent) e.getSource()).getScene().getWindow();
-            stage.setScene(secondaryScene);
-            stage.show();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-    }
-
     public void nextClick(final MouseEvent  e) {
-        paneEnd.setVisible(false);
-        paneMenu.setVisible(true);
+        this.accountView.changeBackFromEnd();
     }
 
     @Override
     public View getView() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.accountView;
     }
 
     @Override
     public void callBackAction(final Object data) {
-        paneMenu.setVisible(false);
-        paneEnd.setVisible(true);
-        if ((boolean) data) {
-            labelEnd.setText("VITTORIA");
-            try {
-                this.account.win();
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (data instanceof Boolean) {
+            this.accountView.changeToEnd();
+            if ((boolean) data) {
+                this.accountView.changeEndLabelText("VITTORIA");
+                try {
+                    this.account.win();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                this.accountView.changeEndLabelText("SCONFITTA");
+                this.account.lose();
             }
-        } else {
-            labelEnd.setText("SCONFITTA");
-            this.account.lose();
         }
     }
 
