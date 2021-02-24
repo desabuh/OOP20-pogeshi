@@ -146,10 +146,23 @@ public final class WorldMapImpl implements WorldMap {
 
     @Override
     public void removeEnemy(final EnemyImp enemy) {
+
+        if (this.getBoss().isPresent()) {
+            this.enemies.remove(0);
+            return;
+        }
+
         this.enemies.remove(enemy);
+
         if (this.enemies.isEmpty()) {
             this.enemies.add(boss);
         }
+    }
+
+    @Override
+    public void setPlayer(final Player player) {
+        player.setPosition(this.player.getPosition());
+        this.player = player;
     }
 
 

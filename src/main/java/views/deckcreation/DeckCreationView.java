@@ -1,8 +1,9 @@
-package views;
+package views.deckcreation;
 
 import java.util.List;
 
 import models.deck.card.Card;
+import views.View;
 
 public interface DeckCreationView extends View {
 

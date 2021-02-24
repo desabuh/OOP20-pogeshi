@@ -1,8 +1,7 @@
 package controllers;
 
-import java.util.List;
+
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.google.common.base.Suppliers;
@@ -16,14 +15,13 @@ import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
-import listener.Listener;
 import models.Character.EnemyImp;
 import models.Character.Player;
+import models.Character.PlayerImp;
 import models.GameMap.Point2D;
-import models.GameMap.Point2DImp;
 import models.GameMap.WorldMap;
+import models.deck.Deck;
 import notifier.EventBus;
-import notifier.GuavaEventBusAdapter;
 import views.View;
 import views.render.Render;
 import views.render.RenderFactory;
@@ -51,7 +49,6 @@ public final class WorldMapController implements Controller {
     private EventBus<Request<LAYOUT, ? extends Object>> notifier;
 
 
-    private MainController mainController;
     private RenderFactory renderFactory = new WorldMapRenderFactory();
 
     private Point2D playerPosition;
@@ -61,7 +58,6 @@ public final class WorldMapController implements Controller {
         this.worldMap = worldMap;
         this.playerPosition = DISPLAY_FUN.applyTransform(this.worldMap.getPlayer().getPosition());
         this.worldView = worldView;
-        this.mainController = mainController;
         this.notifier = notifier;
         this.notifier.register(mainController);
     }
@@ -81,10 +77,10 @@ public final class WorldMapController implements Controller {
         this.worldView.updateEntity(this.renderFactory.renderPlayer(), playerPosition, playerPosition);
 
         this.worldMap.getEnemies().stream()
-            .map(EnemyImp::getPosition)
-            .map(DISPLAY_FUN::applyTransform)
-            .collect(Collectors.toList())
-            .forEach(p -> this.worldView.updateEntity(this.renderFactory.renderEnemy(), p, p));
+        .map(EnemyImp::getPosition)
+        .map(DISPLAY_FUN::applyTransform)
+        .collect(Collectors.toList())
+        .forEach(p -> this.worldView.updateEntity(this.renderFactory.renderEnemy(), p, p));
     }
 
 
@@ -102,9 +98,19 @@ public final class WorldMapController implements Controller {
             .map(DISPLAY_FUN::applyTransform)
             .ifPresentOrElse(p -> this.worldView.updateEntity(this.renderFactory.renderEnemyBoss(), p, p), () -> { });
 
+            this.worldMap.removeEnemy(boss.get());
+        }
 
+        this.notifier
+         .notifyListener(new SwitchControllerRequest<LAYOUT, Player>(LAYOUT.BATTLE, Suppliers.ofInstance(this.worldMap.getPlayer())));
+
+    }
+
+
+    private void checkRemaingEnitities() {
+        if (this.worldMap.getEnemies().isEmpty()) {
             this.notifier
-            .notifyListener(new SwitchControllerRequest<LAYOUT, Player>(LAYOUT.BATTLE, Suppliers.ofInstance(this.worldMap.getPlayer())));
+            .notifyListener(new SwitchControllerRequest<LAYOUT, Boolean>(LAYOUT.ACCOUNT, Suppliers.ofInstance(true)));
         }
     }
 
@@ -152,9 +158,14 @@ public final class WorldMapController implements Controller {
 
     @Override
     public void callBackAction(final Object data) {
-        if (this.worldMap.getEnemies().isEmpty()) {
-            this.notifier
-            .notifyListener(new SwitchControllerRequest<LAYOUT, Boolean>(LAYOUT.ACCOUNT, Suppliers.ofInstance(true)));
+
+        if (data instanceof Player) {
+            this.worldMap.setPlayer((Player) data);
         }
+        if (data instanceof Deck) {
+            this.worldMap.setPlayer(new PlayerImp((Deck) data));
+        }
+        this.checkRemaingEnitities();
+
     }
 }

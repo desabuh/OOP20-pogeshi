@@ -1,4 +1,6 @@
-package controllers;
+package controllers.deckcreation;
+
+import controllers.Controller;
 
 /**
  * Interface representing a Deck creation controller.
