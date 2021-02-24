@@ -1,4 +1,4 @@
-package views;
+package views.deckcreation;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import models.GameMap.Point2D;
 import models.deck.card.Card;
+import views.JavafxView;
 import views.render.Render;
 import views.scene.layout.LAYOUT;
 
