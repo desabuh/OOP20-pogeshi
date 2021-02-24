@@ -21,11 +21,7 @@ public enum LAYOUT {
     /**
      * ACCOUNT layout.
      */
-    DECKCREATION("layouts" + File.separator + "deckCreation.fxml"),
-    /**
-     * ACCOUNT layout.
-     */
-    STATISTICS("layouts" + File.separator + "StatisticsMenu.fxml");
+    DECKCREATION("layouts" + File.separator + "deckCreation.fxml");
 
     private final String pathString;
 

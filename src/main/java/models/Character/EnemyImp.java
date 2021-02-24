@@ -9,7 +9,7 @@ public final class EnemyImp extends CharacterImp implements Enemy {
      * Constructor with default parameters and custom deck and position.
      * <p>
      * <ul>
-     * <li>{@code health} = 100</li>
+     * <li>{@code health} = 10</li>
      * <li>{@code shield} = 0</li>
      * </ul>
      * <p>
@@ -17,7 +17,7 @@ public final class EnemyImp extends CharacterImp implements Enemy {
      * @param position  The {@code position} of the {@code enemy}.
      */
     public EnemyImp(final Deck deck, final Point2D position) {
-        super(100, position, deck, 0);
+        super(10, position, deck, 0);
     }
 
     /**

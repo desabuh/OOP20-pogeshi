@@ -5,8 +5,6 @@ import com.google.inject.Provides;
 
 import controllers.MainMenuController;
 import controllers.MainMenuControllerImp;
-import controllers.StatisticsController;
-import controllers.StatisticsControllerImp;
 import controllers.deckcreation.DeckCreationController;
 import controllers.deckcreation.DeckCreationControllerImpl;
 import controllers.maincontroller.MainController;
@@ -15,6 +13,7 @@ import javafx.stage.Stage;
 import models.Account.Account;
 import models.Account.AccountImp;
 import notifier.EventBus;
+import views.AccountView;
 import views.deckcreation.DeckCreationView;
 import views.deckcreation.DeckCreationViewImpl;
 import views.scene.layout.LAYOUT;
@@ -31,15 +30,16 @@ public final class MenuModule extends AbstractModule {
     DeckCreationController provideDeckController(final Account account, final DeckCreationView deckView, final MainController mainController, final EventBus<Request<LAYOUT, ? extends Object>> notifier) {
         return new DeckCreationControllerImpl(account, deckView, mainController, notifier);
     }
-    
+
     @Provides
-    MainMenuController provideMainMenuController(final Account account) {
-        return new MainMenuControllerImp();
+    MainMenuController provideMainMenuController(final Account account, final AccountView accountView, final MainController mainController, final EventBus<Request<LAYOUT, ? extends Object>> notifier) {
+        return new MainMenuControllerImp(account, accountView, mainController, notifier);
     }
-    
+
     @Provides
-    StatisticsController provideStatisticsController(final Account account) {
-        return new StatisticsControllerImp();
+    AccountView provideAccountView() {
+        return new AccountView(this.stage);
+
     }
 
     
@@ -52,6 +52,5 @@ public final class MenuModule extends AbstractModule {
     DeckCreationView provideDeckView() {
         return new DeckCreationViewImpl(this.stage);
     }
-
 
 }

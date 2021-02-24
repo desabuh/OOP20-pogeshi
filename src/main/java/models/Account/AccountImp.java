@@ -59,7 +59,6 @@ public final class AccountImp implements Account {
             }
             this.statistics = fileStatistics.load(StatisticsImp.class);
         } catch (IOException e) {
-         // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -167,10 +166,9 @@ public final class AccountImp implements Account {
             this.deck = new DeckImpl(this.fileDeck.load(LINKED_LIST_TYPE));
             this.fileRemainingCards.save(new LinkedList<Card>());
             this.remainingCards = this.fileRemainingCards.load(LINKED_LIST_TYPE);
-            this.fileStatistics.save(new StatisticsImp(0, 0, 10));
+            this.fileStatistics.save(new StatisticsImp(0, 0, this.deck.getCards().size()));
             this.statistics = this.fileStatistics.load(StatisticsImp.class);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

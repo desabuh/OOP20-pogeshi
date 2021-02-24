@@ -33,7 +33,7 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
     private ListView<String> listDeck;
     @FXML
     private ListView<String> listCards;
-    
+
     private EventBus<Request<LAYOUT, ? extends Object>> notifier;
     private MainController mainController;
 
@@ -65,7 +65,7 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
 
     @Override
     public void removeCardFromDeck() {
-        if (this.playerAccount.getDeck().isDeckFull()) {
+        if (this.playerAccount.getDeck().isDeckFull()  && !this.listDeck.getSelectionModel().isEmpty()) {
             Card cardToRemove = this.playerAccount.getDeck().getCards().stream()
                     .filter(c -> c.getName().equals(this.listDeck.getSelectionModel().getSelectedItem()))
                     .findAny()
@@ -77,7 +77,7 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
 
     @Override
     public void addCardToDeck() {
-        if (!this.playerAccount.getDeck().isDeckFull()) {
+        if (!this.playerAccount.getDeck().isDeckFull() && !this.listCards.getSelectionModel().isEmpty()) {
             Card cardToAdd = this.cards.stream()
                     .filter(c -> c.getName().equals(this.listCards.getSelectionModel().getSelectedItem()))
                     .findAny()
@@ -110,6 +110,5 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
     }
 
     @Override
-    public void callBackAction(final Object data) {
-    }
+    public void callBackAction(final Object data) { }
 }
