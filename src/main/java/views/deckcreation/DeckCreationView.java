@@ -10,10 +10,10 @@ public interface DeckCreationView extends View {
     /**
      * Initialize the view.
      * 
-     * @param cards all the cards in the game
+     * @param remainingCars all the cards in the game
      * @param playerDeck the deck of the player
      */
-    void initialize(List<Card> cards, List<Card> playerDeck);
+    void initialize(List<Card> remainingCars, List<Card> playerDeck);
 
     /**
      * Changes the displayed card.

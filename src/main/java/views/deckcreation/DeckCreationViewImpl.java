@@ -2,6 +2,7 @@ package views.deckcreation;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.LinkedList;
 import java.util.List;
 
 import javafx.scene.control.Label;
@@ -41,8 +42,9 @@ public final class DeckCreationViewImpl extends JavafxView implements DeckCreati
     }
 
     @Override
-    public void initialize(final List<Card> cards, final List<Card> playerDeck) {
-        this.cards = cards;
+    public void initialize(final List<Card> remainingCards, final List<Card> playerDeck) {
+        this.cards = new LinkedList<>(remainingCards);
+        this.cards.addAll(playerDeck);
         this.playerDeck = playerDeck;
         this.listDeck = (ListView<String>) this.getScene().lookup("#listDeck");
         this.listCards = (ListView<String>) this.getScene().lookup("#listCards");
@@ -53,7 +55,7 @@ public final class DeckCreationViewImpl extends JavafxView implements DeckCreati
         this.lblCardAtk = (Label) this.getScene().lookup("#lblCardAtk");
         this.lblCardCost = (Label) this.getScene().lookup("#lblCardCost");
         this.lblNumCards = (Label) this.getScene().lookup("#lblNumCards");
-        this.cards.stream().filter(card -> !this.playerDeck.contains(card)).forEach(card -> this.listCards.getItems().add(card.getName()));
+        remainingCards.stream().forEach(card -> this.listCards.getItems().add(card.getName()));
         this.playerDeck.stream().forEach(card -> this.listDeck.getItems().add(card.getName()));
         this.listCards.setDisable(true);
         this.listDeck.setDisable(false);
