@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane fx:id="MainMenu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainMenuControllerImp">
+   <children>
+      <Pane fx:id="paneEnd" prefHeight="400.0" prefWidth="600.0" visible="false">
+         <children>
+            <Label fx:id="labelEnd" alignment="CENTER" layoutX="111.0" layoutY="135.0" prefHeight="130.0" prefWidth="378.0" text="WIN" textAlignment="CENTER">
+               <font>
+                  <Font size="72.0" />
+               </font>
+            </Label>
+            <Button fx:id="buttonEnd" layoutX="249.0" layoutY="284.0" mnemonicParsing="false" onMouseClicked="#nextClick" prefHeight="35.0" prefWidth="103.0" text="NEXT" />
+         </children>
+      </Pane>
+      <Pane fx:id="paneMenu" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <Label fx:id="lableMenuTitle" alignment="CENTER" layoutX="178.0" layoutY="50.0" prefHeight="33.0" prefWidth="244.0" text="MAIN MENU">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Button fx:id="buttonPlay" layoutX="178.0" layoutY="100.0" mnemonicParsing="false" onMouseClicked="#playClick" prefHeight="33.0" prefWidth="244.0" text="PLAY" />
+            <Button fx:id="buttonNewGame" layoutX="178.0" layoutY="150.0" mnemonicParsing="false" onMouseClicked="#newGameClick" prefHeight="33.0" prefWidth="244.0" text="NEW GAME" />
+            <Button fx:id="buttonCreateDeck" layoutX="178.0" layoutY="200.0" mnemonicParsing="false" onMouseClicked="#createDeckClick" prefHeight="33.0" prefWidth="244.0" text="CREATE DECK" />
+            <Button fx:id="buttonStatistics" layoutX="178.0" layoutY="250.0" mnemonicParsing="false" onMouseClicked="#statisticsClick" prefHeight="33.0" prefWidth="244.0" text="STATISTICS" />
+            <Button fx:id="buttonExit" layoutX="178.0" layoutY="300.0" mnemonicParsing="false" onMouseClicked="#exitClick" prefHeight="33.0" prefWidth="244.0" text="EXIT" />
+         </children>
+      </Pane>
+      <Pane fx:id="paneStatistics" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" visible="false">
+         <children>
+            <Label fx:id="labelStatisticsTitle" layoutX="229.0" layoutY="59.0" prefHeight="35.0" prefWidth="142.0" text="STATISTICS">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelWins" layoutX="254.0" layoutY="130.0" prefHeight="17.0" prefWidth="155.0" text="Wins:" />
+            <Label fx:id="labelLoses" layoutX="254.0" layoutY="160.0" prefHeight="17.0" prefWidth="155.0" text="Loses:" />
+            <Label fx:id="labelUnlockedCards" layoutX="254.0" layoutY="190.0" prefHeight="17.0" prefWidth="155.0" text="Unlocked cards:" />
+            <Button fx:id="buttonBack" layoutX="40.0" layoutY="34.0" mnemonicParsing="false" onMouseClicked="#backClick" prefHeight="25.0" prefWidth="72.0" text="Back" />
+         </children>
+      </Pane>
+   </children>
+</Pane>

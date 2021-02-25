@@ -27,6 +27,11 @@ sourceSets {
     }
 }
 
+
+repositories {
+    jcenter() // Contains the whole Maven Central + other stuff
+}
+
 // List of JavaFX modules you need. Comment out things you are not using.
 val javaFXModules = listOf(
     "base",
@@ -63,7 +68,6 @@ tasks.test {
 		events("passed", "skipped", "failed")
 	}
 }
-
 
 tasks.withType<Jar> {
     // Otherwise you'll get a "No main manifest attribute" error
