@@ -1,6 +1,5 @@
 package views;
 
-import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
@@ -46,8 +45,8 @@ public final class AccountView extends JavafxView {
     public void changeToStatistics(final int wins, final int loses, final int unlockedCards) {
         this.paneMenu.setVisible(false);
         this.paneStatistics.setVisible(true);
-        this.labelWins.setText("Vittorie: " + String.valueOf(wins));
-        this.labelLoses.setText("Sconfitte:" + String.valueOf(loses));
+        this.labelWins.setText("Wins: " + String.valueOf(wins));
+        this.labelLoses.setText("Loses:" + String.valueOf(loses));
         this.labelUnlockedCards.setText("Unlocked cards: " + String.valueOf(unlockedCards));
     }
 
