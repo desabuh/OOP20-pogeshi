@@ -1,5 +1,6 @@
 package models.battle;
 
+import java.util.Collections;
 import java.util.Optional;
 
 import models.CardIterator;
@@ -38,12 +39,10 @@ public final class BattleImpl implements Battle {
 
     public BattleImpl() {
         p = new PlayerImp(new DeckImpl());
-        //e = new EnemyImp(new DeckImpl(), 1, Point2DImp.setPoint(0, 0));
     }
 
     public BattleImpl(final Player p) {
         this.p = p;
-        //e = new EnemyImp(new DeckImpl(), new Point2DImp(0, 0));
     }
 
     public void setPlayer(final Player player) {
@@ -53,7 +52,6 @@ public final class BattleImpl implements Battle {
 
     @Override
     public void endTurn() {
-        this.checkBattleStatus();
         this.turn = (turn == Turn.PLAYER) ? Turn.ENEMY : Turn.PLAYER;
         if (turn == Turn.PLAYER) {
             drawCard();
@@ -63,7 +61,6 @@ public final class BattleImpl implements Battle {
     }
 
     public void initializeCharacters() {
-        //checkBattleStatus();
         e = new EnemyImp(new DeckImpl(), 10, Point2DImp.setPoint(0, 0));
         if (hasBeenInitialized) {
             throw new IllegalStateException("Both opponents of the battle have already been initialized.");
@@ -167,7 +164,7 @@ public final class BattleImpl implements Battle {
 
         while (next.isEmpty()) {
             next = Optional.of(deckIterator.next());
-            if (p.getHand().getCards().contains(next.get())) {
+            if (Collections.frequency(p.getHand().getCards(), next.get()) >= Collections.frequency(p.getDeck().getCards(), next.get())) {
                 next = Optional.empty();
             }
         }

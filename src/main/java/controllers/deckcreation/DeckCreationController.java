@@ -3,7 +3,7 @@ package controllers.deckcreation;
 import controllers.Controller;
 
 /**
- * Interface representing a Deck creation controller.
+ * Interface representing a deck creation controller.
  */
 public interface DeckCreationController extends Controller {
 
