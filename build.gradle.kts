@@ -22,6 +22,7 @@ sourceSets {
     }
 }
 
+
 repositories {
     jcenter() // Contains the whole Maven Central + other stuff
 }
@@ -62,6 +63,23 @@ tasks.test {
 		events("passed", "skipped", "failed")
 	}
 }
+
+tasks.withType<Jar> {
+    // Otherwise you'll get a "No main manifest attribute" error
+    manifest {
+        attributes["Main-Class"] = "application.Launcher"
+    }
+
+    // To add all of the dependencies otherwise a "NoClassDefFoundError" error
+    from(sourceSets.main.get().output)
+
+    dependsOn(configurations.runtimeClasspath)
+    from({
+        configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
+    })
+}
+
+apply(plugin = "com.github.johnrengelman.shadow")
 
 application {
     mainClassName = "application.Launcher"
