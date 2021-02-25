@@ -24,13 +24,11 @@ public final class MainController implements Listener<Request<LAYOUT, ? extends 
         FXMLLoader loader =  SceneManager.of(event.getRoutingData()).getLoader();
         Controller controller = loader.<Controller>getController();
 
-
-
-        controller.callBackAction(event.supplyData());
-
         View view = controller.getView();
 
         view.loadScene(event.getRoutingData());
+
+        controller.callBackAction(event.supplyData());
 
 
     }

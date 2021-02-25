@@ -34,7 +34,6 @@ public final class DeckImpl implements Deck {
             Type t = new TypeToken<List<CardImpl>>() { }.getType();
             this.cards.addAll(gson.fromJson(fReader, t));
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

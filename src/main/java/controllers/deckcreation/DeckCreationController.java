@@ -26,9 +26,4 @@ public interface DeckCreationController extends Controller {
      * Save the deck created.
      */
     void saveDeck();
-
-    /**
-     * Return to the main menu.
-     */
-    void exitWhitoutSaving();
 }
