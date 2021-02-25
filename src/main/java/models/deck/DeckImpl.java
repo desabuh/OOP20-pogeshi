@@ -50,9 +50,6 @@ public final class DeckImpl implements Deck {
     public DeckImpl(final List<Card> cards) {
         this.cards = new LinkedList<>();
         this.cards.addAll(cards);
-        if (!this.isDeckFull()) {
-            throw new IllegalStateException();
-        }
     }
 
     @SuppressWarnings("serial")

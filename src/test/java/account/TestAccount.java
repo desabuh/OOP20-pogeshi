@@ -1,12 +1,14 @@
 package account;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import models.Account.Account;
 import models.Account.AccountImp;
@@ -28,7 +30,7 @@ public class TestAccount {
         try {
             Card card = new CardImpl.Builder().
                     attack(1).cost(1).description("test").
-                    name("test").resourcePath("test").shield(1).build();
+                    name("test").resourcePath("res" + File.separator + "images" + File.separator + "card15.png").shield(1).build();
             this.account.removeCardFromDeck(card);
 
             /**
@@ -68,7 +70,7 @@ public class TestAccount {
         try {
             Card card = new CardImpl.Builder().
                     attack(1).cost(1).description("test").
-                    name("test").resourcePath("test").shield(1).build();
+                    name("test").resourcePath("res" + File.separator + "images" + File.separator + "card15.png").shield(1).build();
             this.account.addCardToDeck(card);
 
             /**

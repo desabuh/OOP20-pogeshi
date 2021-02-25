@@ -44,6 +44,7 @@ public final class MainMenuControllerImp implements MainMenuController {
     @FXML
     @Override
     public void playClick() {
+        this.account.loadSaves();
         this.notifier.notifyListener(new SwitchControllerRequest<LAYOUT, Deck>(LAYOUT.WORLDMAP, Suppliers.ofInstance(this.account.getDeck())));
     }
 
@@ -57,6 +58,7 @@ public final class MainMenuControllerImp implements MainMenuController {
     @FXML
     @Override
     public void createDeckClick() {
+        this.account.loadSaves();
         this.notifier.notifyListener(new SwitchControllerRequest<LAYOUT, Optional<?>>(LAYOUT.DECKCREATION, Suppliers.ofInstance(Optional.empty())));
     }
 
