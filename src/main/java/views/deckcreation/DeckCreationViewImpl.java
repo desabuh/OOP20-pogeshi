@@ -17,9 +17,11 @@ import views.JavafxView;
 import views.render.Render;
 import views.scene.layout.LAYOUT;
 
+/**
+ * A {@link views.deckcreation.DeckCreationView} implementation.
+ */
 public final class DeckCreationViewImpl extends JavafxView implements DeckCreationView {
 
-    private Stage stage;
     private ListView<String> listDeck;
     private ListView<String> listCards;
     private List<Card> cards;
@@ -32,14 +34,16 @@ public final class DeckCreationViewImpl extends JavafxView implements DeckCreati
     private Label lblCardCost;
     private Label lblNumCards;
 
+    /**
+     * Standard constructor.
+     * @param stage the stage to be displayed
+     */
     public DeckCreationViewImpl(final Stage stage) {
         super(stage, LAYOUT.DECKCREATION);
     }
 
     @Override
-    public void updateEntity(final Render render, final Point2D x, final Point2D y) {
-        // TODO Auto-generated method stub
-    }
+    public void updateEntity(final Render render, final Point2D x, final Point2D y) { }
 
     @Override
     public void initialize(final List<Card> remainingCards, final List<Card> playerDeck) {

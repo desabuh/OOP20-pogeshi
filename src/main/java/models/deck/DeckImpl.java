@@ -21,7 +21,7 @@ import models.deck.card.CardImpl;
 public final class DeckImpl implements Deck {
 
     private static final int NUMBER_OF_DECK_CARDS = 10;
-    private LinkedList<Card> cards;
+    private final LinkedList<Card> cards;
 
     /**
      * Instantiates a standard deck.
@@ -29,9 +29,9 @@ public final class DeckImpl implements Deck {
     @SuppressWarnings("serial")
     public DeckImpl() {
         this.cards  = new LinkedList<>();
-        Gson gson = new Gson();
+        final Gson gson = new Gson();
         try (FileReader fReader = new FileReader("res" + File.separator + "jsons" + File.separator + "ListOfCards.json")) {
-            Type t = new TypeToken<List<CardImpl>>() { }.getType();
+            final Type t = new TypeToken<List<CardImpl>>() { }.getType();
             this.cards.addAll(gson.fromJson(fReader, t));
         } catch (IOException e) {
             e.printStackTrace();
@@ -52,12 +52,17 @@ public final class DeckImpl implements Deck {
         this.cards.addAll(cards);
     }
 
+    /**
+     * Instantiates a new deck from a file.
+     * 
+     * @param file the FileReader that contains the file that contains the deck
+     */
     @SuppressWarnings("serial")
     public DeckImpl(final FileReader file) {
         this.cards = new LinkedList<>();
-        Gson gson = new Gson();
+        final Gson gson = new Gson();
         try (file) {
-            Type t = new TypeToken<List<CardImpl>>() { }.getType();
+            final Type t = new TypeToken<List<CardImpl>>() { }.getType();
             this.cards.addAll(gson.fromJson(file, t));
         } catch (IOException e) {
             e.printStackTrace();

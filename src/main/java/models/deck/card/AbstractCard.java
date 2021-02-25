@@ -5,10 +5,22 @@ import java.io.FileNotFoundException;
 import java.util.Objects;
 
 /**
- *  An abstract Card.
+ *  An abstract card.
  */
 public abstract class AbstractCard implements Card {
 
+    final private int cost;
+    final private int attack;
+    final private int shield;
+    final private String name;
+    final private String resourcePath;
+    final private String description;
+
+    /**
+     * An abstract card builder.
+     *
+     * @param <T> the type of the builder
+     */
     public abstract static class Builder<T extends Builder<T>> {
 
         private int cost;
@@ -17,11 +29,6 @@ public abstract class AbstractCard implements Card {
         private String name;
         private String resourcePath;
         private String description;
-
-        /**
-         * Constructs a Card Builder.
-         */
-        public Builder() { }
 
         /**
          * Set the name of the card.
@@ -54,7 +61,7 @@ public abstract class AbstractCard implements Card {
          */
         public T resourcePath(final String path) throws FileNotFoundException {
             this.resourcePath = path;
-            File file = new File(path);
+            final File file = new File(path);
             if (!file.exists()) {
                 throw new FileNotFoundException();
             }
@@ -99,18 +106,21 @@ public abstract class AbstractCard implements Card {
          *
          * @return A card
          */
-        abstract Card build();
+        protected abstract Card build();
 
-        abstract T self();
+        /**
+         * Return this builder to use method chaining with subclasses.
+         * 
+         * @return the builder
+         */
+        protected abstract T self();
     }
 
-    private int cost;
-    private int attack;
-    private int shield;
-    private String name;
-    private String resourcePath;
-    private String description;
-
+    /**
+     * Template to instantiate a deck from a builder of cards.
+     * 
+     * @param builder the builder needed to build the card
+     */
     protected AbstractCard(final Builder<?> builder) {
         if (builder.cost < 0 || builder.attack < 0 || builder.shield < 0) {
             throw new IllegalStateException("Cost, attack and shield must be >= 0");
