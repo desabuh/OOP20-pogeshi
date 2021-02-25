@@ -8,7 +8,15 @@ import listener.Listener;
  */
 public interface EventBus<T> {
 
+    /**
+     * register a listener.
+     * @param listener
+     */
     void register(Listener<T> listener);
 
+    /**
+     * notify the listener.
+     * @param data
+     */
     void notifyListener(T data);
 }

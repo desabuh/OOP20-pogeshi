@@ -7,5 +7,9 @@ package listener;
  */
 public interface Listener<T> {
 
+    /**
+     * handle event received as argument.
+     * @param event
+     */
     void handleEvent(T event);
 }
