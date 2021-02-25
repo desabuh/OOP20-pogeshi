@@ -63,7 +63,7 @@ public final class TestWorldMap {
         Optional<Point2D> newPos =  this.worldMap.updatePlayerPosition(MOVEMENT.DOWN);
         assertNotEquals(Optional.empty(), newPos);
         Point2D visualDest = WorldMapController.DISPLAY_FUN.applyTransform(newPos.get());
-        assertEquals(Point2DImp.setPoint(100, 0), visualDest);
+        assertEquals(Point2DImp.setPoint(WorldMapController.DELTA, 0), visualDest);
     }
 
 
