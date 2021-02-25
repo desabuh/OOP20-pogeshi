@@ -11,6 +11,17 @@ plugins {
     id("com.github.johnrengelman.shadow") version "5.2.0"
 }
 
+sourceSets {
+    main {
+        java {
+            srcDirs("src")
+        }
+        resources {
+            srcDirs("res")
+        }
+    }
+}
+
 repositories {
     jcenter() // Contains the whole Maven Central + other stuff
 }

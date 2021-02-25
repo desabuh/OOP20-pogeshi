@@ -28,7 +28,13 @@ public class TestBattle {
         b.initializeCharacters();
         int startingEnemyHealth = b.getEnemy().getHealth();
         int cardDamage = b.getPlayer().getHand().getCards().get(0).getAttack();
-        b.playCard(0); // Playing the card
+        /** Since the card to be played could cost more than the available mana, a continuous turn switch is used until 
+         * the player has enough mana to play it. This is also used in the later tests.
+         */
+        while (!b.playCard(0)) {
+            b.endTurn();
+            b.endTurn();
+        }
         assertEquals(startingEnemyHealth - cardDamage, b.getEnemy().getHealth());
     }
 
@@ -66,7 +72,10 @@ public class TestBattle {
         /**
          * Playing a card should decrease the hand's size by 1
          * */
-        b.playCard(0);
+        while (!b.playCard(0)) {
+            b.endTurn();
+            b.endTurn();
+        }
         assertEquals(models.battle.BattleImpl.MAX_CARDS_IN_HAND - 1, b.getPlayer().getHand().getCards().size());
     }
 
@@ -78,7 +87,10 @@ public class TestBattle {
         b = new BattleImpl();
         b.initializeCharacters();
         int cardShield = b.getPlayer().getHand().getCards().get(0).getShield(); // Getting the card's shield added
-        b.playCard(0);
+        while (!b.playCard(0)) {
+            b.endTurn();
+            b.endTurn();
+        }
         assertEquals(cardShield, b.getPlayer().getShield());
     }
 
@@ -96,23 +108,5 @@ public class TestBattle {
         }
         assertTrue(b.hasPlayerWon());
     }
-
-   /* @Test
-    public void testView() {
-        Scene scene = SceneManager.of(LAYOUT.BATTLE).getScene();
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        FXMLLoader loader = SceneManager.of(LAYOUT.BATTLE).getLoader();
-        Controller controller = loader.getController();
-        BattleView view = (BattleView) controller.getView();
-        b = new BattleImpl();
-        b.initializeCharacters();
-        view.updatePlayerStats(b.getPlayer().getHealth(), b.getPlayer().getShield());
-        Label LBLPlayerHealth = (Label) scene.lookup("#LBLPlayerHealth");
-        Label LBLPlayerShield = (Label) scene.lookup("#LBLPlayerShield");
-        assertEquals(LBLPlayerHealth.getText(), String.valueOf(b.getPlayer().getHealth()));
-        assertEquals(LBLPlayerShield.getText(), String.valueOf(b.getPlayer().getShield()));
-
-    }*/
 
 }

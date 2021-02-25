@@ -2,14 +2,17 @@ package models.Account;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import models.Account.FileManager.FileManager;
 import models.Account.FileManager.FileManagerImp;
 import models.deck.Deck;
 import models.deck.DeckImpl;
@@ -22,12 +25,11 @@ public final class AccountImp implements Account {
     private List<Card> remainingCards;
     private Statistics statistics;
     private static final String SAVES_PATH = "res" + File.separator + "saves" + File.separator;
-    private static final String JSONS_PATH = "res" + File.separator + "jsons" + File.separator;
+    private static final String JSONS_PATH = "jsons" + File.separator;
     private static final Type LINKED_LIST_TYPE = new TypeToken<LinkedList<CardImpl>>() { }.getType();
     private final FileManagerImp<LinkedList<Card>> fileDeck;
     private final FileManagerImp<LinkedList<Card>> fileRemainingCards;
     private final FileManagerImp<Statistics> fileStatistics;
-    private final FileManagerImp<LinkedList<Card>> fileDefaultDeck;
     private final Random random;
 
     /**
@@ -39,7 +41,6 @@ public final class AccountImp implements Account {
         this.fileDeck = new FileManagerImp<LinkedList<Card>>(SAVES_PATH + "Deck.json");
         this.fileRemainingCards = new FileManagerImp<LinkedList<Card>>(SAVES_PATH + "RemainingCards.json");
         this.fileStatistics = new FileManagerImp<Statistics>(SAVES_PATH + "Statistics.json");
-        this.fileDefaultDeck = new FileManagerImp<LinkedList<Card>>(JSONS_PATH + "DefaultDeck.json");
         loadSaves();
     }
 
@@ -76,8 +77,7 @@ public final class AccountImp implements Account {
     @Override
     public void win() throws IOException {
         try {
-            final FileManager<LinkedList<Card>> fileAllCards = new FileManagerImp<LinkedList<Card>>(JSONS_PATH + "ListOfCards.json");
-            final LinkedList<Card> allCards = fileAllCards.load(LINKED_LIST_TYPE);
+            final LinkedList<Card> allCards = loadDefaultData("ListOfCards.json");
             final Card card = allCards.get(random.nextInt(allCards.size()));
             if (this.deck.getCards().contains(card) || this.remainingCards.contains(card)) {
                 this.statistics.updateOnWin(true);
@@ -140,7 +140,7 @@ public final class AccountImp implements Account {
     @Override
     public void deleteSaves() {
         try {
-            this.fileDeck.save(this.fileDefaultDeck.load(LINKED_LIST_TYPE));
+            this.fileDeck.save(loadDefaultData("DefaultDeck.json"));
             this.deck = new DeckImpl(this.fileDeck.load(LINKED_LIST_TYPE));
             this.fileRemainingCards.save(new LinkedList<Card>());
             this.remainingCards = this.fileRemainingCards.load(LINKED_LIST_TYPE);
@@ -156,12 +156,14 @@ public final class AccountImp implements Account {
      */
     public void loadSaves() {
         try {
-            if (!this.fileDeck.fileExist()) {
-                if (this.fileDefaultDeck.fileExist()) {
-                    this.fileDeck.save(this.fileDefaultDeck.load(LINKED_LIST_TYPE));
-                } else {
-                    throw new IOException("DefaultDeck.json is missing");
+            File file = new File(SAVES_PATH);
+            if (!file.exists()) {
+                if (!file.mkdir()) {
+                    throw new IOException("Could not create the directory.");
                 }
+            }
+            if (!this.fileDeck.fileExist()) {
+                this.fileDeck.save(loadDefaultData("DefaultDeck.json"));
             }
             this.deck = new DeckImpl(this.fileDeck.load(LINKED_LIST_TYPE));
             if (!this.fileRemainingCards.fileExist()) {
@@ -174,6 +176,18 @@ public final class AccountImp implements Account {
             this.statistics = fileStatistics.load(StatisticsImp.class);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private LinkedList<Card> loadDefaultData(final String fileName) throws IOException {
+        try {
+            Reader reader = new InputStreamReader(ClassLoader.getSystemResourceAsStream(JSONS_PATH + fileName));
+            final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            LinkedList<Card> result = gson.fromJson(reader, LINKED_LIST_TYPE);
+            reader.close();
+            return result;
+        } catch (IOException e) {
+            throw new IOException("Error while closing reader.");
         }
     }
 
