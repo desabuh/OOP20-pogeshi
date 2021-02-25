@@ -21,7 +21,6 @@ import models.deck.card.CardImpl;
 
 class DeckTest {
     private Deck deck;
-    private Card card;
 
     @Test
     public void testDeckCreation() {
@@ -56,8 +55,8 @@ class DeckTest {
                                 .build();
             this.deck = new DeckImpl();
             this.deck.removeCard(this.deck.getCards().stream().findAny().get());
-            this.deck.addCard(card);
-            assertTrue(this.deck.isCardInDeck(card));
+            this.deck.addCard(card1);
+            assertTrue(this.deck.isCardInDeck(card1));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -65,26 +64,26 @@ class DeckTest {
 
     @Test
     public void illegalCards() {
-        assertThrows(NullPointerException.class, () -> this.card = new CardImpl.Builder().build());
-        assertThrows(FileNotFoundException.class, () -> {
-            this.card = new CardImpl.Builder()
-                                    .attack(0)
-                                    .description("Desc")
-                                    .shield(0)
-                                    .name("prova")
-                                    .cost(2)
-                                    .resourcePath("")
-                                    .build();
+        assertThrows(NullPointerException.class, () -> new CardImpl.Builder().build());
+        assertThrows(FileNotFoundException.class, () -> {            
+            new CardImpl.Builder()
+                        .attack(0)
+                        .description("Desc")
+                        .shield(0)
+                        .name("prova")
+                        .cost(2)
+                        .resourcePath("")
+                        .build();
         });
         assertThrows(IllegalStateException.class, () -> {
-            this.card = new CardImpl.Builder()
-                                    .attack(-2)
-                                    .description("Desc")
-                                    .shield(0)
-                                    .name("prova")
-                                    .cost(-3)
-                                    .resourcePath("res" + File.separator + "images" + File.separator + "card15.png")
-                                    .build();
+            new CardImpl.Builder()
+                        .attack(-2)
+                        .description("Desc")
+                        .shield(0)
+                        .name("prova")
+                        .cost(-3)
+                        .resourcePath("res" + File.separator + "images" + File.separator + "card15.png")
+                        .build();
         });
     }
 

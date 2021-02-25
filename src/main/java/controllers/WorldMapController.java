@@ -84,7 +84,10 @@ public final class WorldMapController implements Controller {
     }
 
 
-
+    /**
+     * delete the enemy and pass it to Battle.
+     * @param enemy to be removed and passed to battle
+     */
     private void defeatEnemy(final EnemyImp enemy) {
         this.worldMap.removeEnemy(enemy);
         Point2D newPos = DISPLAY_FUN.applyTransform(enemy.getPosition());
@@ -105,7 +108,9 @@ public final class WorldMapController implements Controller {
 
     }
 
-
+    /*
+     * invoke MainController for win if no enemies are present
+     */
     private void checkRemaingEnitities() {
         if (this.worldMap.getEnemies().isEmpty()) {
             this.notifier
@@ -126,20 +131,13 @@ public final class WorldMapController implements Controller {
 
         if (keyEvent.getCode().equals(KeyCode.D)) { 
             newPos = this.worldMap.updatePlayerPosition(MOVEMENT.RIGTH); 
-        }
-
-        else if (keyEvent.getCode().equals(KeyCode.A)) {
+        } else if (keyEvent.getCode().equals(KeyCode.A)) {
             newPos = this.worldMap.updatePlayerPosition(MOVEMENT.LEFT);
-        }
-
-        else if (keyEvent.getCode().equals(KeyCode.W)) {
+        } else if (keyEvent.getCode().equals(KeyCode.W)) {
             newPos = this.worldMap.updatePlayerPosition(MOVEMENT.UP);
-        }
-
-        else if (keyEvent.getCode().equals(KeyCode.S)) {
+        } else if (keyEvent.getCode().equals(KeyCode.S)) {
             newPos = this.worldMap.updatePlayerPosition(MOVEMENT.DOWN);
         }
-
 
         if (newPos.isPresent()) {
             newPos = Optional.of(DISPLAY_FUN.applyTransform(newPos.get()));

@@ -26,6 +26,11 @@ public final class CanvasDrawer implements Drawer<Canvas> {
         this.gc = canvas.getGraphicsContext2D();
     }
 
+    /**
+     * clear a shape if present and one of its dimensione is 0.
+     * @param render
+     * @param point
+     */
     private void clearShape(final Render render, final Point2D point) {
         if (render.getHeigth() == 0) {
             Shape shape = this.shapeDisplayed.get(point);
@@ -36,11 +41,10 @@ public final class CanvasDrawer implements Drawer<Canvas> {
 
     @Override
     public void draw(final Render render, final Point2D source, final Point2D destination) {
-        
+
         if (render.getWidth() == 0) {
             this.clearShape(render, destination);
-        }
-        else if (this.shapeDisplayed.containsKey(source)) {
+        } else if (this.shapeDisplayed.containsKey(source)) {
 
             MovableShape shape = this.shapeDisplayed.entrySet().stream()
                     .filter(x -> x.getKey().equals(source))
@@ -57,11 +61,12 @@ public final class CanvasDrawer implements Drawer<Canvas> {
 
             this.shapeDisplayed.remove(source);
 
-        }
-        else {
+        } else {
             this.shapeDisplayed
             .put(destination, new Circle(gc, render, destination.getY(), destination.getX()));
         }
+
+
 
     }
 

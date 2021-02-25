@@ -11,7 +11,7 @@ import views.scene.layout.LAYOUT;
 
 /**
  * 
- * This Class is used as router to reidirect the execution to a specific triads of
+ * This Class is used as router to redirect the execution to a specific triads of
  * model,view and controller based on the requested layout.
  *
  */

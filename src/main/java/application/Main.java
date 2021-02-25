@@ -35,14 +35,14 @@ public final class Main extends Application {
     @Override
     public void start(final Stage stage) throws Exception {
         Injector injector = Guice.createInjector(new WorldMapModule(stage),
-                                                 new ComunicationModule(),
-                                                 new MenuModule(stage),
-                                                 new BattleModule(stage));
+                new ComunicationModule(),
+                new MenuModule(stage),
+                new BattleModule(stage));
 
-        
+
         SceneManager.provideControllerFactory(injector::getInstance);
-        
-        
+
+
         CompletableFuture<Scene> completableScene = 
                 CompletableFuture.supplyAsync(() -> SceneManager.of(LAYOUT.ACCOUNT).getScene());
         Scene scene = completableScene.get();
@@ -53,7 +53,7 @@ public final class Main extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();  
-        
+
     }
 
     /**

@@ -40,7 +40,7 @@ public abstract class AbstractShape implements  Shape, Renderable {
     }
 
     @Override
-    public final void accept(Render render) {
+    public final void accept(final Render render) {
         this.height = render.getHeigth();
         this.width = render.getWidth();
         this.color = render.getColor();
