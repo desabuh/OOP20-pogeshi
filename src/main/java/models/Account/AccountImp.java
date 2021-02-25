@@ -24,8 +24,7 @@ public final class AccountImp implements Account {
     private Deck deck;
     private List<Card> remainingCards;
     private Statistics statistics;
-    private static final String SAVES_PATH = "res" + File.separator + "saves" + File.separator;
-    private static final String JSONS_PATH = "jsons" + File.separator;
+    private static final String SAVES_PATH = "saves" + File.separator;
     private static final Type LINKED_LIST_TYPE = new TypeToken<LinkedList<CardImpl>>() { }.getType();
     private final FileManagerImp<LinkedList<Card>> fileDeck;
     private final FileManagerImp<LinkedList<Card>> fileRemainingCards;
@@ -181,7 +180,7 @@ public final class AccountImp implements Account {
 
     private LinkedList<Card> loadDefaultData(final String fileName) throws IOException {
         try {
-            Reader reader = new InputStreamReader(ClassLoader.getSystemResourceAsStream(JSONS_PATH + fileName));
+            Reader reader = new InputStreamReader(this.getClass().getResourceAsStream("/jsons/" + fileName));
             final Gson gson = new GsonBuilder().setPrettyPrinting().create();
             LinkedList<Card> result = gson.fromJson(reader, LINKED_LIST_TYPE);
             reader.close();

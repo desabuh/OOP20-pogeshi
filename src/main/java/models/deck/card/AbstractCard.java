@@ -2,7 +2,16 @@ package models.deck.card;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.lang.reflect.Type;
+import java.util.LinkedList;
 import java.util.Objects;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 /**
  *  An abstract card.
@@ -59,12 +68,8 @@ public abstract class AbstractCard implements Card {
          * @return this builder
          * @throws FileNotFoundException when the file indicated by the path does not exist
          */
-        public T resourcePath(final String path) throws FileNotFoundException {
+        public T resourcePath(final String path) {
             this.resourcePath = path;
-            final File file = new File(path);
-            if (!file.exists()) {
-                throw new FileNotFoundException();
-            }
             return self();
         }
 

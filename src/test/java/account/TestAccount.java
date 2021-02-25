@@ -27,34 +27,29 @@ public class TestAccount {
     public void testRemoveCardFromDeck() {
         account = new AccountImp();
         account.deleteSaves();      //Reset to default status, remainingCards is empty.
-        try {
-            Card card = new CardImpl.Builder().
-                    attack(1).cost(1).description("test").
-                    name("test").resourcePath("res" + File.separator + "images" + File.separator + "card15.png").shield(1).build();
-            this.account.removeCardFromDeck(card);
+        Card card = new CardImpl.Builder().
+                attack(1).cost(1).description("test").
+                name("test").resourcePath("res" + File.separator + "images" + File.separator + "card15.png").shield(1).build();
+        this.account.removeCardFromDeck(card);
 
-            /**
-             * The card shouldn't be in the remaingCards since it's a dummy card
-             * and isn't in the deck.
-             */
-            assertFalse(this.account.getRemainingCards().contains(card));
+        /**
+         * The card shouldn't be in the remaingCards since it's a dummy card
+         * and isn't in the deck.
+         */
+        assertFalse(this.account.getRemainingCards().contains(card));
 
-            card = this.account.getDeck().getCard().get();
-            account.removeCardFromDeck(card);
+        card = this.account.getDeck().getCard().get();
+        account.removeCardFromDeck(card);
 
-            /**
-             * The card should now be in the remaingCards.
-             */
-            assertTrue(this.account.getRemainingCards().contains(card));
+        /**
+         * The card should now be in the remaingCards.
+         */
+        assertTrue(this.account.getRemainingCards().contains(card));
 
-            /**
-             * The card shouldn't be in the deck now (There are no copies in the default deck).
-             */
-            assertFalse(this.account.getDeck().getCards().contains(card));
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        /**
+         * The card shouldn't be in the deck now (There are no copies in the default deck).
+         */
+        assertFalse(this.account.getDeck().getCards().contains(card));
 
     }
 
@@ -67,34 +62,29 @@ public class TestAccount {
         account = new AccountImp();
         account.deleteSaves();      //Reset to default status, remainingCards is empty.
         this.account.getDeck().getCards().remove(0);    //Otherwise the deck would be full.
-        try {
-            Card card = new CardImpl.Builder().
-                    attack(1).cost(1).description("test").
-                    name("test").resourcePath("res" + File.separator + "images" + File.separator + "card15.png").shield(1).build();
-            this.account.addCardToDeck(card);
+        Card card = new CardImpl.Builder().
+                attack(1).cost(1).description("test").
+                name("test").resourcePath("res" + File.separator + "images" + File.separator + "card15.png").shield(1).build();
+        this.account.addCardToDeck(card);
 
-            /**
-             * The card shouldn't be in the deck since it's a dummy card
-             * and isn't in the remaingCards.
-             */
-            assertFalse(this.account.getDeck().getCards().contains(card));
+        /**
+         * The card shouldn't be in the deck since it's a dummy card
+         * and isn't in the remaingCards.
+         */
+        assertFalse(this.account.getDeck().getCards().contains(card));
 
-            this.account.getRemainingCards().add(card);
-            account.addCardToDeck(card);
+        this.account.getRemainingCards().add(card);
+        account.addCardToDeck(card);
 
-            /**
-             * The card should now be in the deck.
-             */
-            assertTrue(this.account.getDeck().getCards().contains(card));
+        /**
+         * The card should now be in the deck.
+         */
+        assertTrue(this.account.getDeck().getCards().contains(card));
 
-            /**
-             * The card shouldn't be in the remaingCards now.
-             */
-            assertFalse(this.account.getRemainingCards().contains(card));
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        /**
+         * The card shouldn't be in the remaingCards now.
+         */
+        assertFalse(this.account.getRemainingCards().contains(card));
 
     }
 

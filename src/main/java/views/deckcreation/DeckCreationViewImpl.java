@@ -1,7 +1,5 @@
 package views.deckcreation;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -85,12 +83,10 @@ public final class DeckCreationViewImpl extends JavafxView implements DeckCreati
                     .get(); 
         }
 
-        try {
-            img = new Image(new FileInputStream(card.getResourcePath()));
-            this.imgCard.setImage(img);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+
+        img = new Image(this.getClass().getResourceAsStream(card.getResourcePath()));
+        this.imgCard.setImage(img);
+
 
         this.lblCardName.setText(card.getName());
         this.lblCardDesc.setText(card.getDescription());
@@ -118,4 +114,5 @@ public final class DeckCreationViewImpl extends JavafxView implements DeckCreati
         this.lblNumCards.setText("10/10");
         this.lblNumCards.setTextFill(Color.LIME);
     }
+
 }

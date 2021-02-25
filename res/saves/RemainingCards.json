@@ -1,10 +1,1 @@
-[
-  {
-    "cost": 8,
-    "attack": 10,
-    "shield": 10,
-    "name": "Card7",
-    "resourcePath": "res/images/card7.png",
-    "description": "DESC"
-  }
-]
+[]

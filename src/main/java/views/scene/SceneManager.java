@@ -58,7 +58,7 @@ public final class SceneManager {
         this.loader.setControllerFactory(FACTORY);
         Parent parent = null;
         try {
-            parent = this.loader.load(ClassLoader.getSystemResourceAsStream(layout.getPathString()));
+            parent = this.loader.load(this.getClass().getResourceAsStream(layout.getPathString()));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

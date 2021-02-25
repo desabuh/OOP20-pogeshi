@@ -3,6 +3,8 @@ package models.deck;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -11,6 +13,7 @@ import java.util.Optional;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import models.deck.card.Card;
 import models.deck.card.CardImpl;
@@ -20,6 +23,7 @@ import models.deck.card.CardImpl;
  */
 public final class DeckImpl implements Deck {
 
+    private static final Type LINKED_LIST_TYPE = new TypeToken<LinkedList<CardImpl>>() { }.getType();
     private static final int NUMBER_OF_DECK_CARDS = 10;
     private final LinkedList<Card> cards;
 
@@ -29,11 +33,10 @@ public final class DeckImpl implements Deck {
     @SuppressWarnings("serial")
     public DeckImpl() {
         this.cards  = new LinkedList<>();
-        final Gson gson = new Gson();
-        try (FileReader fReader = new FileReader("res" + File.separator + "jsons" + File.separator + "ListOfCards.json")) {
-            final Type t = new TypeToken<List<CardImpl>>() { }.getType();
-            this.cards.addAll(gson.fromJson(fReader, t));
+        try {
+            this.cards.addAll(loadDefaultData("ListOfCards.json"));
         } catch (IOException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -128,4 +131,17 @@ public final class DeckImpl implements Deck {
     public String toString() {
         return "cards = " + cards;
     }
+
+    private LinkedList<Card> loadDefaultData(final String fileName) throws IOException {
+        try {
+            Reader reader = new InputStreamReader(this.getClass().getResourceAsStream("/jsons/" + fileName));
+            final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            LinkedList<Card> result = gson.fromJson(reader, LINKED_LIST_TYPE);
+            reader.close();
+            return result;
+        } catch (IOException e) {
+            throw new IOException("Error while closing reader.");
+        }
+    }
+
 }

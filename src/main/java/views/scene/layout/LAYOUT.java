@@ -1,7 +1,5 @@
 package views.scene.layout;
 
-import java.io.File;
-
 /**
  *  Enum to provide layout path string.
  */
@@ -9,19 +7,19 @@ public enum LAYOUT {
     /**
      * BATTLE layout.
      */
-    BATTLE("layouts" + File.separator + "battle.fxml"),
+    BATTLE("/layouts/battle.fxml"),
     /**
      * WORLDMAP layout.
      */
-    WORLDMAP("layouts" + File.separator + "worldmap.fxml"),
+    WORLDMAP("/layouts/worldmap.fxml"),
     /**
      * ACCOUNT layout.
      */
-    ACCOUNT("layouts" + File.separator + "MainMenu.fxml"),
+    ACCOUNT("/layouts/MainMenu.fxml"),
     /**
      * ACCOUNT layout.
      */
-    DECKCREATION("layouts" + File.separator + "deckCreation.fxml");
+    DECKCREATION("/layouts/deckCreation.fxml");
 
     private final String pathString;
 

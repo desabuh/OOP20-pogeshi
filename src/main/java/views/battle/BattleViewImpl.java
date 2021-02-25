@@ -117,7 +117,7 @@ public final class BattleViewImpl extends JavafxView implements BattleView {
 
     public void addCardToHand(final String imagePath, final Text description, final EventHandler<MouseEvent> onClick) {
         ImageView card = new ImageView();
-        card.setImage(new Image(new File(imagePath).toURI().toString()));
+        card.setImage(new Image(this.getClass().getResourceAsStream(imagePath)));
         card.setFitWidth(CARD_WIDTH);
         card.setPreserveRatio(true);
 
