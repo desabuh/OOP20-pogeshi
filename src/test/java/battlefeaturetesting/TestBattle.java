@@ -109,22 +109,4 @@ public class TestBattle {
         assertTrue(b.hasPlayerWon());
     }
 
-   /* @Test
-    public void testView() {
-        Scene scene = SceneManager.of(LAYOUT.BATTLE).getScene();
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        FXMLLoader loader = SceneManager.of(LAYOUT.BATTLE).getLoader();
-        Controller controller = loader.getController();
-        BattleView view = (BattleView) controller.getView();
-        b = new BattleImpl();
-        b.initializeCharacters();
-        view.updatePlayerStats(b.getPlayer().getHealth(), b.getPlayer().getShield());
-        Label LBLPlayerHealth = (Label) scene.lookup("#LBLPlayerHealth");
-        Label LBLPlayerShield = (Label) scene.lookup("#LBLPlayerShield");
-        assertEquals(LBLPlayerHealth.getText(), String.valueOf(b.getPlayer().getHealth()));
-        assertEquals(LBLPlayerShield.getText(), String.valueOf(b.getPlayer().getShield()));
-
-    }*/
-
 }
