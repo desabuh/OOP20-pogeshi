@@ -40,7 +40,7 @@
             <Font size="30.0" />
          </font>
       </Label>
-      <Button fx:id="btnEndTurn" layoutX="1680.0" layoutY="700.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="107.0" text="Passa turno" />
+      <Button fx:id="btnEndTurn" layoutX="1680.0" layoutY="700.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="107.0" text="End turn" />
       <HBox fx:id="hbPlayerHand" layoutX="21.0" layoutY="767.0" prefHeight="284.0" prefWidth="1554.0" />
       <Label fx:id="lblMana" alignment="CENTER" layoutX="633.0" layoutY="700.0" prefHeight="45.0" prefWidth="259.0" text="Mana:" textFill="#00fcff">
          <font>
