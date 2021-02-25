@@ -41,8 +41,7 @@ public final class FileManagerImp<T> implements FileManager<T> {
         try {
             if (!fileExist()) {
                 if (!file.createNewFile()) {
-                    System.err.println("Failed to create the file");
-                    return;
+                    throw new IOException("Failed to create the file");
                 }
             }
             FileWriter writer = new FileWriter(file);
