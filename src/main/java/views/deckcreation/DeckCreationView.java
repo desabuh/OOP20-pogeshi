@@ -5,15 +5,18 @@ import java.util.List;
 import models.deck.card.Card;
 import views.View;
 
+/**
+ * Interface for a deck view.
+ */
 public interface DeckCreationView extends View {
 
     /**
      * Initialize the view.
      * 
-     * @param remainingCars all the cards in the game
-     * @param playerDeck the deck of the player
+     * @param remainingCards the player's cards that aren't in the deck
+     * @param playerDeck the player's deck
      */
-    void initialize(List<Card> remainingCars, List<Card> playerDeck);
+    void initialize(List<Card> remainingCards, List<Card> playerDeck);
 
     /**
      * Changes the displayed card.

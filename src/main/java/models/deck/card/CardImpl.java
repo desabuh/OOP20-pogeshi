@@ -5,6 +5,9 @@ package models.deck.card;
  */
 public final class CardImpl extends AbstractCard implements Comparable<Card> {
 
+    /**
+     * A {@link models.deck.card.AbstractCard.Builder} implementation.
+     */
     public static final class Builder extends AbstractCard.Builder<Builder> {
 
         /**
@@ -16,6 +19,9 @@ public final class CardImpl extends AbstractCard implements Comparable<Card> {
             return new CardImpl(this);
         }
 
+        /**
+         * Returns this.
+         */
         @Override
         protected Builder self() {
             return this;

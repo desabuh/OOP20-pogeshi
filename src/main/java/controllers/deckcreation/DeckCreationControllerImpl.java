@@ -28,8 +28,9 @@ import views.scene.layout.LAYOUT;
  */
 public final class DeckCreationControllerImpl implements DeckCreationController {
 
-    private Account playerAccount;
-    private DeckCreationView deckCreationView;
+    private final Account playerAccount;
+    private final DeckCreationView deckCreationView;
+    private final EventBus<Request<LAYOUT, ? extends Object>> notifier;
     private List<Card> cards;
 
     @FXML
@@ -37,20 +38,16 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
     @FXML
     private ListView<String> listCards;
 
-    private EventBus<Request<LAYOUT, ? extends Object>> notifier;
-    private MainController mainController;
-
     @Inject
     public DeckCreationControllerImpl(final Account account, final DeckCreationView deckCreationView, final MainController mainController, final EventBus<Request<LAYOUT, ? extends Object>> notifier) {
         this.playerAccount = account;
         this.deckCreationView = deckCreationView;
         this.notifier = notifier;
-        this.mainController = mainController;
         this.notifier.register(mainController);
     }
 
     /**
-     * Start blocking the outside cards list and loading cards from json.
+     * Initialize the deck controller.
      */
     public void initialize() {
         this.cards = new LinkedList<>(this.playerAccount.getDeck().getCards());
@@ -69,7 +66,7 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
     @Override
     public void removeCardFromDeck() {
         if (this.playerAccount.getDeck().isDeckFull()  && !this.listDeck.getSelectionModel().isEmpty()) {
-            Card cardToRemove = this.playerAccount.getDeck().getCards().stream()
+            final Card cardToRemove = this.playerAccount.getDeck().getCards().stream()
                     .filter(c -> c.getName().equals(this.listDeck.getSelectionModel().getSelectedItem()))
                     .findAny()
                     .get();
@@ -81,7 +78,7 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
     @Override
     public void addCardToDeck() {
         if (!this.playerAccount.getDeck().isDeckFull() && !this.listCards.getSelectionModel().isEmpty()) {
-            Card cardToAdd = this.cards.stream()
+            final Card cardToAdd = this.cards.stream()
                     .filter(c -> c.getName().equals(this.listCards.getSelectionModel().getSelectedItem()))
                     .findAny()
                     .get();
@@ -96,7 +93,7 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
             this.playerAccount.save();
             this.notifier.notifyListener(new SwitchControllerRequest<LAYOUT, Optional<?>>(LAYOUT.ACCOUNT, Suppliers.ofInstance(Optional.empty())));
         } else {
-            Alert alert = new Alert(AlertType.WARNING);
+            final Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText("The player's deck isn't full!");
             alert.setContentText("You cannot save the deck if it isn't complete!");
