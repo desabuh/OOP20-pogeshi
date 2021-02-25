@@ -9,7 +9,7 @@
    <children>
       <Pane fx:id="paneEnd" prefHeight="400.0" prefWidth="600.0" visible="false">
          <children>
-            <Label fx:id="labelEnd" alignment="CENTER" layoutX="111.0" layoutY="135.0" prefHeight="130.0" prefWidth="378.0" text="VITTARIA" textAlignment="CENTER">
+            <Label fx:id="labelEnd" alignment="CENTER" layoutX="111.0" layoutY="135.0" prefHeight="130.0" prefWidth="378.0" text="WIN" textAlignment="CENTER">
                <font>
                   <Font size="72.0" />
                </font>
@@ -19,29 +19,29 @@
       </Pane>
       <Pane fx:id="paneMenu" prefHeight="400.0" prefWidth="600.0">
          <children>
-            <Label fx:id="lableMenuTitle" alignment="CENTER" layoutX="178.0" layoutY="50.0" prefHeight="33.0" prefWidth="244.0" text="MENU PRINCIPALE">
+            <Label fx:id="lableMenuTitle" alignment="CENTER" layoutX="178.0" layoutY="50.0" prefHeight="33.0" prefWidth="244.0" text="MAIN MENU">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button fx:id="buttonGioca" layoutX="178.0" layoutY="100.0" mnemonicParsing="false" onMouseClicked="#giocaClick" prefHeight="33.0" prefWidth="244.0" text="GIOCA" />
-            <Button fx:id="buttonNuovaPartita" layoutX="178.0" layoutY="150.0" mnemonicParsing="false" onMouseClicked="#nuovaPartitaClick" prefHeight="33.0" prefWidth="244.0" text="NUOVA PARTITA" />
-            <Button fx:id="buttonFormaDeck" layoutX="178.0" layoutY="200.0" mnemonicParsing="false" onMouseClicked="#formaDeckClick" prefHeight="33.0" prefWidth="244.0" text="FORMA DECK" />
-            <Button fx:id="buttonStatistiche" layoutX="178.0" layoutY="250.0" mnemonicParsing="false" onMouseClicked="#statisticheClick" prefHeight="33.0" prefWidth="244.0" text="STATISTICHE" />
-            <Button fx:id="buttonEsci" layoutX="178.0" layoutY="300.0" mnemonicParsing="false" onMouseClicked="#esciClick" prefHeight="33.0" prefWidth="244.0" text="ESCI" />
+            <Button fx:id="buttonPlay" layoutX="178.0" layoutY="100.0" mnemonicParsing="false" onMouseClicked="#playClick" prefHeight="33.0" prefWidth="244.0" text="PLAY" />
+            <Button fx:id="buttonNewGame" layoutX="178.0" layoutY="150.0" mnemonicParsing="false" onMouseClicked="#newGameClick" prefHeight="33.0" prefWidth="244.0" text="NEW GAME" />
+            <Button fx:id="buttonCreateDeck" layoutX="178.0" layoutY="200.0" mnemonicParsing="false" onMouseClicked="#createDeckClick" prefHeight="33.0" prefWidth="244.0" text="CREATE DECK" />
+            <Button fx:id="buttonStatistics" layoutX="178.0" layoutY="250.0" mnemonicParsing="false" onMouseClicked="#statisticsClick" prefHeight="33.0" prefWidth="244.0" text="STATISTICS" />
+            <Button fx:id="buttonExit" layoutX="178.0" layoutY="300.0" mnemonicParsing="false" onMouseClicked="#exitClick" prefHeight="33.0" prefWidth="244.0" text="EXIT" />
          </children>
       </Pane>
       <Pane fx:id="paneStatistics" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" visible="false">
          <children>
-            <Label fx:id="labelStatisticsTitle" layoutX="229.0" layoutY="59.0" prefHeight="35.0" prefWidth="142.0" text="STATISTICHE">
+            <Label fx:id="labelStatisticsTitle" layoutX="229.0" layoutY="59.0" prefHeight="35.0" prefWidth="142.0" text="STATISTICS">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label fx:id="labelWins" layoutX="254.0" layoutY="130.0" prefHeight="17.0" prefWidth="155.0" text="Vittorie:" />
-            <Label fx:id="labelLoses" layoutX="254.0" layoutY="160.0" prefHeight="17.0" prefWidth="155.0" text="Sconfitte:" />
+            <Label fx:id="labelWins" layoutX="254.0" layoutY="130.0" prefHeight="17.0" prefWidth="155.0" text="Wins:" />
+            <Label fx:id="labelLoses" layoutX="254.0" layoutY="160.0" prefHeight="17.0" prefWidth="155.0" text="Loses:" />
             <Label fx:id="labelUnlockedCards" layoutX="254.0" layoutY="190.0" prefHeight="17.0" prefWidth="155.0" text="Unlocked cards:" />
-            <Button fx:id="buttonIndietro" layoutX="40.0" layoutY="34.0" mnemonicParsing="false" onMouseClicked="#indietroClick" prefHeight="25.0" prefWidth="72.0" text="Indietro" />
+            <Button fx:id="buttonBack" layoutX="40.0" layoutY="34.0" mnemonicParsing="false" onMouseClicked="#backClick" prefHeight="25.0" prefWidth="72.0" text="Back" />
          </children>
       </Pane>
    </children>

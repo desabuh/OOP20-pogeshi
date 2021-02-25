@@ -43,45 +43,46 @@ public final class MainMenuControllerImp implements MainMenuController {
 
     @FXML
     @Override
-    public void giocaClick() {
+    public void playClick() {
         this.notifier.notifyListener(new SwitchControllerRequest<LAYOUT, Deck>(LAYOUT.WORLDMAP, Suppliers.ofInstance(this.account.getDeck())));
     }
 
     @FXML
     @Override
-    public void nuovaPartitaClick() {
+    public void newGameClick() {
         account.deleteSaves();
-        giocaClick();
+        playClick();
     }
 
     @FXML
     @Override
-    public void formaDeckClick() {
+    public void createDeckClick() {
         this.notifier.notifyListener(new SwitchControllerRequest<LAYOUT, Optional<?>>(LAYOUT.DECKCREATION, Suppliers.ofInstance(Optional.empty())));
     }
 
     @FXML
     @Override
-    public void statisticheClick(final MouseEvent  e) {
+    public void statisticsClick() {
         this.accountView.changeToStatistics(account.getStatistics().getWins(), account.getStatistics().getLoses(), account.getStatistics().getUnlockedCards());
     }
 
     @FXML
     @Override
-    public void indietroClick(final MouseEvent  e) {
+    public void backClick() {
         this.accountView.changeBackFromStatistics();
     }
 
     @FXML
     @Override
-    public void esciClick() {
+    public void exitClick() {
         System.exit(0);
 
     }
 
     @FXML
     @Override
-    public void nextClick(final MouseEvent  e) {
+    public void nextClick() {
+        exitClick();
         this.accountView.changeBackFromEnd();
     }
 
@@ -95,14 +96,14 @@ public final class MainMenuControllerImp implements MainMenuController {
         if (data instanceof Boolean) {
             this.accountView.changeToEnd();
             if ((boolean) data) {
-                this.accountView.changeEndLabelText("VITTORIA");
+                this.accountView.changeEndLabelText("YOU WON");
                 try {
                     this.account.win();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             } else {
-                this.accountView.changeEndLabelText("SCONFITTA");
+                this.accountView.changeEndLabelText("YOU LOST");
                 this.account.lose();
             }
         }
