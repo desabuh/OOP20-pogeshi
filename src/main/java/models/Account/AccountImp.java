@@ -46,7 +46,6 @@ public final class AccountImp implements Account {
     /**
      * Return the value of {@code deck}.
      */
-    //TODO: to test
     @Override
     public Deck getDeck() {
         return this.deck;
@@ -55,7 +54,6 @@ public final class AccountImp implements Account {
     /**
      * Return a {@code List<Card>} of the {@code remaining cards}.
      */
-    //TODO: to test
     @Override
     public List<Card> getRemainingCards() {
         return this.remainingCards;
