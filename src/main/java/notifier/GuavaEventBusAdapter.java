@@ -30,7 +30,7 @@ public final class GuavaEventBusAdapter<T> implements notifier.EventBus<T> {
 
     /**
      * function used to register a listener for this notifier.
-     * @param listener a {@link Listener} for {@link Command} object
+     * @param listener a {@link Listener} for the defined object
      */
     @Override
     public void register(final Listener<T> listener) {

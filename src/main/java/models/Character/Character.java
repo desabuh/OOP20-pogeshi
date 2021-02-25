@@ -3,11 +3,6 @@ package models.Character;
 import models.GameMap.Point2D;
 import models.deck.Deck;
 
-/** description.
- * @param
- * {@link Battle}
- * @return
- */
 public interface Character {
 
     /**

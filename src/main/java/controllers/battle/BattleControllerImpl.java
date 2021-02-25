@@ -115,12 +115,6 @@ public final class BattleControllerImpl implements BattleController {
         }
         if (battle.checkBattleEnd()) {
             this.battleFinish();
-            /*if (battle.currentTurn() instanceof Player) {
-                battleView.showMessage("Victory!", "You won the fight!");
-            } else {
-                battleView.showMessage("Defeat!", "You died!");
-            }
-            System.exit(0);*/
         }
     }
 
@@ -142,7 +136,7 @@ public final class BattleControllerImpl implements BattleController {
             battleView.showDamageToEnemy(c.getAttack());
             battleView.updateManaLabel(battle.getPlayerUnusedCombatMana(), battle.getPlayer().getMana());
         } else {
-            battleView.showDamageToPlayer(c.getAttack());
+            //battleView.showDamageToPlayer(c.getAttack());
         }
         battleView.updateEnemyStats(battle.getEnemy().getHealth(), battle.getEnemy().getShield());
         battleView.updatePlayerStats(battle.getPlayer().getHealth(), battle.getPlayer().getShield());
@@ -205,8 +199,6 @@ public final class BattleControllerImpl implements BattleController {
      * Function to call when the battle is finished. Switches the program's flow to the appropriate controller, based on the battle's result.
      * */
     private void battleFinish() {
-        //battle.reset();
-        //battleView.reset();
         if (battle.hasPlayerWon()) {
             battle.reset();
             battleView.reset();
@@ -214,7 +206,6 @@ public final class BattleControllerImpl implements BattleController {
             battleView.updatePlayerStats(battle.getPlayer().getHealth(), battle.getPlayer().getShield());
             battleView.updateEnemyStats(battle.getEnemy().getHealth(), battle.getEnemy().getShield());
             battleView.updateManaLabel(battle.getPlayerUnusedCombatMana(), battle.getPlayer().getMana());
-            
             this.notifier
                 .notifyListener(new SwitchControllerRequest<LAYOUT, Player>(LAYOUT.WORLDMAP, Suppliers.ofInstance(this.battle.getPlayer())));
         } else {

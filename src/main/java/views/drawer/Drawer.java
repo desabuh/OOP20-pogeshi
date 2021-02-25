@@ -13,7 +13,7 @@ public interface Drawer<T extends Node> {
 
     /**
      * function to draw a render in a specific destination.
-     * @param render to draw on {@link <T>} component
+     * @param render to draw on component
      * @param source upper left bound
      * @param destination upper left bound
      */

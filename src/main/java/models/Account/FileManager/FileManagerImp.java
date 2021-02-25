@@ -78,7 +78,6 @@ public final class FileManagerImp<T> implements FileManager<T> {
     /**
      * Delete the {@code file} and check if the operation succeeded.
      */
-    //TODO: Not used
     @Override
     public void deleteSaves() {
         if (!file.delete()) {
