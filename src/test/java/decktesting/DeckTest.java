@@ -9,9 +9,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -46,16 +44,16 @@ class DeckTest {
 
     @Test
     public void testAddCard() {
-        Card card;
+        Card card1;
         try {
-            card = new CardImpl.Builder()
-                    .name("Monster")
-                    .attack(1)
-                    .shield(2)
-                    .cost(2)
-                    .description("Description")
-                    .resourcePath("res" + File.separator + "images" + File.separator + "card15.png")
-                    .build();
+            card1 = new CardImpl.Builder()
+                                .name("Monster")
+                                .attack(1)
+                                .shield(2)
+                                .cost(2)
+                                .description("Description")
+                                .resourcePath("res" + File.separator + "images" + File.separator + "card15.png")
+                                .build();
             this.deck = new DeckImpl();
             this.deck.removeCard(this.deck.getCards().stream().findAny().get());
             this.deck.addCard(card);
@@ -89,27 +87,12 @@ class DeckTest {
                                     .build();
         });
     }
-    
+
     @Test
     public void illegalDeckCreation() {
         assertThrows(IOException.class, () -> this .deck = new DeckImpl(new FileReader("file inesistente")));
-        List<Card> list = new ArrayList<>();
-        try {
-            Card card1 = new CardImpl.Builder()
-                    .attack(0)
-                    .description("Desc")
-                    .shield(0)
-                    .name("prova")
-                    .cost(0)
-                    .resourcePath("res" + File.separator + "images" + File.separator + "card15.png")
-                    .build();
-            list.add(card1);
-            assertThrows(IllegalStateException.class, () -> this.deck = new DeckImpl(list));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
     }
-    
+
     @Test
     public void testingEmptyDeck() {
         this.deck = new DeckImpl();
