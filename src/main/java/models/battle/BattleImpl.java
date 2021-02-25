@@ -198,7 +198,6 @@ public final class BattleImpl implements Battle {
         if (!hasBattleFinished) {
             throw new IllegalStateException("The battle has not ended yet.");
         }
-        this.reset();
         return p.getHealth() > 0;
     }
 
