@@ -16,7 +16,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListView;
 import models.Account.Account;
-import models.Account.AccountImp;
 import models.deck.card.Card;
 import notifier.EventBus;
 import views.View;
@@ -58,7 +57,7 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
         this.cards.addAll(this.playerAccount.getRemainingCards());
         Platform.runLater(() -> {
             this.deckCreationView.setScene(SceneManager.of(LAYOUT.DECKCREATION).getScene());
-            this.deckCreationView.initialize(this.cards, this.playerAccount.getDeck().getCards());
+            this.deckCreationView.initialize(this.playerAccount.getRemainingCards(), this.playerAccount.getDeck().getCards());
         });
     }
 
@@ -98,9 +97,9 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
             this.notifier.notifyListener(new SwitchControllerRequest<LAYOUT, Optional<?>>(LAYOUT.ACCOUNT, Suppliers.ofInstance(Optional.empty())));
         } else {
             Alert alert = new Alert(AlertType.WARNING);
-            alert.setTitle("Attenzione");
-            alert.setHeaderText("Il mazzo del giocatore non è completo.");
-            alert.setContentText("Non si può salvare il mazzo se non è completo!");
+            alert.setTitle("Warning");
+            alert.setHeaderText("The player's deck isn't full!");
+            alert.setContentText("You cannot save the deck if it isn't complete!");
             alert.showAndWait();
         }
     }
@@ -111,5 +110,7 @@ public final class DeckCreationControllerImpl implements DeckCreationController 
     }
 
     @Override
-    public void callBackAction(final Object data) { }
+    public void callBackAction(final Object data) { 
+        this.playerAccount.loadSaves();
+    }
 }
