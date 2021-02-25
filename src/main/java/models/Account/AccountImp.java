@@ -79,7 +79,7 @@ public final class AccountImp implements Account {
             final FileManager<LinkedList<Card>> fileAllCards = new FileManagerImp<LinkedList<Card>>(JSONS_PATH + "ListOfCards.json");
             final LinkedList<Card> allCards = fileAllCards.load(LINKED_LIST_TYPE);
             final Card card = allCards.get(random.nextInt(allCards.size()));
-            if (this.deck.getCards().contains(card) || remainingCards.contains(card)) {
+            if (this.deck.getCards().contains(card) || this.remainingCards.contains(card)) {
                 this.statistics.updateOnWin(true);
             } else {
                 this.statistics.updateOnWin(false);
