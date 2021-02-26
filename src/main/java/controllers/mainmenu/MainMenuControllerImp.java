@@ -1,4 +1,4 @@
-package controllers;
+package controllers.mainmenu;
 
 import java.io.IOException;
 import java.util.Optional;

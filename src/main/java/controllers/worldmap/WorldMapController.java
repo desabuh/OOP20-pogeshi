@@ -1,12 +1,15 @@
-package controllers;
+package controllers.worldmap;
 
 
 import java.util.Optional;
+
 import java.util.stream.Collectors;
 
 import com.google.common.base.Suppliers;
 import com.google.inject.Inject;
 
+import controllers.Controller;
+import controllers.MOVEMENT;
 import controllers.maincontroller.MainController;
 import controllers.maincontroller.Request;
 import controllers.maincontroller.SwitchControllerRequest;

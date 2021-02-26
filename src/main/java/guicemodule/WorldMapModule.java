@@ -6,9 +6,9 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 
 import controllers.Controller;
-import controllers.WorldMapController;
 import controllers.maincontroller.MainController;
 import controllers.maincontroller.Request;
+import controllers.worldmap.WorldMapController;
 import javafx.stage.Stage;
 import models.GameMap.WorldMap;
 import models.GameMap.WorldMapImpl;

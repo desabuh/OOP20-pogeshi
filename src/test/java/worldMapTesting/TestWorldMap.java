@@ -12,7 +12,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import controllers.MOVEMENT;
-import controllers.WorldMapController;
+import controllers.worldmap.WorldMapController;
 import guicemodule.ComunicationModule;
 import guicemodule.WorldMapModule;
 import models.Character.EnemyImp;
