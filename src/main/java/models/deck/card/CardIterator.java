@@ -1,11 +1,9 @@
-package models;
+package models.deck.card;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
-import models.deck.card.Card;
 
 
 public final class CardIterator implements Iterator<Card> {

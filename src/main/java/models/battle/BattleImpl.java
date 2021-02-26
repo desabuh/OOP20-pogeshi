@@ -3,7 +3,6 @@ package models.battle;
 import java.util.Collections;
 import java.util.Optional;
 
-import models.CardIterator;
 import models.Account.AccountImp;
 import models.Character.Character;
 import models.Character.EnemyImp;
@@ -12,6 +11,7 @@ import models.Character.PlayerImp;
 import models.GameMap.Point2DImp;
 import models.deck.DeckImpl;
 import models.deck.card.Card;
+import models.deck.card.CardIterator;
 
 public final class BattleImpl implements Battle {
 
