@@ -61,7 +61,7 @@ public final class BattleImpl implements Battle {
     }
 
     public void initializeCharacters() {
-        e = new EnemyImp(new DeckImpl(), 10, Point2DImp.setPoint(0, 0));
+        e = new EnemyImp(new DeckImpl(), 5, Point2DImp.setPoint(0, 0));
         if (hasBeenInitialized) {
             throw new IllegalStateException("Both opponents of the battle have already been initialized.");
         }

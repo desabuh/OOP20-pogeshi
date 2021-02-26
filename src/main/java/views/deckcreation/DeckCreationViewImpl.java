@@ -23,7 +23,6 @@ public final class DeckCreationViewImpl extends JavafxView implements DeckCreati
     private ListView<String> listDeck;
     private ListView<String> listCards;
     private List<Card> cards;
-    private List<Card> playerDeck;
     private ImageView imgCard;
     private Label lblCardName;
     private Label lblCardDesc;
@@ -43,11 +42,12 @@ public final class DeckCreationViewImpl extends JavafxView implements DeckCreati
     @Override
     public void updateEntity(final Render render, final Point2D x, final Point2D y) { }
 
+    //In this case it is not possible to receive another object than a ListView<String>.
+    @SuppressWarnings("unchecked")
     @Override
     public void initialize(final List<Card> remainingCards, final List<Card> playerDeck) {
         this.cards = new LinkedList<>(remainingCards);
         this.cards.addAll(playerDeck);
-        this.playerDeck = playerDeck;
         this.listDeck = (ListView<String>) this.getScene().lookup("#listDeck");
         this.listCards = (ListView<String>) this.getScene().lookup("#listCards");
         this.imgCard = (ImageView) this.getScene().lookup("#imgCard");
@@ -58,7 +58,7 @@ public final class DeckCreationViewImpl extends JavafxView implements DeckCreati
         this.lblCardCost = (Label) this.getScene().lookup("#lblCardCost");
         this.lblNumCards = (Label) this.getScene().lookup("#lblNumCards");
         remainingCards.stream().forEach(card -> this.listCards.getItems().add(card.getName()));
-        this.playerDeck.stream().forEach(card -> this.listDeck.getItems().add(card.getName()));
+        playerDeck.stream().forEach(card -> this.listDeck.getItems().add(card.getName()));
         this.listCards.setDisable(true);
         this.listDeck.setDisable(false);
         this.listDeck.getSelectionModel().select(0);

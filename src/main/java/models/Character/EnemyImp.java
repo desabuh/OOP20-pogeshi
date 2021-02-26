@@ -17,7 +17,7 @@ public final class EnemyImp extends CharacterImp implements Enemy {
      * @param position  The {@code position} of the {@code enemy}.
      */
     public EnemyImp(final Deck deck, final Point2D position) {
-        super(10, position, deck, 0);
+        super(5, position, deck, 0);
     }
 
     /**
