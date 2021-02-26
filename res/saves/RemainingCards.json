@@ -1,1 +1,18 @@
-[]
+[
+  {
+    "cost": "0",
+    "attack": "0",
+    "shield": "1",
+    "name": "Card13",
+    "description": "DESC",
+    "resourcePath": "/images/card13.png"
+  },
+  {
+    "cost": "5",
+    "attack": "7",
+    "shield": "7",
+    "name": "Card14",
+    "description": "DESC",
+    "resourcePath": "/images/card14.png"
+  }
+]

@@ -1,7 +1,7 @@
 [
   {
     "cost": 1,
-    "attack": 1,
+    "attack": 5,
     "shield": 1,
     "name": "Card1",
     "resourcePath": "res/images/card1.png",
@@ -9,7 +9,7 @@
   },
   {
     "cost": 3,
-    "attack": 5,
+    "attack": 15,
     "shield": 2,
     "name": "Card2",
     "resourcePath": "res/images/card2.png",
@@ -17,7 +17,7 @@
   },
   {
     "cost": 2,
-    "attack": 1,
+    "attack": 10,
     "shield": 2,
     "name": "Card3",
     "resourcePath": "res/images/card3.png",
@@ -25,7 +25,7 @@
   },
   {
     "cost": 4,
-    "attack": 3,
+    "attack": 20,
     "shield": 3,
     "name": "Card4",
     "resourcePath": "res/images/card4.png",
@@ -33,7 +33,7 @@
   },
   {
     "cost": 5,
-    "attack": 6,
+    "attack": 25,
     "shield": 1,
     "name": "Card5",
     "resourcePath": "res/images/card5.png",
@@ -41,7 +41,7 @@
   },
   {
     "cost": 3,
-    "attack": 1,
+    "attack": 15,
     "shield": 4,
     "name": "Card6",
     "resourcePath": "res/images/card6.png",
@@ -49,7 +49,7 @@
   },
   {
     "cost": 8,
-    "attack": 10,
+    "attack": 40,
     "shield": 10,
     "name": "Card7",
     "resourcePath": "res/images/card7.png",
@@ -57,7 +57,7 @@
   },
   {
     "cost": 6,
-    "attack": 1,
+    "attack": 30,
     "shield": 10,
     "name": "Card8",
     "resourcePath": "res/images/card8.png",
@@ -65,7 +65,7 @@
   },
   {
     "cost": 1,
-    "attack": 0,
+    "attack": 5,
     "shield": 2,
     "name": "Card9",
     "resourcePath": "res/images/card9.png",
@@ -73,7 +73,7 @@
   },
   {
     "cost": 7,
-    "attack": 5,
+    "attack": 35,
     "shield": 5,
     "name": "Card10",
     "resourcePath": "res/images/card10.png",

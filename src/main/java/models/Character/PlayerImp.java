@@ -25,7 +25,7 @@ public final class PlayerImp extends CharacterImp implements Player {
      * @param deck  The {@code deck} of the {@code player}.
      */
     public PlayerImp(final Deck deck) {
-        super(100, new Point2DImp(0, 0), deck, 0);
+        super(250, new Point2DImp(0, 0), deck, 0);
         setMana(1);
         this.hand = new HandImpl();
     }
