@@ -1,4 +1,6 @@
-package controllers;
+package controllers.mainmenu;
+
+import controllers.Controller;
 
 public interface MainMenuController extends Controller {
 

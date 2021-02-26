@@ -3,12 +3,12 @@ package guicemodule;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 
-import controllers.MainMenuController;
-import controllers.MainMenuControllerImp;
 import controllers.deckcreation.DeckCreationController;
 import controllers.deckcreation.DeckCreationControllerImpl;
 import controllers.maincontroller.MainController;
 import controllers.maincontroller.Request;
+import controllers.mainmenu.MainMenuController;
+import controllers.mainmenu.MainMenuControllerImp;
 import javafx.stage.Stage;
 import models.Account.Account;
 import models.Account.AccountImp;
