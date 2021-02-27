@@ -1,6 +1,5 @@
 plugins {
   id 'application'
-  id 'org.openjfx.javafxplugin' version '0.0.8'
   id 'eclipse'
   id 'java'
  /*
@@ -10,6 +9,16 @@ plugins {
   */
   id 'com.github.johnrengelman.shadow' version '5.2.0'
 }
+
+def supportedPlatforms = ['linux', 'mac', 'win']
+// List of JavaFX modules you need. Comment out things you are not using.
+def javaFXModules = [
+    'base',
+    'controls',
+    'fxml',
+    'swing',
+    'graphics'
+]
 
 sourceSets {
   main {
@@ -39,11 +48,11 @@ dependencies {
 	implementation 'com.google.inject:guice:5.0.0-BETA-1'
 	testImplementation(platform('org.junit:junit-bom:5.7.1'))
 	testImplementation('org.junit.jupiter:junit-jupiter')
-}
-
-javafx {
-    version = "13"
-    modules = [ 'javafx.controls', 'javafx.fxml' ]
+	for (platform in supportedPlatforms) {
+        for (module in javaFXModules) {
+            implementation 'org.openjfx:javafx-' + module + ':13:' + platform
+        }
+    }
 }
 
 test {
